@@ -2326,27 +2326,37 @@ Do not generate or use a fake portrait.
 
 # 94. PERSONAL BRAND COLORS
 
-The visual identity should use a restrained palette.
+The visual identity should incorporate the owner's preferred color palette: **Green, Yellow, and combined Green & Yellow (Lime / Chartreuse / Duo-tone Gradients)**, balanced with clean, restrained neutral tones.
 
-Possible direction:
+### Preferred Color Direction:
 
 ```text
-Primary:
-Near-black / deep neutral
+Base & Backgrounds:
+- Dark Mode: Deep neutral / near-black / rich charcoal (#0B0F10, #12181A)
+- Light Mode: Crisp white / soft warm neutral (#FAFAFA, #F4F6F5)
 
-Secondary:
-White / soft neutral
+Primary Accent (Green):
+- Emerald / Tech Green (e.g., #10B981, #059669, #00D084)
+- Communicates precision, systems engineering, vitality, and stability.
 
-Accent:
-One distinctive technology-oriented accent
+Secondary Accent (Yellow):
+- Warm Amber / Golden Yellow (e.g., #F59E0B, #EAB308, #FFD166)
+- Communicates energy, intellect, clarity, focus, and innovation.
+
+Combined Accent (Green + Yellow):
+- Lime / Chartreuse / Duo-tone Green-to-Yellow gradients (e.g., linear-gradient(135deg, #10B981, #EAB308))
+- Used for special badges, interactive highlights, primary CTAs, active indicators, and subtle visual focal points.
 
 Supporting:
-Muted gray tones
+- Muted slate, cool gray tones, and subtle border lines for hierarchy and depth.
 ```
 
-Do not use too many colors.
+### Color Usage Guidelines:
 
-The exact palette should be implemented as design tokens so it can be changed globally.
+1. **Restraint and Balance:** Green and yellow should be used deliberately for accents, status badges, buttons, active links, and highlights without overwhelming readability or creating visual noise.
+2. **Accessible Contrast:** Ensure all green and yellow text/elements meet WCAG 2.2 AA contrast standards against both dark and light backgrounds.
+3. **Design Tokens:** Implement the palette using CSS variables (`--color-primary-green`, `--color-accent-yellow`, `--gradient-green-yellow`, etc.) so themes and accents can be managed centrally and globally.
+4. **Theme Harmony:** Provide tailored green and yellow shades for both dark mode and light mode to ensure optimal optical balance and readability.
 
 ---
 
