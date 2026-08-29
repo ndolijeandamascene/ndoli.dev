@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Dashboard | {{ OWNER_NAME }}</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <style>
+    /* Full In-Dashboard Self-Contained Styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+    }
+    .dash-app {
+      display: flex !important;
+      flex-direction: row !important;
+      min-height: 100vh !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .dash-sidebar {
+      width: 270px !important;
+      min-width: 270px !important;
+      max-width: 270px !important;
+      height: 100vh !important;
+      position: sticky !important;
+      top: 0 !important;
+      background: var(--bg-surface) !important;
+      border-right: 1px solid var(--border-color) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
+      z-index: 100 !important;
+    }
+    .dash-sidebar-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dash-sidebar-nav {
+      padding: 16px 12px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .dash-nav-section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 14px 12px 6px;
+    }
+    .dash-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .dash-nav-link:hover {
+      color: var(--text-primary);
+      background: var(--color-green-subtle);
+    }
+    .dash-nav-link.active {
+      color: var(--color-green) !important;
+      background: var(--color-green-subtle) !important;
+      font-weight: 600 !important;
+      border-left: 3px solid var(--color-green) !important;
+    }
+    .dash-nav-link-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dash-sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-surface-elevated);
+    }
+    .dash-main {
+      flex: 1 !important;
+      min-width: 0 !important;
+      height: 100vh !important;
+      overflow-y: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      box-sizing: border-box !important;
+    }
+    .dash-header {
+      height: 70px !important;
+      min-height: 70px !important;
+      background: var(--bg-surface) !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      padding: 0 32px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 50 !important;
+    }
+    .dash-content {
+      padding: 32px !important;
+      flex: 1 !important;
+      box-sizing: border-box !important;
+      max-width: 1440px !important;
+      width: 100% !important;
+    }
+    .dash-tab-panel {
+      display: none;
+    }
+    .dash-tab-panel.active {
+      display: block;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dash-table-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+    }
+    .dash-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: var(--text-sm);
+    }
+    .dash-table th {
+      background: var(--bg-surface-elevated);
+      padding: 12px 16px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .dash-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+    .dash-table tr:last-child td {
+      border-bottom: none;
+    }
+    .dash-table tr:hover td {
+      background: var(--bg-surface-elevated);
+    }
+    /* Modal Styles */
+    .dash-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .dash-modal.open {
+      display: flex;
+    }
+    .dash-modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color-hover);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: var(--shadow-xl);
+      box-sizing: border-box;
+    }
+    @media (max-width: 960px) {
+      .dash-sidebar {
+        position: fixed !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.25s ease !important;
+      }
+      .dash-sidebar.open {
+        transform: translateX(0) !important;
+      }
+      .dash-header { padding: 0 16px !important; }
+      .dash-content { padding: 16px !important; }
+    }
+  </style>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('ndoli-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+</head>
+<body class="dash-app">
+
+  <!-- ================= SIDEBAR MENU ================= -->
+  <aside id="dash-sidebar" class="dash-sidebar">
+    <div>
+      <!-- Sidebar Header / Brand -->
+      <div class="dash-sidebar-header">
+        <a href="{% url 'core:home' %}" style="display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-primary);">
+          <span style="font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em;">NDOLI</span>
+          <span class="brand-badge">CONTROL</span>
+        </a>
+      </div>
+
+      <!-- In-Dashboard Navigation Tabs -->
+      <nav class="dash-sidebar-nav" aria-label="Dashboard Navigation">
+        
+        <div class="dash-nav-section-title">Core Management</div>
+        
+        <a onclick="switchTab('tab-overview', this)" class="dash-nav-link active">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span>Overview</span>
+          </div>
+        </a>
+
+        <a onclick="switchTab('tab-job-offers', this)" class="dash-nav-link">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>Job Offers &amp; Salary</span>
+          </div>
+          {% if new_job_offers_count > 0 %}
+          <span class="badge badge-yellow">{{ new_job_offers_count }}</span>
+          {% endif %}
+        </a>
+
+        <a onclick="switchTab('tab-inquiries', this)" class="dash-nav-link">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span>Direct Inquiries</span>
+          </div>
+          {% if unread_messages_count > 0 %}
+          <span class="badge badge-green">{{ unread_messages_count }}</span>
+          {% endif %}
+        </a>
+
+        <div class="dash-nav-section-title">Content &amp; Systems</div>
+
+        <a onclick="switchTab('tab-projects', this)" class="dash-nav-link">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span>Projects &amp; Systems</span>
+          </div>
+          <span class="badge badge-neutral">{{ projects_count }}</span>
+        </a>
+
+        <a onclick="switchTab('tab-articles', this)" class="dash-nav-link">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            <span>Articles &amp; Writing</span>
+          </div>
+          <span class="badge badge-neutral">{{ articles_count }}</span>
+        </a>
+
+        <div class="dash-nav-section-title">Settings &amp; Live Site</div>
+
+        <a onclick="switchTab('tab-settings', this)" class="dash-nav-link">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Site Profile Settings</span>
+          </div>
+        </a>
+
+        <a href="{% url 'core:home' %}" target="_blank" rel="noopener noreferrer" class="dash-nav-link" style="color: var(--color-green);">
+          <div class="dash-nav-link-left">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            <span>View Live Site</span>
+          </div>
+          <span>&nearr;</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="dash-sidebar-footer">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+        <div style="display: flex; align-items: center; gap: var(--space-2);">
+          <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--color-green); color: #FFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px;">
+            N
+          </div>
+          <div>
+            <div style="font-size: var(--text-xs); font-weight: 700; color: var(--text-primary);">{{ user.username }}</div>
+            <div style="font-size: 10px; color: var(--color-green); font-family: var(--font-mono);">Superuser</div>
+          </div>
+        </div>
+
+        <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+
+      <a href="{% url 'core:logout' %}" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center;">
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <main class="dash-main">
+
+    <!-- Top Header Bar -->
+    <header class="dash-header">
+      <div style="display: flex; align-items: center; gap: var(--space-4);">
+        <div>
+          <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: 2px;">
+            <span class="badge badge-green" style="font-size: 10px; padding: 2px 6px;">LIVE CONTROL CENTER</span>
+            <span style="font-size: 11px; font-family: var(--font-mono); color: var(--color-green); font-weight: 600;">
+              ● VPS Operational (62.171.182.99)
+            </span>
+          </div>
+          <h1 style="font-size: var(--text-xl); margin-bottom: 0; font-weight: 800;">
+            Website Control Dashboard
+          </h1>
+        </div>
+      </div>
+
+      <!-- Header In-Dashboard Actions -->
+      <div style="display: flex; gap: var(--space-2); align-items: center;">
+        <button onclick="openModal('modal-add-project')" class="btn btn-secondary btn-sm">
+          + Add Project
+        </button>
+        <button onclick="openModal('modal-add-article')" class="btn btn-secondary btn-sm">
+          + Write Article
+        </button>
+        <a href="{% url 'core:home' %}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          View Website &nearr;
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Scrollable Content -->
+    <div class="dash-content">
+
+      <!-- Flash Notification Alerts -->
+      {% if messages %}
+        {% for message in messages %}
+          <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid var(--color-green); color: var(--text-primary); padding: var(--space-4); border-radius: var(--radius-md); font-size: var(--text-sm); margin-bottom: var(--space-6);">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ================= TAB 1: OVERVIEW ================= -->
+      <div id="tab-overview" class="dash-tab-panel active">
+        
+        <!-- SECTION: 4 KEY METRIC CARDS -->
+        <div class="grid grid-4" style="gap: var(--space-4); margin-bottom: var(--space-8);">
+          
+          <div class="card" style="border-left: 4px solid var(--color-yellow); background: var(--bg-surface); cursor: pointer;" onclick="switchTab('tab-job-offers')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2);">
+              <span style="font-size: var(--text-xs); font-family: var(--font-mono); color: var(--color-yellow); font-weight: 700; text-transform: uppercase;">JOB OFFERS</span>
+              <span class="badge {% if new_job_offers_count > 0 %}badge-yellow{% else %}badge-neutral{% endif %}">{{ new_job_offers_count }} NEW</span>
+            </div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: var(--space-1);">
+              {{ job_offers_count }}
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">Proposals with salary rates</p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-green); background: var(--bg-surface); cursor: pointer;" onclick="switchTab('tab-inquiries')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2);">
+              <span style="font-size: var(--text-xs); font-family: var(--font-mono); color: var(--color-green); font-weight: 700; text-transform: uppercase;">INQUIRIES</span>
+              <span class="badge {% if unread_messages_count > 0 %}badge-green{% else %}badge-neutral{% endif %}">{{ unread_messages_count }} UNREAD</span>
+            </div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: var(--space-1);">
+              {{ messages_count }}
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">Direct contact messages</p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--color-green); background: var(--bg-surface); cursor: pointer;" onclick="switchTab('tab-projects')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2);">
+              <span style="font-size: var(--text-xs); font-family: var(--font-mono); color: var(--color-green); font-weight: 700; text-transform: uppercase;">SYSTEMS</span>
+              <span class="badge badge-green">{{ live_projects_count }} LIVE</span>
+            </div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: var(--space-1);">
+              {{ projects_count }}
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">Verified systems &amp; prototypes</p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--border-color); background: var(--bg-surface); cursor: pointer;" onclick="switchTab('tab-articles')">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2);">
+              <span style="font-size: var(--text-xs); font-family: var(--font-mono); color: var(--text-muted); font-weight: 700; text-transform: uppercase;">ARTICLES</span>
+              <span class="badge badge-neutral">{{ published_articles_count }} PUBLISHED</span>
+            </div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: var(--space-1);">
+              {{ articles_count }}
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">Published lab publications</p>
+          </div>
+
+        </div>
+
+        <!-- QUICK RECENT ACTIVITY PREVIEW -->
+        <div class="grid grid-2" style="gap: var(--space-6); margin-bottom: var(--space-8);">
+          
+          <!-- Recent Job Offers Card -->
+          <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+              <h2 style="font-size: var(--text-base); color: var(--color-yellow); margin-bottom: 0;">Recent Job Offers</h2>
+              <button onclick="switchTab('tab-job-offers')" class="btn btn-outline btn-sm" style="font-size: 11px; padding: 2px 8px;">View All &rarr;</button>
+            </div>
+            {% if recent_job_offers %}
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                {% for offer in recent_job_offers %}
+                <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px 14px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                    <strong style="font-size: var(--text-sm);">{{ offer.job_title }}</strong>
+                    <span class="badge {% if offer.status == 'new' %}badge-yellow{% else %}badge-green{% endif %}">{{ offer.get_status_display }}</span>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted);">{{ offer.company_name }} &bull; {{ offer.contact_person }}</div>
+                  <div style="font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--color-yellow); margin-top: 4px;">{{ offer.offered_salary }}</div>
+                </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p style="font-size: var(--text-xs); color: var(--text-muted); padding: var(--space-4) 0; text-align: center;">No job offers received yet.</p>
+            {% endif %}
+          </div>
+
+          <!-- Recent Inquiries Card -->
+          <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+              <h2 style="font-size: var(--text-base); color: var(--color-green); margin-bottom: 0;">Recent Inquiries</h2>
+              <button onclick="switchTab('tab-inquiries')" class="btn btn-outline btn-sm" style="font-size: 11px; padding: 2px 8px;">View All &rarr;</button>
+            </div>
+            {% if recent_messages %}
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                {% for msg in recent_messages %}
+                <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px 14px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                    <strong style="font-size: var(--text-sm);">{{ msg.subject }}</strong>
+                    <span class="badge {% if not msg.is_read %}badge-green{% else %}badge-neutral{% endif %}">{% if not msg.is_read %}Unread{% else %}Read{% endif %}</span>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted);">From: {{ msg.name }} ({{ msg.email }})</div>
+                  <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">{{ msg.message|truncatewords:12 }}</div>
+                </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p style="font-size: var(--text-xs); color: var(--text-muted); padding: var(--space-4) 0; text-align: center;">No inquiries received yet.</p>
+            {% endif %}
+          </div>
+
+        </div>
+
+        <!-- SECTION: INFRASTRUCTURE & SERVER SPECIFICATIONS -->
+        <div class="card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color);">
+          <h3 style="font-size: var(--text-sm); font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--space-4);">
+            ⚙️ Production Environment &amp; Server Infrastructure
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); font-size: var(--text-xs);">
+            <div style="background: var(--bg-surface); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted); display: block; margin-bottom: 2px;">Canonical Domain</span>
+              <strong style="color: var(--color-green); font-size: var(--text-sm);">https://ndoli.dev</strong>
+            </div>
+            <div style="background: var(--bg-surface); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted); display: block; margin-bottom: 2px;">Linux VPS Target</span>
+              <strong style="color: var(--text-primary); font-size: var(--text-sm);">62.171.182.99</strong>
+            </div>
+            <div style="background: var(--bg-surface); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted); display: block; margin-bottom: 2px;">Database Engine</span>
+              <strong style="color: var(--color-yellow); font-size: var(--text-sm);">PostgreSQL + pgvector (PG16)</strong>
+            </div>
+            <div style="background: var(--bg-surface); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted); display: block; margin-bottom: 2px;">Static Asset Delivery</span>
+              <strong style="color: var(--text-primary); font-size: var(--text-sm);">WhiteNoise Manifest Storage</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= TAB 2: JOB OFFERS MANAGER ================= -->
+      <div id="tab-job-offers" class="dash-tab-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <div>
+            <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: 2px;">
+              💼 Employer Job Offers &amp; Proposed Compensation
+            </h2>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
+              Manage, update status, and review compensation for all incoming IT roles.
+            </p>
+          </div>
+        </div>
+
+        <div class="dash-table-wrapper">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Company / Org</th>
+                <th>Position Title</th>
+                <th>Offered Salary</th>
+                <th>Contact Person</th>
+                <th>Status</th>
+                <th>Update Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for offer in all_job_offers %}
+              <tr>
+                <td>
+                  <strong>{{ offer.company_name }}</strong>
+                  {% if offer.company_website %}<br><a href="{{ offer.company_website }}" target="_blank" style="font-size: 11px; color: var(--text-muted);">{{ offer.company_website }}</a>{% endif %}
+                </td>
+                <td>
+                  <span style="font-weight: 600; color: var(--text-primary);">{{ offer.job_title }}</span>
+                  <div style="font-size: 11px; color: var(--text-muted);">{{ offer.get_job_category_display }} &bull; {{ offer.get_employment_type_display }}</div>
+                </td>
+                <td>
+                  <span style="font-family: var(--font-mono); font-weight: 700; color: var(--color-yellow); background: var(--color-yellow-subtle); padding: 2px 8px; border-radius: 4px;">
+                    {{ offer.offered_salary }}
+                  </span>
+                </td>
+                <td>
+                  <div style="font-weight: 500;">{{ offer.contact_person }}</div>
+                  <a href="mailto:{{ offer.contact_email }}" style="font-size: 11px; color: var(--color-green);">{{ offer.contact_email }}</a>
+                </td>
+                <td>
+                  <span class="badge {% if offer.status == 'new' %}badge-yellow{% elif offer.status == 'accepted' %}badge-green{% else %}badge-neutral{% endif %}">
+                    {{ offer.get_status_display }}
+                  </span>
+                </td>
+                <td>
+                  <form method="post" style="display: flex; gap: 4px; align-items: center;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_job_status">
+                    <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                    <select name="status" class="form-select" style="padding: 4px 8px; font-size: 11px; width: auto;" onchange="this.form.submit()">
+                      <option value="new" {% if offer.status == 'new' %}selected{% endif %}>New</option>
+                      <option value="reviewed" {% if offer.status == 'reviewed' %}selected{% endif %}>Reviewed</option>
+                      <option value="contacted" {% if offer.status == 'contacted' %}selected{% endif %}>Contacted</option>
+                      <option value="accepted" {% if offer.status == 'accepted' %}selected{% endif %}>Accepted</option>
+                      <option value="declined" {% if offer.status == 'declined' %}selected{% endif %}>Declined</option>
+                    </select>
+                  </form>
+                </td>
+                <td>
+                  <form method="post" onsubmit="return confirm('Delete this job offer record?');" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_job_offer">
+                    <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                    <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px; color: #EF4444;">
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: var(--space-8);">
+                  No employer offers submitted yet.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= TAB 3: DIRECT INQUIRIES ================= -->
+      <div id="tab-inquiries" class="dash-tab-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <div>
+            <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: 2px;">
+              ✉️ Direct Inquiries &amp; Messages
+            </h2>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
+              All messages received via the `/contact/` form.
+            </p>
+          </div>
+        </div>
+
+        <div class="dash-table-wrapper">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Sender</th>
+                <th>Subject</th>
+                <th>Message Content</th>
+                <th>Received</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for msg in all_messages %}
+              <tr>
+                <td>
+                  <strong>{{ msg.name }}</strong>
+                  <div style="font-size: 11px;"><a href="mailto:{{ msg.email }}" style="color: var(--color-green);">{{ msg.email }}</a></div>
+                </td>
+                <td>
+                  <span style="font-weight: 600; color: var(--text-primary);">{{ msg.subject }}</span>
+                </td>
+                <td style="font-size: var(--text-xs); color: var(--text-secondary); max-width: 340px;">
+                  {{ msg.message }}
+                </td>
+                <td style="font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-mono);">
+                  {{ msg.created_at|date:"M d, Y H:i" }}
+                </td>
+                <td>
+                  <span class="badge {% if not msg.is_read %}badge-green{% else %}badge-neutral{% endif %}">
+                    {% if not msg.is_read %}Unread{% else %}Read{% endif %}
+                  </span>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 4px;">
+                    <form method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="toggle_message_read">
+                      <input type="hidden" name="message_id" value="{{ msg.id }}">
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px;">
+                        {% if msg.is_read %}Mark Unread{% else %}Mark Read{% endif %}
+                      </button>
+                    </form>
+                    <form method="post" onsubmit="return confirm('Delete this message?');" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="delete_message">
+                      <input type="hidden" name="message_id" value="{{ msg.id }}">
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px; color: #EF4444;">
+                        ✕
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: var(--space-8);">
+                  No direct contact messages received yet.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= TAB 4: PROJECTS & SYSTEMS (FULL CRUD) ================= -->
+      <div id="tab-projects" class="dash-tab-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <div>
+            <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: 2px;">
+              🚀 Systems &amp; Projects Manager (CRUD)
+            </h2>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
+              Create, edit, update, or remove showcase systems and case studies.
+            </p>
+          </div>
+          <button onclick="openModal('modal-add-project')" class="btn btn-primary btn-sm">
+            + Add New System
+          </button>
+        </div>
+
+        <div class="dash-table-wrapper">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Title &amp; Tagline</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Role</th>
+                <th>Live URL</th>
+                <th>Actions (Edit / Delete)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in all_projects %}
+              <tr>
+                <td>
+                  <strong>{{ p.title }}</strong>
+                  <div style="font-size: 11px; color: var(--color-green);">{{ p.tagline }}</div>
+                </td>
+                <td style="font-size: 12px; color: var(--text-secondary);">
+                  {{ p.category.name|default:"General" }}
+                </td>
+                <td>
+                  <span class="badge {% if p.status == 'production' %}badge-green{% elif p.status == 'prototype' %}badge-yellow{% else %}badge-neutral{% endif %}">
+                    {{ p.get_status_display }}
+                  </span>
+                </td>
+                <td style="font-size: 12px;">{{ p.role }}</td>
+                <td>
+                  {% if p.live_url %}
+                    <a href="{{ p.live_url }}" target="_blank" style="font-size: 11px; color: var(--color-green); font-weight: 600;">Visit &nearr;</a>
+                  {% else %}
+                    <span style="color: var(--text-muted); font-size: 11px;">Prototype</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div style="display: flex; gap: 6px; align-items: center;">
+                    <button onclick="openEditProject('{{ p.id }}', '{{ p.title|escapejs }}', '{{ p.tagline|escapejs }}', '{{ p.category.id|default:'' }}', '{{ p.status }}', '{{ p.role|escapejs }}', '{{ p.live_url|default:''|escapejs }}', '{{ p.repository_url|default:''|escapejs }}', '{{ p.short_description|escapejs }}', '{{ p.overview|escapejs }}', {% if p.featured %}true{% else %}false{% endif %})" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 11px;">
+                      Edit
+                    </button>
+                    <form method="post" onsubmit="return confirm('Delete project {{ p.title }}?');" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="delete_project">
+                      <input type="hidden" name="project_id" value="{{ p.id }}">
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 11px; color: #EF4444;">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: var(--space-8);">
+                  No projects added yet.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= TAB 5: ARTICLES & WRITING (FULL CRUD) ================= -->
+      <div id="tab-articles" class="dash-tab-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <div>
+            <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: 2px;">
+              📝 Articles &amp; Lab Publications (CRUD)
+            </h2>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
+              Publish, update, edit content, or delete technical publications.
+            </p>
+          </div>
+          <button onclick="openModal('modal-add-article')" class="btn btn-accent btn-sm">
+            + Write New Article
+          </button>
+        </div>
+
+        <div class="dash-table-wrapper">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Read Time</th>
+                <th>Status</th>
+                <th>Actions (Edit / Delete)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for a in all_articles %}
+              <tr>
+                <td>
+                  <strong>{{ a.title }}</strong>
+                  <div style="font-size: 11px; color: var(--text-muted);">{{ a.excerpt|truncatewords:10 }}</div>
+                </td>
+                <td style="font-size: 12px;">{{ a.category.name|default:"Tech" }}</td>
+                <td style="font-size: 12px; font-family: var(--font-mono);">{{ a.reading_time_minutes }} min</td>
+                <td>
+                  <span class="badge {% if a.is_published %}badge-green{% else %}badge-neutral{% endif %}">
+                    {% if a.is_published %}Live{% else %}Draft{% endif %}
+                  </span>
+                </td>
+                <td>
+                  <div style="display: flex; gap: 6px; align-items: center;">
+                    <button onclick="openEditArticle('{{ a.id }}', '{{ a.title|escapejs }}', '{{ a.category.id|default:'' }}', '{{ a.reading_time_minutes }}', '{{ a.excerpt|escapejs }}', '{{ a.content|escapejs }}', {% if a.is_published %}true{% else %}false{% endif %}, {% if a.is_featured %}true{% else %}false{% endif %})" class="btn btn-secondary btn-sm" style="padding: 2px 8px; font-size: 11px;">
+                      Edit
+                    </button>
+                    <form method="post" onsubmit="return confirm('Delete article {{ a.title }}?');" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="action" value="delete_article">
+                      <input type="hidden" name="article_id" value="{{ a.id }}">
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 11px; color: #EF4444;">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: var(--space-8);">
+                  No articles written yet.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= TAB 6: SITE PROFILE SETTINGS ================= -->
+      <div id="tab-settings" class="dash-tab-panel">
+        <div style="margin-bottom: var(--space-4);">
+          <h2 style="font-size: var(--text-xl); color: var(--text-primary); margin-bottom: 2px;">
+            ⚙️ Public Site Profile &amp; Bio Settings
+          </h2>
+          <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
+            Update your public personal branding, headlines, and contact details directly without leaving the dashboard.
+          </p>
+        </div>
+
+        <div class="card" style="padding: var(--space-6); background: var(--bg-surface); border: 1px solid var(--border-color);">
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_settings">
+
+            <div class="grid grid-2" style="gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="owner_name" value="{{ site_settings.owner_name }}" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Role Title / Designation</label>
+                <input type="text" name="role_title" value="{{ site_settings.role_title }}" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Hero Headline</label>
+              <textarea name="hero_headline" class="form-textarea" rows="2" required>{{ site_settings.hero_headline }}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">About Snapshot / Bio Summary</label>
+              <textarea name="snapshot_text" class="form-textarea" rows="4" required>{{ site_settings.snapshot_text }}</textarea>
+            </div>
+
+            <div class="grid grid-2" style="gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label">Public Email</label>
+                <input type="email" name="email" value="{{ site_settings.email }}" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" name="location" value="{{ site_settings.location }}" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="grid grid-2" style="gap: var(--space-4);">
+              <div class="form-group">
+                <label class="form-label">GitHub URL</label>
+                <input type="url" name="github_url" value="{{ site_settings.github_url }}" class="form-input">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">LinkedIn URL</label>
+                <input type="url" name="linkedin_url" value="{{ site_settings.linkedin_url }}" class="form-input">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="margin-top: var(--space-4);">
+              Save Profile Changes &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= IN-DASHBOARD MODAL: ADD PROJECT ================= -->
+  <div id="modal-add-project" class="dash-modal">
+    <div class="dash-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: 0;">+ Add New Project / System</h3>
+        <button onclick="closeModal('modal-add-project')" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_project">
+
+        <div class="form-group">
+          <label class="form-label">Project Title *</label>
+          <input type="text" name="title" class="form-input" placeholder="e.g. HealthCare Cloud Platform" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tagline (One-Liner) *</label>
+          <input type="text" name="tagline" class="form-input" placeholder="e.g. AI-assisted clinical information platform" required>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select">
+              {% for c in project_categories %}
+              <option value="{{ c.id }}">{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="production">Production (Live)</option>
+              <option value="prototype" selected>Prototype / In Progress</option>
+              <option value="active_dev">Active Development</option>
+              <option value="concept">Concept</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Your Role</label>
+            <input type="text" name="role" class="form-input" placeholder="e.g. Lead Software Architect" value="Lead Developer">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Live URL (Optional)</label>
+            <input type="url" name="live_url" class="form-input" placeholder="https://example.com/">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Short Description</label>
+          <textarea name="short_description" class="form-textarea" rows="2" placeholder="Brief 2-sentence summary..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">System Overview &amp; Architecture</label>
+          <textarea name="overview" class="form-textarea" rows="3" placeholder="Technical breakdown of the platform..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            Create Project &rarr;
+          </button>
+          <button type="button" onclick="closeModal('modal-add-project')" class="btn btn-outline">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= IN-DASHBOARD MODAL: EDIT PROJECT ================= -->
+  <div id="modal-edit-project" class="dash-modal">
+    <div class="dash-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: 0;">✏️ Edit Project / System</h3>
+        <button onclick="closeModal('modal-edit-project')" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="edit_project">
+        <input type="hidden" name="project_id" id="edit-proj-id">
+
+        <div class="form-group">
+          <label class="form-label">Project Title *</label>
+          <input type="text" name="title" id="edit-proj-title" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tagline (One-Liner) *</label>
+          <input type="text" name="tagline" id="edit-proj-tagline" class="form-input" required>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select name="category" id="edit-proj-category" class="form-select">
+              {% for c in project_categories %}
+              <option value="{{ c.id }}">{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select name="status" id="edit-proj-status" class="form-select">
+              <option value="production">Production (Live)</option>
+              <option value="prototype">Prototype / In Progress</option>
+              <option value="active_dev">Active Development</option>
+              <option value="concept">Concept</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Your Role</label>
+            <input type="text" name="role" id="edit-proj-role" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Live URL</label>
+            <input type="url" name="live_url" id="edit-proj-live-url" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Short Description</label>
+          <textarea name="short_description" id="edit-proj-short-desc" class="form-textarea" rows="2"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">System Overview</label>
+          <textarea name="overview" id="edit-proj-overview" class="form-textarea" rows="3"></textarea>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+            Save Project Updates &rarr;
+          </button>
+          <button type="button" onclick="closeModal('modal-edit-project')" class="btn btn-outline">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= IN-DASHBOARD MODAL: ADD ARTICLE ================= -->
+  <div id="modal-add-article" class="dash-modal">
+    <div class="dash-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: 0;">+ Write Technical Article</h3>
+        <button onclick="closeModal('modal-add-article')" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add_article">
+
+        <div class="form-group">
+          <label class="form-label">Article Title *</label>
+          <input type="text" name="title" class="form-input" placeholder="e.g. Deploying Django with Docker and Nginx on Linux VPS" required>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select">
+              {% for ac in article_categories %}
+              <option value="{{ ac.id }}">{{ ac.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Estimated Read Time (Minutes)</label>
+            <input type="number" name="reading_time_minutes" class="form-input" value="6">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Excerpt / Summary *</label>
+          <textarea name="excerpt" class="form-textarea" rows="2" placeholder="Short description of what the reader will learn..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Article Content (Markdown / Text) *</label>
+          <textarea name="content" class="form-textarea" rows="6" placeholder="Write your full technical article..." required></textarea>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="submit" class="btn btn-accent" style="flex: 1; justify-content: center;">
+            Publish Article &rarr;
+          </button>
+          <button type="button" onclick="closeModal('modal-add-article')" class="btn btn-outline">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= IN-DASHBOARD MODAL: EDIT ARTICLE ================= -->
+  <div id="modal-edit-article" class="dash-modal">
+    <div class="dash-modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
+        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: 0;">✏️ Edit Technical Article</h3>
+        <button onclick="closeModal('modal-edit-article')" class="btn btn-outline btn-sm">✕</button>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="edit_article">
+        <input type="hidden" name="article_id" id="edit-art-id">
+
+        <div class="form-group">
+          <label class="form-label">Article Title *</label>
+          <input type="text" name="title" id="edit-art-title" class="form-input" required>
+        </div>
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select name="category" id="edit-art-category" class="form-select">
+              {% for ac in article_categories %}
+              <option value="{{ ac.id }}">{{ ac.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Estimated Read Time (Minutes)</label>
+            <input type="number" name="reading_time_minutes" id="edit-art-readtime" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Excerpt / Summary *</label>
+          <textarea name="excerpt" id="edit-art-excerpt" class="form-textarea" rows="2" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Article Content (Markdown / Text) *</label>
+          <textarea name="content" id="edit-art-content" class="form-textarea" rows="6" required></textarea>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); margin-top: var(--space-4);">
+          <button type="submit" class="btn btn-accent" style="flex: 1; justify-content: center;">
+            Save Article Updates &rarr;
+          </button>
+          <button type="button" onclick="closeModal('modal-edit-article')" class="btn btn-outline">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript for Tabs & In-Dashboard CRUD Modals -->
+  <script src="{% static 'js/theme.js' %}"></script>
+  <script>
+    function switchTab(tabId, el) {
+      // Hide all panels
+      document.querySelectorAll('.dash-tab-panel').forEach(p => p.classList.remove('active'));
+      // Remove active from links
+      document.querySelectorAll('.dash-nav-link').forEach(l => l.classList.remove('active'));
+
+      // Show selected panel
+      const targetPanel = document.getElementById(tabId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+
+      // Highlight link
+      if (el) {
+        el.classList.add('active');
+      } else {
+        const links = document.querySelectorAll('.dash-nav-link');
+        links.forEach(link => {
+          if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(tabId)) {
+            link.classList.add('active');
+          }
+        });
+      }
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.remove('open');
+    }
+
+    function openEditProject(id, title, tagline, catId, status, role, liveUrl, repoUrl, shortDesc, overview, featured) {
+      document.getElementById('edit-proj-id').value = id;
+      document.getElementById('edit-proj-title').value = title;
+      document.getElementById('edit-proj-tagline').value = tagline;
+      if (catId) document.getElementById('edit-proj-category').value = catId;
+      document.getElementById('edit-proj-status').value = status;
+      document.getElementById('edit-proj-role').value = role;
+      document.getElementById('edit-proj-live-url').value = liveUrl;
+      document.getElementById('edit-proj-short-desc').value = shortDesc;
+      document.getElementById('edit-proj-overview').value = overview;
+      openModal('modal-edit-project');
+    }
+
+    function openEditArticle(id, title, catId, readingTime, excerpt, content, isPub, isFeat) {
+      document.getElementById('edit-art-id').value = id;
+      document.getElementById('edit-art-title').value = title;
+      if (catId) document.getElementById('edit-art-category').value = catId;
+      document.getElementById('edit-art-readtime').value = readingTime;
+      document.getElementById('edit-art-excerpt').value = excerpt;
+      document.getElementById('edit-art-content').value = content;
+      openModal('modal-edit-article');
+    }
+
+    // Close modal on click outside
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('dash-modal')) {
+        e.target.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -175,6 +175,31 @@ class PlatformTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(JobOffer.objects.filter(company_name='Tech Enterprise Ltd').exists())
 
+    def test_login_page_and_dashboard_access(self):
+        from django.contrib.auth.models import User
+        # 1. Unauthenticated request to dashboard redirects to login
+        res_unauth = self.client.get(reverse('core:dashboard'))
+        self.assertEqual(res_unauth.status_code, 302)
+
+        # 2. Login page loads
+        res_login = self.client.get(reverse('core:login'))
+        self.assertEqual(res_login.status_code, 200)
+        self.assertContains(res_login, 'Admin Portal')
+
+        # 3. Create test admin and authenticate
+        User.objects.create_superuser(username='admin_ndoli', password='Password123!', email='admin@ndoli.dev')
+        self.client.login(username='admin_ndoli', password='Password123!')
+
+        # 4. Authenticated request opens dashboard
+        res_dash = self.client.get(reverse('core:dashboard'))
+        self.assertEqual(res_dash.status_code, 200)
+        self.assertContains(res_dash, 'Website Control Dashboard')
+        self.assertContains(res_dash, 'LIVE CONTROL CENTER')
+
+        # 5. Logout
+        res_logout = self.client.get(reverse('core:logout'))
+        self.assertEqual(res_logout.status_code, 302)
+
     def test_seo_sitemap_and_robots(self):
         res_sitemap = self.client.get('/sitemap.xml')
         self.assertEqual(res_sitemap.status_code, 200)
