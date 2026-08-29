@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Now (/now) | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
+{% block meta_description %}What NDOLI Jean Damascene is currently building, learning, researching, and exploring.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-eyebrow">Public Log</span>
+      <h1 style="margin-bottom: var(--space-2);">What I'm Doing Now</h1>
+      <p class="section-subtitle">
+        Inspired by Derek Sivers' <em>/now</em> page movement. This is a public snapshot of what currently occupies my technical energy and focus.
+      </p>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom: var(--space-12);">
+      <div class="card card-highlight">
+        <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: var(--space-3);">
+          🔨 Building
+        </h2>
+        <ul style="padding-left: var(--space-4); font-size: var(--text-sm); line-height: 1.8; color: var(--text-secondary);">
+          <li>Iterating on <strong>IHKIP</strong>: health knowledge ingestion, hierarchical chunking, and local vector retrieval.</li>
+          <li>Developing automated property management workflows for enterprise client operations.</li>
+          <li>Refining the <code>ndoli.dev</code> technology platform and custom token design system.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: var(--space-3);">
+          📚 Learning
+        </h2>
+        <ul style="padding-left: var(--space-4); font-size: var(--text-sm); line-height: 1.8; color: var(--text-secondary);">
+          <li>Deepening understanding of <strong>PostgreSQL HNSW vs. IVFFlat</strong> indexing performance with high-dimensional embeddings.</li>
+          <li>Local small language model quantization (GGUF / llama.cpp / vLLM) for low-latency edge servers.</li>
+          <li>Advanced Linux kernel networking, eBPF fundamentals, and VPS security hardening.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: var(--space-3);">
+          🔬 Researching
+        </h2>
+        <ul style="padding-left: var(--space-4); font-size: var(--text-sm); line-height: 1.8; color: var(--text-secondary);">
+          <li>Clinical knowledge governance: preventing hallucinations in medical terminology retrieval.</li>
+          <li>Hybrid search strategies combining BM25 full-text search with dense semantic vector rankings.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: var(--space-3);">
+          📍 Current Location & Role
+        </h2>
+        <p style="font-size: var(--text-sm); line-height: 1.8; color: var(--text-secondary); margin-bottom: 0;">
+          Based in <strong>Kigali, Rwanda</strong>. Serving as IT Manager at GIRA LTD, while actively available for strategic system engineering projects and advisory conversations.
+        </p>
+      </div>
+    </div>
+
+    <div style="font-size: var(--text-xs); color: var(--text-muted); text-align: center;">
+      Page last updated: August 2026
+    </div>
+  </div>
+</section>
+{% endblock %}

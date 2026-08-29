@@ -212,58 +212,41 @@ Create a premium developer identity:
 
 # 8. Color System
 
-Use a restrained, high-contrast, professional palette incorporating the owner's preferred colors: **Green, Yellow, and combined Green & Yellow accents**.
+Use a modern, professional, clean, and premium color system using a combination of green and yellow.
 
-### CSS Variables & Design Tokens
+### 1. Color Palette
 
-```css
-:root {
-  /* Base & Surfaces (Light Mode) */
-  --background: #FAFAFA;
-  --foreground: #0F172A;
-  --surface: #FFFFFF;
-  --surface-elevated: #F1F5F9;
-  --border: #E2E8F0;
-  --muted: #64748B;
+#### Primary Colors:
+* **Green 600:** `#16A34A` (Primary brand color for light mode)
+* **Green 500:** `#22C55E` (Primary brand color for dark mode)
+* **Yellow 400:** `#FACC15` (Vibrant accent & dark mode highlight)
+* **Yellow 500:** `#EAB308` (Warm golden accent for light mode)
 
-  /* Preferred Accent Colors (Green & Yellow) */
-  --primary-green: #10B981;        /* Emerald / Tech Green */
-  --primary-green-hover: #059669;
-  --accent-yellow: #F59E0B;        /* Warm Amber / Golden Yellow */
-  --accent-yellow-hover: #D97706;
-  --gradient-green-yellow: linear-gradient(135deg, #10B981, #EAB308); /* Synergy Accent */
+#### Neutral Colors (Slate Scale):
+* **Slate 900:** `#0F172A` (Dark mode base background & deep typography)
+* **Slate 800:** `#1E293B` (Dark mode surface cards)
+* **Slate 700:** `#334155` (Dark mode borders & elevated cards)
+* **Slate 600:** `#475569` (Subtle secondary text)
+* **Slate 500:** `#64748B` (Muted metadata text)
+* **Slate 200:** `#E2E8F0` (Light mode borders & light dividers)
+* **Slate 50:** `#F8FAFC` (Light mode primary background)
 
-  /* Functional States */
-  --primary: #10B981;
-  --primary-hover: #059669;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --danger: #EF4444;
-}
+#### Semantic Colors:
+* **Success:** `#16A34A`
+* **Warning:** `#FACC15`
+* **Error:** `#EF4444`
+* **Info:** `#3B82F6`
 
-[data-theme="dark"] {
-  /* Base & Surfaces (Dark Mode) */
-  --background: #0B0F10;
-  --foreground: #F8FAFC;
-  --surface: #12181A;
-  --surface-elevated: #1A2224;
-  --border: #233033;
-  --muted: #94A3B8;
+### 2. Gradients
+* **Green $\rightarrow$ Yellow:** `linear-gradient(135deg, #16A34A 0%, #FACC15 100%)`
+* **Yellow $\rightarrow$ Green:** `linear-gradient(135deg, #FACC15 0%, #16A34A 100%)`
+* **Green $\rightarrow$ Yellow $\rightarrow$ Green:** `linear-gradient(135deg, #16A34A 0%, #FACC15 50%, #22C55E 100%)`
 
-  /* Refined Dark Mode Accents */
-  --primary-green: #10B981;
-  --primary-green-hover: #34D399;
-  --accent-yellow: #FBBF24;
-  --accent-yellow-hover: #FCD34D;
-  --gradient-green-yellow: linear-gradient(135deg, #10B981, #FBBF24);
-}
-```
-
-### Color Usage Guidelines
-1. **Green (Primary Accent):** Represents precision, systems engineering, vitality, and stability. Used for primary actions, active indicators, and success states.
-2. **Yellow (Secondary Accent):** Represents energy, intellect, clarity, focus, and innovation. Used for highlights, callouts, and key notices.
-3. **Combined Green & Yellow:** Used in subtle gradients, active badges, and focus rings.
-4. **Accessibility:** All color combinations must strictly pass **WCAG 2.2 AA** contrast ratios in both light and dark themes.
+### 3. Usage Guidelines
+1. **Green is the primary brand color:** Use for primary buttons, links, icons, highlights, and success states.
+2. **Yellow is the accent color:** Use for highlights, CTAs, important badges, and attention elements.
+3. **Synergy:** Use green and yellow together to create energy, positivity, growth, and clarity.
+4. **Accessibility:** Maintain strict **WCAG 2.2 AA** high contrast across light and dark modes.
 
 ---
 

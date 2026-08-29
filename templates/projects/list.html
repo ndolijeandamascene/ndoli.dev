@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects & Case Studies | {{ OWNER_NAME }}{% endblock %}
+{% block meta_description %}Explore systems, software platforms, and engineering case studies built by NDOLI Jean Damascene.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Portfolio & Systems</span>
+      <h1>Projects & Case Studies</h1>
+      <p class="section-subtitle">A collection of practical digital systems, AI platforms, and enterprise solutions designed and built with evidence of work.</p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-color);">
+      <a href="{% url 'projects:list' %}" class="btn btn-sm {% if not active_category %}btn-primary{% else %}btn-outline{% endif %}">
+        All Projects
+      </a>
+      {% for cat in categories %}
+      <a href="?category={{ cat.slug }}" class="btn btn-sm {% if active_category == cat.slug %}btn-primary{% else %}btn-outline{% endif %}">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="grid grid-2">
+      {% for project in projects %}
+      <article class="card {% if project.featured %}card-highlight{% endif %}">
+        <div class="card-header">
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            <span class="badge badge-yellow">{{ project.category.name|default:"Software System" }}</span>
+            {% if project.featured %}<span class="badge badge-green">FEATURED</span>{% endif %}
+          </div>
+          <span class="badge badge-neutral">{{ project.status_label }}</span>
+        </div>
+
+        <div class="card-body">
+          <h2 class="card-title">
+            <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+          </h2>
+          <p style="font-size: var(--text-sm); color: var(--color-green); font-weight: 500; margin-bottom: var(--space-3);">
+            {{ project.tagline }}
+          </p>
+          <p style="font-size: var(--text-sm); line-height: 1.6; color: var(--text-secondary);">
+            {{ project.short_description }}
+          </p>
+
+          <div class="tech-tags">
+            {% for tech in project.technologies.all %}
+              <span class="badge badge-neutral">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            <a href="{{ project.get_absolute_url }}" class="btn btn-secondary btn-sm">
+              Read Details &rarr;
+            </a>
+            {% if project.live_url %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+              Visit Live Site &nearr;
+            </a>
+            {% endif %}
+          </div>
+          {% if project.repository_url %}
+          <a href="{{ project.repository_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+            GitHub
+          </a>
+          {% endif %}
+        </div>
+      </article>
+      {% empty %}
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: var(--space-12);">
+        <p style="font-size: var(--text-lg); color: var(--text-muted); margin-bottom: var(--space-4);">No projects found in this category.</p>
+        <a href="{% url 'projects:list' %}" class="btn btn-secondary">View All Projects</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

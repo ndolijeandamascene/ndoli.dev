@@ -1,0 +1,601 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}NDOLI Jean Damascene | IT Professional & Software Developer{% endblock %}
+{% block meta_description %}NDOLI Jean Damascene is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}
+
+{% block content %}
+<!-- ==========================================================================
+     1. HERO SECTION & SYSTEMS VISUALIZATION (SIDE-BY-SIDE ON DESKTOP)
+     ========================================================================== -->
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="status-pulse"></span>
+        <span>Based in Kigali, Rwanda &bull; Available for Technical Systems &amp; Engineering</span>
+      </div>
+
+      <h1 class="hero-headline">
+        BUILDING DIGITAL SYSTEMS <br>
+        <span class="text-gradient">THAT MATTER.</span>
+      </h1>
+
+      <div class="hero-identity">
+        <strong class="hero-name">{{ OWNER_NAME }}</strong>
+        <span class="hero-role-divider">|</span>
+        <span class="hero-role">IT Professional &amp; Software Developer</span>
+      </div>
+
+      <p class="hero-description">
+        I build practical digital systems, intelligent software, and technology solutions that solve real-world problems.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#projects" class="btn btn-primary btn-lg">
+          Explore My Work &rarr;
+        </a>
+        <a href="{% url 'core:cv' %}" class="btn btn-secondary btn-lg">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Download CV
+        </a>
+        <a href="{% url 'core:hire' %}" class="btn btn-accent btn-lg">
+          Hire Me &rarr;
+        </a>
+        <a href="{% url 'core:contact' %}" class="hero-subtle-link">
+          Let's Talk &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Interactive Technical Systems Visualization Diagram -->
+    <div class="hero-visual">
+      <div class="systems-diagram-card">
+        <div class="diagram-header">
+          <span class="diagram-dot red"></span>
+          <span class="diagram-dot yellow"></span>
+          <span class="diagram-dot green"></span>
+          <span class="diagram-title">systems_architecture.svg</span>
+        </div>
+
+        <svg viewBox="0 0 460 380" class="systems-svg">
+          <defs>
+            <linearGradient id="sysGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#22C55E"/>
+              <stop offset="100%" stop-color="#16A34A"/>
+            </linearGradient>
+            <linearGradient id="sysYellowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FACC15"/>
+              <stop offset="100%" stop-color="#EAB308"/>
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Connecting Circuit Lines -->
+          <!-- Root to Nodes -->
+          <path d="M230 65 L230 110 M230 110 L90 110 L90 150 M230 110 L230 150 M230 110 L370 110 L370 150" stroke="var(--border-color-hover)" stroke-width="2" fill="none" class="circuit-path"/>
+          <!-- Nodes to Convergence -->
+          <path d="M90 205 L90 240 L230 240 M230 205 L230 240 M370 205 L370 240 L230 240 M230 240 L230 270" stroke="var(--border-color-hover)" stroke-width="2" fill="none" class="circuit-path"/>
+          <!-- Convergence to Real-World Impact -->
+          <path d="M230 320 L230 345" stroke="#22C55E" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+
+          <!-- Top Root Node: SOFTWARE -->
+          <g class="diagram-node node-software" transform="translate(150, 20)">
+            <rect width="160" height="45" rx="8" class="svg-node-bg-elevated" stroke="#22C55E" stroke-width="1.8" filter="url(#glow)"/>
+            <text x="80" y="28" class="svg-node-text-primary" font-size="13" font-weight="700" font-family="var(--font-mono)" text-anchor="middle">SOFTWARE</text>
+            <circle cx="80" cy="45" r="4" fill="#FACC15"/>
+          </g>
+
+          <!-- Middle Branch Node 1: DATA -->
+          <g class="diagram-node node-data" transform="translate(30, 150)">
+            <rect width="120" height="54" rx="8" class="svg-node-bg" stroke="var(--border-color)" stroke-width="1.4"/>
+            <text x="60" y="26" class="svg-node-text-primary" font-size="12" font-weight="700" font-family="var(--font-mono)" text-anchor="middle">DATA</text>
+            <text x="60" y="43" fill="var(--text-muted)" font-size="9.5" font-family="var(--font-mono)" text-anchor="middle">PostgreSQL / Vector</text>
+            <circle cx="60" cy="0" r="3.5" fill="#22C55E"/>
+            <circle cx="60" cy="54" r="3.5" fill="#22C55E"/>
+          </g>
+
+          <!-- Middle Branch Node 2: AI -->
+          <g class="diagram-node node-ai" transform="translate(170, 150)">
+            <rect width="120" height="54" rx="8" class="svg-node-bg" stroke="#FACC15" stroke-width="1.8" filter="url(#glow)"/>
+            <text x="60" y="26" fill="#FACC15" font-size="12" font-weight="700" font-family="var(--font-mono)" text-anchor="middle">AI &amp; RAG</text>
+            <text x="60" y="43" fill="var(--text-muted)" font-size="9.5" font-family="var(--font-mono)" text-anchor="middle">LLMs / Embeddings</text>
+            <circle cx="60" cy="0" r="4" fill="#FACC15"/>
+            <circle cx="60" cy="54" r="4" fill="#FACC15"/>
+          </g>
+
+          <!-- Middle Branch Node 3: SYSTEMS -->
+          <g class="diagram-node node-systems" transform="translate(310, 150)">
+            <rect width="120" height="54" rx="8" class="svg-node-bg" stroke="var(--border-color)" stroke-width="1.4"/>
+            <text x="60" y="26" class="svg-node-text-primary" font-size="12" font-weight="700" font-family="var(--font-mono)" text-anchor="middle">SYSTEMS</text>
+            <text x="60" y="43" fill="var(--text-muted)" font-size="9.5" font-family="var(--font-mono)" text-anchor="middle">Linux / VPS / Cloud</text>
+            <circle cx="60" cy="0" r="3.5" fill="#22C55E"/>
+            <circle cx="60" cy="54" r="3.5" fill="#22C55E"/>
+          </g>
+
+          <!-- Convergence Node: DIGITAL PRODUCTS -->
+          <g class="diagram-node node-products" transform="translate(140, 270)">
+            <rect width="180" height="48" rx="8" class="svg-node-bg-elevated" stroke="#22C55E" stroke-width="1.8"/>
+            <text x="90" y="29" fill="#22C55E" font-size="13" font-weight="700" font-family="var(--font-mono)" text-anchor="middle">DIGITAL PRODUCTS</text>
+            <circle cx="90" cy="0" r="4" fill="#22C55E"/>
+            <circle cx="90" cy="48" r="3.5" fill="#FACC15"/>
+          </g>
+
+          <!-- Impact Tag: REAL-WORLD PROBLEMS -->
+          <g class="diagram-node node-impact" transform="translate(130, 345)">
+            <text x="100" y="16" fill="#FACC15" font-size="11.5" font-weight="700" font-family="var(--font-mono)" text-anchor="middle" letter-spacing="1">✓ REAL-WORLD PROBLEMS</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     2. PROFESSIONAL IDENTITY STRIP
+     ========================================================================== -->
+<section class="credibility-strip">
+  <div class="container credibility-container">
+    <div class="credibility-roles">
+      <span class="credibility-tag">IT PROFESSIONAL</span>
+      <span class="credibility-bullet">&bull;</span>
+      <span class="credibility-tag">SOFTWARE DEVELOPER</span>
+      <span class="credibility-bullet">&bull;</span>
+      <span class="credibility-tag">SYSTEMS BUILDER</span>
+    </div>
+    <div class="credibility-stack">
+      <span>Python</span> &bull; <span>Django</span> &bull; <span>PostgreSQL</span> &bull; <span>JavaScript</span> &bull; <span>AI &amp; RAG</span> &bull; <span>Linux Infrastructure</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     3. WHAT I BUILD (4 Core Capabilities)
+     ========================================================================== -->
+<section class="section" id="capabilities">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Core Capabilities</span>
+      <h2>WHAT I BUILD</h2>
+      <p class="section-subtitle">"Technology should solve problems, not just demonstrate technology."</p>
+    </div>
+
+    <div class="grid grid-2" style="gap: var(--space-6);">
+      <!-- Card 1 -->
+      <div class="card capability-card">
+        <div class="capability-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+        </div>
+        <h3 class="capability-title">Digital Platforms</h3>
+        <p class="capability-desc">Designing and building complete web-based systems for organizations, businesses, and institutional operations.</p>
+        <div class="capability-tech">
+          <span class="tech-pill">Django</span>
+          <span class="tech-pill">PostgreSQL</span>
+          <span class="tech-pill">RESTful APIs</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card capability-card">
+        <div class="capability-icon" style="color: var(--color-yellow); background: var(--color-yellow-subtle); border-color: var(--color-yellow-border);">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="capability-title">Intelligent Software</h3>
+        <p class="capability-desc">Building AI-assisted applications using retrieval, language models, embeddings, and intelligent orchestration without privacy leakage.</p>
+        <div class="capability-tech">
+          <span class="tech-pill">AI &amp; RAG</span>
+          <span class="tech-pill">pgvector</span>
+          <span class="tech-pill">Vector Search</span>
+          <span class="tech-pill">Local LLMs</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card capability-card">
+        <div class="capability-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="capability-title">Business Systems</h3>
+        <p class="capability-desc">Turning real operational workflows, inventory, tenancy, and loan management into reliable, audit-ready digital systems.</p>
+        <div class="capability-tech">
+          <span class="tech-pill">Automation</span>
+          <span class="tech-pill">Relational Data</span>
+          <span class="tech-pill">Integrations</span>
+          <span class="tech-pill">Access Control</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card capability-card">
+        <div class="capability-icon" style="color: var(--color-yellow); background: var(--color-yellow-subtle); border-color: var(--color-yellow-border);">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+        </div>
+        <h3 class="capability-title">Infrastructure &amp; Security</h3>
+        <p class="capability-desc">Deploying and maintaining the server infrastructure, reverse proxies, and backup pipelines that make applications reliable and accessible.</p>
+        <div class="capability-tech">
+          <span class="tech-pill">Linux Servers</span>
+          <span class="tech-pill">VPS / Docker</span>
+          <span class="tech-pill">Networking &amp; DNS</span>
+          <span class="tech-pill">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     4. FEATURED FLAGSHIP CASE STUDY: IHKIP
+     ========================================================================== -->
+{% if flagship_project %}
+<section class="section" style="background: var(--bg-surface-subtle); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Flagship Case Study</span>
+      <h2>FEATURED PROJECT: IHKIP</h2>
+      <p class="section-subtitle">Health Knowledge Intelligence Platform</p>
+    </div>
+
+    <div class="featured-flagship-card">
+      <div class="grid grid-2" style="gap: var(--space-8); align-items: center;">
+        <div>
+          <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3); flex-wrap: wrap;">
+            <span class="badge badge-green">PROTOTYPE / ACTIVE RESEARCH</span>
+            <span class="badge badge-neutral">HEALTHCARE AI</span>
+          </div>
+
+          <h3 style="font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; margin-bottom: var(--space-3); color: var(--text-primary);">
+            {{ flagship_project.title }}
+          </h3>
+
+          <p style="font-size: var(--text-base); color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-6);">
+            An AI-assisted knowledge platform designed to organize, retrieve, and interact with authoritative clinical health knowledge using local vector search without external data leakage.
+          </p>
+
+          <!-- Architecture Visual Representation -->
+          <div class="architecture-flow-pill">
+            <span class="flow-step">Knowledge</span>
+            <span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Ingestion</span>
+            <span class="flow-arrow">&rarr;</span>
+            <span class="flow-step highlight-green">pgvector</span>
+            <span class="flow-arrow">&rarr;</span>
+            <span class="flow-step highlight-yellow">Local RAG</span>
+            <span class="flow-arrow">&rarr;</span>
+            <span class="flow-step">Intelligence</span>
+          </div>
+
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6);">
+            {% for tech in flagship_project.technologies.all %}
+            <span class="badge badge-outline">{{ tech.name }}</span>
+            {% endfor %}
+          </div>
+
+          <div style="display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap;">
+            <a href="{% url 'projects:detail' slug=flagship_project.slug %}" class="btn btn-primary btn-lg">
+              View Case Study &rarr;
+            </a>
+            {% if flagship_project.repository_url %}
+            <a href="{{ flagship_project.repository_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+              GitHub Repository
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Architectural Blueprint Box -->
+        <div class="blueprint-box">
+          <div class="blueprint-header">
+            <span>ARCHITECTURE SUMMARY</span>
+            <span style="color: var(--color-green);">Grounded Clinical Retrieval</span>
+          </div>
+          <ul class="blueprint-list">
+            <li>
+              <strong style="color: var(--color-green);">&bull; Vector Store:</strong> PostgreSQL + pgvector (Cosine distance similarity indexing)
+            </li>
+            <li>
+              <strong style="color: var(--color-yellow);">&bull; Inference Runtime:</strong> Local quantized Qwen model on Linux VPS
+            </li>
+            <li>
+              <strong style="color: var(--text-primary);">&bull; Backend Orchestrator:</strong> Django &amp; Python with contextual citation validation
+            </li>
+            <li>
+              <strong style="color: var(--text-primary);">&bull; Privacy &amp; Governance:</strong> Zero external third-party API exposure
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ==========================================================================
+     5. SELECTED PROJECTS GRID
+     ========================================================================== -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Engineered Solutions</span>
+      <h2>SELECTED PROJECTS</h2>
+      <p class="section-subtitle">Real systems designed, built, and deployed to solve specific organizational needs.</p>
+    </div>
+
+    <div class="grid grid-3" style="gap: var(--space-6);">
+      {% for project in selected_projects %}
+      {% if project.slug != 'ihkip' %}
+      <div class="card project-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-3);">
+          <span class="badge {% if project.status == 'production' %}badge-green{% else %}badge-yellow{% endif %}">
+            {{ project.get_status_display }}
+          </span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">
+            {{ project.category.name }}
+          </span>
+        </div>
+
+        <h3 class="card-title" style="font-size: var(--text-lg); margin-bottom: var(--space-2);">
+          <a href="{{ project.get_absolute_url }}" style="color: var(--text-primary);">{{ project.title }}</a>
+        </h3>
+
+        <p class="card-desc" style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4); flex-grow: 1;">
+          {{ project.short_description|truncatewords:20 }}
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: var(--space-4);">
+          {% for tech in project.technologies.all|slice:":3" %}
+          <span class="badge badge-neutral" style="font-size: 11px;">{{ tech.name }}</span>
+          {% endfor %}
+        </div>
+
+        <a href="{{ project.get_absolute_url }}" class="card-link" style="color: var(--color-green); font-weight: 600; font-size: var(--text-sm);">
+          View Project &rarr;
+        </a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: var(--space-10);">
+      <a href="{% url 'projects:list' %}" class="btn btn-secondary btn-lg">
+        Browse All Systems &amp; Projects &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     6. TECHNICAL DNA (CONNECTED ENGINEERING ECOSYSTEM)
+     ========================================================================== -->
+<section class="section" style="background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Engineering Ecosystem</span>
+      <h2>MY TECHNICAL DNA</h2>
+      <p class="section-subtitle">How technologies connect in my systems architecture.</p>
+    </div>
+
+    <!-- Connected Technical Matrix -->
+    <div class="grid grid-3" style="gap: var(--space-6);">
+      <!-- Pillar 1: Backend -->
+      <div class="card" style="border-top: 3px solid var(--color-green);">
+        <h3 style="font-size: var(--text-base); font-family: var(--font-mono); color: var(--color-green); margin-bottom: var(--space-3); text-transform: uppercase;">
+          [01] Backend Systems
+        </h3>
+        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4);">Application logic, domain models, APIs, and business workflows.</p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+          <li><strong style="color: var(--text-primary);">&bull; Python:</strong> Primary backend language</li>
+          <li><strong style="color: var(--text-primary);">&bull; Django:</strong> Architecture, auth, ORM &amp; Admin</li>
+          <li><strong style="color: var(--text-primary);">&bull; Django REST:</strong> API design &amp; contracts</li>
+          <li><strong style="color: var(--text-primary);">&bull; JavaScript:</strong> Interactive interfaces &amp; DOM</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2: Data & AI -->
+      <div class="card" style="border-top: 3px solid var(--color-yellow);">
+        <h3 style="font-size: var(--text-base); font-family: var(--font-mono); color: var(--color-yellow); margin-bottom: var(--space-3); text-transform: uppercase;">
+          [02] Data &amp; AI Intelligence
+        </h3>
+        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4);">Relational integrity, vector storage, and local model orchestration.</p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+          <li><strong style="color: var(--text-primary);">&bull; PostgreSQL:</strong> Core relational data store</li>
+          <li><strong style="color: var(--text-primary);">&bull; pgvector:</strong> High-dimensional embeddings</li>
+          <li><strong style="color: var(--text-primary);">&bull; RAG Pipeline:</strong> Contextual retrieval &amp; citation</li>
+          <li><strong style="color: var(--text-primary);">&bull; Local LLMs:</strong> Qwen runtime on self-hosted VPS</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3: Infrastructure & Security -->
+      <div class="card" style="border-top: 3px solid var(--color-green);">
+        <h3 style="font-size: var(--text-base); font-family: var(--font-mono); color: var(--color-green); margin-bottom: var(--space-3); text-transform: uppercase;">
+          [03] Infrastructure &amp; Ops
+        </h3>
+        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4);">Server environments, containerization, and networking safety.</p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+          <li><strong style="color: var(--text-primary);">&bull; Linux / VPS:</strong> Server provisioning &amp; hardening</li>
+          <li><strong style="color: var(--text-primary);">&bull; Docker:</strong> Containerized reproducible runtime</li>
+          <li><strong style="color: var(--text-primary);">&bull; Networks:</strong> TCP/IP, DNS, SSL &amp; Reverse Proxies</li>
+          <li><strong style="color: var(--text-primary);">&bull; Security:</strong> RBAC, CSRF protection, backup plans</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     7. PROFESSIONAL TIMELINE & EXPERIENCE
+     ========================================================================== -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Career &amp; Leadership</span>
+      <h2>PROFESSIONAL EXPERIENCE</h2>
+      <p class="section-subtitle">Verified track record of managing infrastructure, developing platforms, and supporting operations.</p>
+    </div>
+
+    <div class="timeline" style="max-width: 800px; margin: 0 auto var(--space-10);">
+      {% for exp in experiences %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="card" style="padding: var(--space-5);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; margin-bottom: var(--space-2);">
+            <div>
+              <h3 style="font-size: var(--text-lg); font-weight: 700; margin-bottom: 2px;">
+                {{ exp.role }} &mdash; <span style="color: var(--color-green);">{{ exp.organization }}</span>
+              </h3>
+              <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">{{ exp.location }}</p>
+            </div>
+            <span class="badge {% if exp.is_current %}badge-green{% else %}badge-neutral{% endif %}">
+              {{ exp.start_date }} &ndash; {{ exp.end_date }}
+            </span>
+          </div>
+
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-3);">
+            {{ exp.description }}
+          </p>
+
+          <div style="font-size: var(--text-xs); color: var(--text-muted); font-family: var(--font-mono);">
+            <strong>Technologies:</strong> {{ exp.technologies_used }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center;">
+      <a href="{% url 'experience:list' %}" class="btn btn-secondary">
+        View Full Experience &amp; Academic Credentials &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     8. CURRENT FOCUS (CURRENTLY BUILDING)
+     ========================================================================== -->
+<section class="section" style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Active Research &amp; Work</span>
+      <h2>CURRENTLY BUILDING</h2>
+      <p class="section-subtitle">Real problems I am investigating, engineering, and prototyping right now.</p>
+    </div>
+
+    <div class="grid grid-3" style="gap: var(--space-4); margin-bottom: var(--space-8);">
+      <div class="card focus-card">
+        <span class="focus-number">01</span>
+        <h3 class="focus-title">AI-Assisted Software</h3>
+        <p class="focus-desc">Designing reliable, hallucination-resistant LLM workflows with strict citation mapping.</p>
+      </div>
+
+      <div class="card focus-card">
+        <span class="focus-number" style="color: var(--color-yellow);">02</span>
+        <h3 class="focus-title">Knowledge Intelligence</h3>
+        <p class="focus-desc">Building local RAG architectures using PostgreSQL, pgvector, and high-performance vector indexing.</p>
+      </div>
+
+      <div class="card focus-card">
+        <span class="focus-number">03</span>
+        <h3 class="focus-title">Healthcare Technology</h3>
+        <p class="focus-desc">Exploring verifiable clinical guideline discovery pipelines with zero data leakage.</p>
+      </div>
+
+      <div class="card focus-card">
+        <span class="focus-number">04</span>
+        <h3 class="focus-title">Scalable Django Applications</h3>
+        <p class="focus-desc">Developing modular multi-tenant systems for business asset and operations tracking.</p>
+      </div>
+
+      <div class="card focus-card">
+        <span class="focus-number" style="color: var(--color-yellow);">05</span>
+        <h3 class="focus-title">Digital Infrastructure</h3>
+        <p class="focus-desc">Hardening Linux VPS deployments, automated backups, and containerized Docker environments.</p>
+      </div>
+
+      <div class="card focus-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--color-green-subtle); border-color: var(--color-green-border);">
+        <h3 style="font-size: var(--text-base); margin-bottom: var(--space-2); color: var(--color-green);">Want Live Updates?</h3>
+        <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-3);">See what I'm experimenting with this month.</p>
+        <a href="{% url 'core:now' %}" class="btn btn-primary btn-sm">
+          See What I'm Doing Now &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     9. WRITING (FROM THE LAB)
+     ========================================================================== -->
+<section class="section" id="writing">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Technical Insights</span>
+      <h2>FROM THE LAB</h2>
+      <p class="section-subtitle">Articles, engineering notes, and architectural breakdowns from production builds.</p>
+    </div>
+
+    <div class="grid grid-3" style="gap: var(--space-6); margin-bottom: var(--space-8);">
+      {% for article in recent_articles %}
+      <article class="card article-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+          <span class="badge badge-green" style="font-size: 11px;">{{ article.category.name }}</span>
+          <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ article.reading_time_minutes }} min read</span>
+        </div>
+
+        <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); line-height: 1.4;">
+          <a href="{{ article.get_absolute_url }}" style="color: var(--text-primary);">{{ article.title }}</a>
+        </h3>
+
+        <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4); flex-grow: 1;">
+          {{ article.excerpt|truncatewords:22 }}
+        </p>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--space-3); border-top: 1px solid var(--border-color);">
+          <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ article.published_at|date:"M Y" }}</span>
+          <a href="{{ article.get_absolute_url }}" style="font-size: var(--text-sm); font-weight: 600; color: var(--color-green);">
+            Read Article &rarr;
+          </a>
+        </div>
+      </article>
+      {% empty %}
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: var(--space-8);">
+        <p style="color: var(--text-muted); margin-bottom: 0;">Articles are being written in the lab.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="text-align: center;">
+      <a href="{% url 'articles:list' %}" class="btn btn-secondary">
+        Browse All Articles &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     10. FINAL CALL TO ACTION
+     ========================================================================== -->
+<section class="section cta-section">
+  <div class="container container-narrow" style="text-align: center; position: relative; z-index: 1;">
+    <span class="section-eyebrow" style="color: var(--color-yellow);">Let's Collaborate</span>
+    <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: #FFFFFF; margin-bottom: var(--space-4); letter-spacing: -0.02em;">
+      HAVE A PROBLEM WORTH SOLVING?
+    </h2>
+    <p style="font-size: var(--text-lg); color: #CBD5E1; line-height: 1.7; margin-bottom: var(--space-8); max-width: 650px; margin-left: auto; margin-right: auto;">
+      I'm interested in building useful technology, collaborating on meaningful projects, and turning complex operational workflows into reliable working systems.
+    </p>
+
+    <div style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
+      <a href="{% url 'core:contact' %}" class="btn btn-accent btn-lg">
+        Let's Talk &rarr;
+      </a>
+      <a href="#projects" class="btn btn-secondary btn-lg" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: #FFFFFF;">
+        View My Work &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

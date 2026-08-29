@@ -1,0 +1,168 @@
+/* ==========================================================================
+   NDOLI.DEV DESIGN TOKENS
+   System: Premium Green & Yellow Coloring System
+   Palettes: Deep Forest Charcoal (#07130E, #0D1F17) + Green (#16A34A, #22C55E) + Yellow (#FACC15, #EAB308)
+   ========================================================================== */
+
+:root {
+  /* Font Families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+
+  /* Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Container Widths */
+  --container-max: 1200px;
+  --container-narrow: 840px;
+
+  /* --- BRAND RAW PALETTE TOKENS --- */
+  --raw-green-600: #16A34A;
+  --raw-green-500: #22C55E;
+  --raw-yellow-400: #FACC15;
+  --raw-yellow-500: #EAB308;
+  
+  --raw-slate-900: #0F172A;
+  --raw-slate-800: #1E293B;
+  --raw-slate-700: #334155;
+  --raw-slate-600: #475569;
+  --raw-slate-500: #64748B;
+  --raw-slate-200: #E2E8F0;
+  --raw-slate-50:  #F8FAFC;
+
+  /* Semantic Colors */
+  --color-success: #16A34A;
+  --color-warning: #FACC15;
+  --color-error:   #EF4444;
+  --color-info:    #3B82F6;
+
+  /* --- LIGHT THEME --- */
+  --bg-primary: #F8FAFC;          /* Slate 50 */
+  --bg-surface: #FFFFFF;          /* Pure White */
+  --bg-surface-elevated: #F1F5F9; /* Elevated Light */
+  --bg-surface-subtle: #F8FAFC;
+  --text-primary: #0F172A;        /* Slate 900 */
+  --text-secondary: #334155;      /* Slate 700 */
+  --text-muted: #64748B;          /* Slate 500 */
+  --border-color: #E2E8F0;        /* Slate 200 */
+  --border-color-hover: #CBD5E1;
+
+  /* Primary Brand (Green) */
+  --color-green: #16A34A;         /* Green 600 */
+  --color-green-hover: #15803D;   /* Darker Green */
+  --color-green-subtle: rgba(22, 163, 74, 0.10);
+  --color-green-border: rgba(22, 163, 74, 0.28);
+
+  /* Accent Brand (Yellow) */
+  --color-yellow: #EAB308;        /* Yellow 500 */
+  --color-yellow-hover: #CA8A04;
+  --color-yellow-subtle: rgba(234, 179, 8, 0.12);
+  --color-yellow-border: rgba(234, 179, 8, 0.30);
+
+  /* Gradients */
+  --gradient-green-yellow: linear-gradient(135deg, #16A34A 0%, #FACC15 100%);
+  --gradient-yellow-green: linear-gradient(135deg, #FACC15 0%, #16A34A 100%);
+  --gradient-tri-color: linear-gradient(135deg, #16A34A 0%, #FACC15 50%, #22C55E 100%);
+  --gradient-synergy: var(--gradient-green-yellow);
+  --gradient-surface: linear-gradient(180deg, rgba(22, 163, 74, 0.04) 0%, transparent 100%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(22, 163, 74, 0.12) 0%, transparent 65%);
+
+  /* Functional Roles */
+  --primary: #16A34A;
+  --primary-hover: #15803D;
+  --accent: #FACC15;
+  --accent-hover: #EAB308;
+  --focus-ring: rgba(22, 163, 74, 0.4);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+  --shadow-glow: 0 0 25px rgba(22, 163, 74, 0.18);
+}
+
+/* --- DARK THEME (Deep Forest & Systems Charcoal) --- */
+[data-theme="dark"] {
+  --bg-primary: #07130E;          /* Deep Forest Charcoal */
+  --bg-surface: #0D1F17;          /* Rich Dark Surface */
+  --bg-surface-elevated: #152E23; /* Elevated Surface */
+  --bg-surface-subtle: #0A1812;
+  --text-primary: #F8FAFC;        /* Slate 50 */
+  --text-secondary: #E2E8F0;      /* Slate 200 */
+  --text-muted: #94A3B8;          /* Slate 400 */
+  --border-color: #1F3A2E;        /* Subtle green-tinted border */
+  --border-color-hover: #2E5644;
+
+  /* Primary Brand (Green in Dark Mode) */
+  --color-green: #22C55E;         /* Green 500 */
+  --color-green-hover: #4ADE80;   /* Bright Green */
+  --color-green-subtle: rgba(34, 197, 94, 0.14);
+  --color-green-border: rgba(34, 197, 94, 0.32);
+
+  /* Accent Brand (Yellow in Dark Mode) */
+  --color-yellow: #FACC15;        /* Yellow 400 */
+  --color-yellow-hover: #FDE047;
+  --color-yellow-subtle: rgba(250, 204, 21, 0.14);
+  --color-yellow-border: rgba(250, 204, 21, 0.32);
+
+  /* Gradients */
+  --gradient-green-yellow: linear-gradient(135deg, #22C55E 0%, #FACC15 100%);
+  --gradient-yellow-green: linear-gradient(135deg, #FACC15 0%, #22C55E 100%);
+  --gradient-tri-color: linear-gradient(135deg, #16A34A 0%, #FACC15 50%, #22C55E 100%);
+  --gradient-synergy: var(--gradient-green-yellow);
+  --gradient-surface: linear-gradient(180deg, rgba(34, 197, 94, 0.06) 0%, transparent 100%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.20) 0%, transparent 70%);
+
+  /* Functional Roles */
+  --primary: #22C55E;
+  --primary-hover: #4ADE80;
+  --accent: #FACC15;
+  --accent-hover: #FDE047;
+  --focus-ring: rgba(34, 197, 94, 0.5);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 10px -1px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 14px 24px -3px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 30px rgba(34, 197, 94, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

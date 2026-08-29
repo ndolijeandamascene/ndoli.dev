@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} | {{ OWNER_NAME }}{% endblock %}
+{% block meta_description %}{{ article.excerpt }}{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ article.title }}",
+  "description": "{{ article.excerpt }}",
+  "datePublished": "{{ article.published_at|date:'c' }}",
+  "dateModified": "{{ article.updated_at|date:'c' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author_name }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ OWNER_NAME }}",
+    "url": "{{ CANONICAL_HOST }}"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="section" style="padding-top: var(--space-12);">
+  <div class="container-narrow">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <a href="{% url 'articles:list' %}">Writing</a> &rarr; 
+      <span style="color: var(--text-primary);">{{ article.title }}</span>
+    </nav>
+
+    <!-- Header -->
+    <header style="margin-bottom: var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--border-color);">
+      <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3); flex-wrap: wrap;">
+        <span class="badge badge-yellow">{{ article.category.name|default:"Engineering" }}</span>
+        <span class="badge badge-neutral">{{ article.reading_time_minutes }} min read</span>
+      </div>
+
+      <h1 style="margin-bottom: var(--space-4);">{{ article.title }}</h1>
+      <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-4);">
+        {{ article.excerpt }}
+      </p>
+
+      <div style="display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-xs); font-family: var(--font-mono); color: var(--text-muted);">
+        <span>By <strong style="color: var(--text-primary);">{{ article.author_name }}</strong></span>
+        <span>&bull;</span>
+        <time datetime="{{ article.published_at|date:'Y-m-d' }}">{{ article.published_at|date:"F d, Y" }}</time>
+      </div>
+    </header>
+
+    <!-- Markdown Rendered Content -->
+    <div class="article-prose">
+      {{ article.rendered_content|safe }}
+    </div>
+
+    <!-- Tags -->
+    {% if article.tags.all %}
+    <div style="margin-top: var(--space-8); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+      <span style="font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono); margin-right: var(--space-2);">Tags:</span>
+      {% for tag in article.tags.all %}
+        <span class="badge badge-neutral" style="margin-right: 4px;">#{{ tag.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Author Card -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6); margin-top: var(--space-12); display: flex; flex-direction: column; gap: var(--space-2);">
+      <span class="badge badge-green" style="width: fit-content;">ABOUT THE AUTHOR</span>
+      <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-1);">{{ OWNER_NAME }}</h3>
+      <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-3);">
+        IT Professional and software developer focused on practical digital platforms, Django backend engineering, and responsible AI systems in Rwanda.
+      </p>
+      <div>
+        <a href="{% url 'core:about' %}" class="btn btn-outline btn-sm">Read Bio &rarr;</a>
+        <a href="{% url 'core:contact' %}" class="btn btn-outline btn-sm">Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock %}

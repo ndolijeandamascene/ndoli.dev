@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Technical Skills & Disciplines | {{ OWNER_NAME }}{% endblock %}
+{% block meta_description %}Categorized technical skills, programming languages, backend frameworks, databases, and AI tooling of NDOLI Jean Damascene.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Technical Competencies</span>
+      <h1>Technical Skills & Stack</h1>
+      <p class="section-subtitle">Disciplines and technologies I have worked with, defended, and deployed to production systems.</p>
+    </div>
+
+    <div class="grid grid-2" style="gap: var(--space-6); margin-bottom: var(--space-12);">
+      {% for category in skill_categories %}
+      <div class="skill-category-card">
+        <h2 class="skill-category-title">
+          <span style="color: var(--color-green);">&bull;</span>
+          {{ category.name }}
+        </h2>
+        <ul class="skill-list">
+          {% for skill in category.skills.all %}
+          <li>
+            <span class="badge {% if skill.is_featured %}badge-green{% else %}badge-neutral{% endif %}" style="font-size: var(--text-sm); padding: 6px 12px;">
+              {{ skill.name }}
+              {% if skill.level_tag %}<small style="opacity: 0.7; margin-left: 4px;">({{ skill.level_tag }})</small>{% endif %}
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% empty %}
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: var(--space-8);">
+        <p style="color: var(--text-muted);">Skills matrix being compiled.</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6);">
+      <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: var(--space-2);">Skill Truthfulness & Integrity Policy</h3>
+      <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0;">
+        I do not display subjective percentage bars (e.g., <em>"Python 95%"</em>). Instead, my skills are demonstrated through working code, architecture case studies, and deployed systems.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

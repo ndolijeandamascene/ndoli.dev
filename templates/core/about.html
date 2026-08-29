@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}About | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
+{% block meta_description %}Learn about NDOLI Jean Damascene: software engineer, IT manager, and system builder specializing in Django, PostgreSQL, and intelligent digital platforms.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-eyebrow">About NDOLI</span>
+      <h1 style="margin-bottom: var(--space-4);">Building Technology That Solves Real-World Problems</h1>
+      <p class="section-subtitle">A journey centered on technical competence, architectural discipline, and practical digital systems.</p>
+    </div>
+
+    <div class="article-prose" style="margin-bottom: var(--space-12);">
+      <h2>Professional Identity</h2>
+      <p>
+        I am <strong>NDOLI Jean Damascene</strong>, an IT professional, software developer, and systems builder based in Rwanda. My work is driven by a straightforward philosophy: <em>technology is only as valuable as the real-world problems it solves and the reliability with which it performs.</em>
+      </p>
+      <p>
+        Rather than merely assembling off-the-shelf templates or reciting buzzwords, I focus on the end-to-end craft of software engineering: designing normalized relational schemas, implementing secure RESTful APIs, orchestrating AI/RAG retrieval pipelines, and configuring hardened production server environments.
+      </p>
+
+      <h2>Core Engineering Philosophy</h2>
+      <blockquote>
+        "Simplicity is prerequisite for reliability. Build software with clear data boundaries, verify every assumption with tests, and prioritize evidence of work over claims of expertise."
+      </blockquote>
+      <p>
+        My architectural approach follows these foundational tenets:
+      </p>
+      <ul>
+        <li><strong>Security & Data Governance:</strong> Zero trust on user inputs, robust CSRF/CORS barriers, strict password hashing, and isolation of sensitive credentials.</li>
+        <li><strong>Maintainability First:</strong> Clean Django architecture, explicit service layers, and modular separation rather than bloated monolithic spaghetti.</li>
+        <li><strong>Evidence over Hype:</strong> When integrating AI, grounding responses in verified knowledge graphs and local vector databases (e.g., PostgreSQL with pgvector) rather than blind unconstrained generation.</li>
+        <li><strong>Performance by Design:</strong> Server-side rendering, efficient SQL joins (`select_related`/`prefetch_related`), minimal frontend runtime baggage, and fast responsive delivery.</li>
+      </ul>
+
+      <h2>Education & Academic Foundation</h2>
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6); margin: var(--space-6) 0;">
+        <span class="badge badge-green" style="margin-bottom: var(--space-2);">ACADEMIC DEGREE</span>
+        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">Bachelor of Science in Information Technology</h3>
+        <p style="color: var(--color-yellow); font-family: var(--font-mono); font-size: var(--text-sm); margin-bottom: var(--space-2);">
+          University of Rwanda · Class of 2026
+        </p>
+        <p style="font-size: var(--text-sm); margin-bottom: 0;">
+          Rigorous academic study in computer systems, algorithms, relational database theory, software engineering methodologies, computer networking, and cybersecurity.
+        </p>
+      </div>
+
+      <h2>What I Am Building Now</h2>
+      <p>
+        Currently, I am leading technical operations as IT Manager at GIRA LTD while actively architecting intelligent health information systems (<strong>IHKIP</strong>) and exploring local LLM orchestration workflows.
+      </p>
+    </div>
+
+    <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+      <a href="{% url 'projects:list' %}" class="btn btn-primary">Explore Featured Projects &rarr;</a>
+      <a href="{% url 'core:cv' %}" class="btn btn-secondary">Review Full CV</a>
+      <a href="{% url 'core:contact' %}" class="btn btn-outline">Send a Message</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+services:
+  web:
+    build: .
+    container_name: ndoli_dev_web
+    restart: always
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-super-secret-production-key-change-me}
+      - ALLOWED_HOSTS=ndoli.dev,www.ndoli.dev,62.171.182.99,localhost,127.0.0.1
+      - DATABASE_URL=postgres://${DB_USER:-ndoli_user}:${DB_PASSWORD:-ndoli_password}@db:5432/${DB_NAME:-ndoli_dev}
+      - EMAIL_HOST=${EMAIL_HOST:-localhost}
+      - EMAIL_PORT=${EMAIL_PORT:-587}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-contact@ndoli.dev}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - media_volume:/app/media
+
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: ndoli_dev_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-ndoli_dev}
+      POSTGRES_USER: ${DB_USER:-ndoli_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ndoli_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ndoli_user} -d ${DB_NAME:-ndoli_dev}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  media_volume:

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} | Case Study | {{ OWNER_NAME }}{% endblock %}
+{% block meta_description %}{{ project.short_description }}{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ project.title }}",
+  "description": "{{ project.tagline }}",
+  "applicationCategory": "{{ project.category.name|default:'Software' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ OWNER_NAME }}"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="section" style="padding-top: var(--space-12);">
+  <div class="container-narrow">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <a href="{% url 'projects:list' %}">Projects</a> &rarr; 
+      <span style="color: var(--text-primary);">{{ project.title }}</span>
+    </nav>
+
+    <!-- Case Study Header -->
+    <header style="margin-bottom: var(--space-8); padding-bottom: var(--space-6); border-bottom: 1px solid var(--border-color);">
+      <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-3); flex-wrap: wrap;">
+        <span class="badge badge-yellow">{{ project.category.name|default:"Software System" }}</span>
+        <span class="badge badge-neutral">Status: {{ project.status_label }}</span>
+        {% if project.featured %}<span class="badge badge-green">FLAGSHIP CASE STUDY</span>{% endif %}
+      </div>
+
+      <h1 style="margin-bottom: var(--space-3);">{{ project.title }}</h1>
+      <p style="font-size: var(--text-xl); color: var(--color-green); font-weight: 600; line-height: 1.4; margin-bottom: var(--space-6);">
+        {{ project.tagline }}
+      </p>
+
+      <!-- Project Metadata Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-4);">
+        <div>
+          <span style="font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Role</span>
+          <p style="font-size: var(--text-sm); font-weight: 600; margin-bottom: 0; color: var(--text-primary);">{{ project.role }}</p>
+        </div>
+        <div>
+          <span style="font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Category</span>
+          <p style="font-size: var(--text-sm); font-weight: 600; margin-bottom: 0; color: var(--text-primary);">{{ project.category.name }}</p>
+        </div>
+        <div>
+          <span style="font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Timeline</span>
+          <p style="font-size: var(--text-sm); font-weight: 600; margin-bottom: 0; color: var(--text-primary);">{{ project.created_at|date:"Y" }}</p>
+        </div>
+        <div>
+          <span style="font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Status</span>
+          <p style="font-size: var(--text-sm); font-weight: 600; margin-bottom: 0; color: var(--color-yellow);">{{ project.status_label }}</p>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div style="display: flex; gap: var(--space-3); margin-top: var(--space-6); flex-wrap: wrap;">
+        {% if project.repository_url %}
+        <a href="{{ project.repository_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View GitHub Repository
+        </a>
+        {% endif %}
+        {% if project.live_url %}
+        <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          Visit Live System &rarr;
+        </a>
+        {% endif %}
+      </div>
+    </header>
+
+    <!-- CASE STUDY PROSE -->
+    <div class="article-prose">
+      {% if project.overview %}
+      <h2>Executive Overview</h2>
+      <p>{{ project.overview|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.problem_statement %}
+      <h2>The Problem & Real-World Context</h2>
+      <p>{{ project.problem_statement|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.solution_architecture %}
+      <h2>System Design & Architecture</h2>
+      <p>{{ project.solution_architecture|linebreaks }}</p>
+
+      <!-- Technical Architecture Layout Block -->
+      <div style="background: #0B0F10; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6); margin: var(--space-6) 0; font-family: var(--font-mono); font-size: var(--text-sm); color: #F8FAFC; overflow-x: auto;">
+        <div style="color: var(--color-green); margin-bottom: var(--space-2); font-weight: 700;">// High-Level Data & Service Flow</div>
+        <pre style="background: transparent; border: none; padding: 0; margin: 0; color: inherit;">
+Client / Healthcare User
+       │
+       ▼ (HTTPS / Session & Token Auth)
+Django Web & API Layer
+       │
+       ├──► Knowledge Ingestion & Governance Engine
+       │         │
+       │         ▼ (Vector Chunking & Embedding)
+       │    PostgreSQL + pgvector (Semantic Storage)
+       │
+       └──► Query Orchestrator
+                 │
+                 ▼ (Top-K Hybrid Retrieval)
+            Local LLM (Qwen / Inference Engine)
+                 │
+                 ▼ (Grounded Clinical Knowledge Output)
+            Structured Response & Citation Verification
+        </pre>
+      </div>
+      {% endif %}
+
+      <h2>Technology Stack & Tooling</h2>
+      <div class="tech-tags" style="margin-bottom: var(--space-6);">
+        {% for tech in project.technologies.all %}
+          <span class="badge badge-neutral" style="font-size: var(--text-sm); padding: 6px 12px;">{{ tech.name }}</span>
+        {% endfor %}
+      </div>
+
+      {% if project.implementation_details %}
+      <h2>Implementation Details</h2>
+      <p>{{ project.implementation_details|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.challenges_and_solutions %}
+      <h2>Engineering Challenges & Key Solutions</h2>
+      <p>{{ project.challenges_and_solutions|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.security_and_governance %}
+      <h2>Security, Access Control & Data Governance</h2>
+      <p>{{ project.security_and_governance|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.results_and_impact %}
+      <h2>Outcomes & Verified Results</h2>
+      <p>{{ project.results_and_impact|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.lessons_learned %}
+      <h2>Engineering Takeaways & Lessons Learned</h2>
+      <p>{{ project.lessons_learned|linebreaks }}</p>
+      {% endif %}
+
+      {% if project.future_roadmap %}
+      <h2>Future Roadmap & Iterations</h2>
+      <p>{{ project.future_roadmap|linebreaks }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Related Projects -->
+    {% if related_projects %}
+    <div style="margin-top: var(--space-16); padding-top: var(--space-8); border-top: 1px solid var(--border-color);">
+      <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-6);">Explore Related Systems</h3>
+      <div class="grid grid-2">
+        {% for rel in related_projects %}
+        <article class="card">
+          <span class="badge badge-yellow" style="width: fit-content; margin-bottom: var(--space-2);">{{ rel.category.name }}</span>
+          <h4 style="font-size: var(--text-lg); margin-bottom: var(--space-2);">
+            <a href="{{ rel.get_absolute_url }}">{{ rel.title }}</a>
+          </h4>
+          <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-4);">{{ rel.short_description|truncatewords:20 }}</p>
+          <a href="{{ rel.get_absolute_url }}" class="btn btn-outline btn-sm" style="margin-top: auto; width: fit-content;">Read Case Study &rarr;</a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>{% block title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}</title>
+  <meta name="title" content="{% block meta_title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}">
+  <meta name="description" content="{% block meta_description %}{{ OWNER_NAME }} is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}">
+  <meta name="author" content="{{ OWNER_NAME }}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{% block canonical %}{{ CANONICAL_HOST }}{{ request.path }}{% endblock %}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:url" content="{{ CANONICAL_HOST }}{{ request.path }}">
+  <meta property="og:title" content="{% block og_title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ CANONICAL_HOST }}{% static 'images/og-default.svg' %}{% endblock %}">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="{{ CANONICAL_HOST }}{{ request.path }}">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}IT professional and software developer building intelligent systems and practical technology solutions.{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{{ CANONICAL_HOST }}{% static 'images/og-default.svg' %}{% endblock %}">
+
+  <!-- Theme Color for Mobile Browsers -->
+  <meta name="theme-color" content="#0B0F10">
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Design Tokens & Main Styles -->
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <!-- Anti-Flicker Theme Script -->
+  <script src="{% static 'js/theme.js' %}"></script>
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {{ PERSON_JSON_LD|safe }}
+  </script>
+  {% block extra_schema %}{% endblock %}
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header & Navigation -->
+  {% include 'components/header.html' %}
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    {% if messages %}
+      <div class="container" style="padding-top: var(--space-4);">
+        {% for message in messages %}
+          <div class="alert-success" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% include 'components/footer.html' %}
+
+  <!-- Client Script -->
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

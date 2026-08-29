@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}Curriculum Vitae | {{ OWNER_NAME }} — IT Operations & Systems Administrator, Software Developer{% endblock %}
+{% block meta_description %}Official Curriculum Vitae of NDOLI Jean Damascene. IT Operations Administrator, Systems Administrator, and Software Developer with over three years of experience.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
+  <div class="container">
+    <!-- Top Action Bar -->
+    <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-color);">
+      <div>
+        <span class="section-eyebrow">Verified Curriculum Vitae</span>
+        <h1>{{ OWNER_NAME }}</h1>
+        <p style="color: var(--text-muted); margin-bottom: 0;">IT Operations Administrator &bull; Systems Administrator &bull; Software Developer</p>
+      </div>
+
+      <div style="display: flex; gap: var(--space-3);">
+        <button onclick="window.print()" class="btn btn-primary">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          Print / Save PDF
+        </button>
+        <a href="{% url 'core:contact' %}" class="btn btn-secondary">Contact NDOLI</a>
+      </div>
+    </div>
+
+    <!-- CV DOCUMENT CONTAINER (Matches 2-column layout of the PDF) -->
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md);">
+      
+      <!-- Top Banner Header -->
+      <div style="background: #0B0F10; color: #FFFFFF; padding: var(--space-8); border-bottom: 3px solid var(--color-green);">
+        <h2 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: var(--space-2); color: #FFFFFF;">
+          {{ OWNER_NAME|upper }}
+        </h2>
+        <p style="font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 600; color: var(--color-green); margin-bottom: 0; letter-spacing: 0.05em; text-transform: uppercase;">
+          IT OPERATIONS ADMINISTRATOR &bull; SYSTEMS ADMINISTRATOR &bull; SOFTWARE DEVELOPER
+        </p>
+      </div>
+
+      <!-- Main 2-Column Body -->
+      <div class="grid" style="grid-template-columns: 1fr; gap: 0;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 0;" class="cv-layout-grid">
+          
+          <!-- LEFT SIDEBAR (Contact, Core Skills, Certifications, Languages, References) -->
+          <aside style="background: var(--bg-surface-elevated); padding: var(--space-8); border-right: 1px solid var(--border-color);">
+            
+            <!-- Contact -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-green); margin-bottom: var(--space-3);">
+                Contact
+              </h3>
+              <p style="font-size: var(--text-sm); color: var(--text-primary); margin-bottom: var(--space-1);">Kigali, Rwanda</p>
+              <p style="font-size: var(--text-sm); color: var(--text-primary); margin-bottom: var(--space-1);">
+                <a href="mailto:ndolijeandamascene@gmail.com" style="color: var(--text-primary);">ndolijeandamascene@gmail.com</a>
+              </p>
+              <p style="font-size: var(--text-sm); color: var(--text-primary); margin-bottom: var(--space-1);">
+                <a href="tel:+250789312765" style="color: var(--text-primary);">+250 789 312 765</a>
+              </p>
+              <p style="font-size: var(--text-xs); color: var(--color-green); margin-bottom: 0; font-family: var(--font-mono);">
+                https://ndoli.dev
+              </p>
+            </div>
+
+            <!-- Core Skills -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-green); margin-bottom: var(--space-3);">
+                Core Skills
+              </h3>
+              <ul style="list-style: none; font-size: var(--text-sm); display: flex; flex-direction: column; gap: var(--space-2);">
+                <li style="display: flex; justify-content: space-between;"><span>Linux &amp; Windows Server</span><span style="color: var(--color-green);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&blacksquare;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>VPS / Cloud Hosting</span><span style="color: var(--color-green);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&blacksquare;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>Networking (TCP/IP, DNS)</span><span style="color: var(--color-green);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&blacksquare;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>SSL &amp; Domain Management</span><span style="color: var(--color-green);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&blacksquare;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>Django, Python, C#</span><span style="color: var(--color-yellow);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&square;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>PostgreSQL / MySQL</span><span style="color: var(--color-yellow);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&square;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>HTML, CSS, JavaScript</span><span style="color: var(--color-yellow);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&square;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>Backup &amp; Disaster Recovery</span><span style="color: var(--color-yellow);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&square;</span></li>
+                <li style="display: flex; justify-content: space-between;"><span>Cybersecurity Practices</span><span style="color: var(--color-yellow);">&blacksquare;&blacksquare;&blacksquare;&blacksquare;&square;</span></li>
+              </ul>
+            </div>
+
+            <!-- Certifications -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-green); margin-bottom: var(--space-3);">
+                Certifications
+              </h3>
+              <ul style="list-style: none; font-size: var(--text-xs); line-height: 1.8; color: var(--text-secondary);">
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> NDG Linux Essentials</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Linux Unhatched</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> IT Essentials</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Cybersecurity Administration</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Network Defense</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Firewalls &amp; Cloud Security</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> OS &amp; Endpoint Security</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Ethical Hacker</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Responsive Web Design</li>
+                <li><strong style="color: var(--color-yellow);">&#9670;</strong> Foundational C# (Microsoft)</li>
+              </ul>
+            </div>
+
+            <!-- Languages -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-green); margin-bottom: var(--space-3);">
+                Languages
+              </h3>
+              <p style="font-size: var(--text-sm); margin-bottom: 4px;">English &mdash; <span style="color: var(--text-muted);">Professional</span></p>
+              <p style="font-size: var(--text-sm); margin-bottom: 0;">Kinyarwanda &mdash; <span style="color: var(--text-muted);">Native</span></p>
+            </div>
+
+            <!-- References -->
+            <div>
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-green); margin-bottom: var(--space-3);">
+                Professional References
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-xs); color: var(--text-secondary);">
+                <div><strong>NGABONZIZA Emmy</strong><br>GCIC Ltd &bull; 0788 307 304</div>
+                <div><strong>NDAHIRO George</strong><br>TrumpetNet / Codadev &bull; 0785 072 120</div>
+                <div><strong>NDOREYAHO Eric</strong><br>ES Sumba &bull; 0788 341 111</div>
+                <div><strong>RUTIKANGA Theogene</strong><br>GIRA Ltd &bull; 0788 307 400</div>
+                <div><strong>TUYISHIME Viateur</strong><br>CPC Ltd &bull; 0781 695 946</div>
+                <div><strong>HARERIMANA Pacific</strong><br>Urumuri Rw'Icyizere &bull; 0787 480 996</div>
+                <div><strong>MIHIGO Amanda</strong><br>Beyond Success Rwanda &bull; 0787 534 241</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- RIGHT MAIN CONTENT (Professional Summary, Experience, Projects, Infrastructure, Education) -->
+          <div style="padding: var(--space-8);">
+            
+            <!-- Professional Summary -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Professional Summary
+              </h3>
+              <p style="font-size: var(--text-sm); line-height: 1.7; color: var(--text-secondary); margin-bottom: var(--space-3);">
+                IT Operations Administrator, Systems Administrator, and Software Developer with over three years of experience supporting enterprise IT infrastructure, end-user computing, Linux and Windows environments, networking, cloud-hosted applications, and web platforms. Experienced in providing Tier 2 technical support, managing servers and networks, deploying business applications, maintaining IT security standards, and supporting digital transformation initiatives.
+              </p>
+              <p style="font-size: var(--text-sm); line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
+                Strong background in troubleshooting hardware, software, network, and server issues while ensuring high service availability and operational excellence. Proven ability to coordinate IT projects, manage infrastructure deployments, improve operational processes, and provide excellent customer support across multiple organizations.
+              </p>
+            </div>
+
+            <!-- Professional Experience Timeline -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-4);">
+                Professional Experience
+              </h3>
+
+              <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+                
+                <!-- GIRA Ltd -->
+                <div style="border-left: 2px solid var(--color-green); padding-left: var(--space-4);">
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <h4 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary);">
+                      ICT Officer &mdash; <span style="color: var(--color-green);">GIRA Ltd</span>
+                    </h4>
+                    <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-yellow);">June 2023 – Present</span>
+                  </div>
+                  <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-2);">
+                    <li>Provide technical support for employees by diagnosing and resolving hardware, software, networking, and system-related issues while ensuring minimal disruption to business operations.</li>
+                    <li>Administer Linux servers, VPS infrastructure, and cloud-hosted services supporting enterprise web applications.</li>
+                    <li>Install, configure, and maintain operating systems, applications, and ICT equipment while monitoring system performance and implementing preventive maintenance.</li>
+                    <li>Manage backups, server security, DNS configuration, SSL certificates, and hosting environments to ensure business continuity and service reliability.</li>
+                    <li>Coordinate deployment of internally developed business applications and collaborate with development teams to support production environments.</li>
+                    <li>Deliver user training and technical guidance while maintaining ICT documentation and promoting compliance with organizational security policies.</li>
+                  </ul>
+                </div>
+
+                <!-- GCIC Ltd -->
+                <div style="border-left: 2px solid var(--color-green); padding-left: var(--space-4);">
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <h4 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary);">
+                      ICT Officer &mdash; <span style="color: var(--color-green);">GCIC Ltd</span>
+                    </h4>
+                    <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-yellow);">January 2025 – Present</span>
+                  </div>
+                  <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-2);">
+                    <li>Support daily IT operations by maintaining enterprise systems, network infrastructure, and business applications.</li>
+                    <li>Administer hosting environments, monitor server performance, and provide technical assistance to staff across multiple departments.</li>
+                    <li>Coordinate deployment of new software solutions, manage system upgrades, and maintain IT asset records.</li>
+                    <li>Support cybersecurity initiatives through system monitoring and preventive maintenance.</li>
+                    <li>Troubleshoot infrastructure, connectivity, and application issues while ensuring reliable technology services and accurate operational documentation.</li>
+                  </ul>
+                </div>
+
+                <!-- CPC Ltd -->
+                <div style="border-left: 2px solid var(--border-color); padding-left: var(--space-4);">
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <h4 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary);">
+                      IT Manager &mdash; <span style="color: var(--color-green);">CPC Ltd</span>
+                    </h4>
+                    <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">May 2024 – September 2024</span>
+                  </div>
+                  <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-2);">
+                    <li>Led the organization's daily IT operations by overseeing ICT infrastructure, server administration, network services, and user support activities.</li>
+                    <li>Managed implementation of technology solutions, coordinated system deployments, and maintained backup and disaster recovery procedures.</li>
+                    <li>Ensured the availability and security of business systems while working closely with management to improve operational efficiency through technology.</li>
+                  </ul>
+                </div>
+
+                <!-- Urumuri Rw'Icyizere Ltd -->
+                <div style="border-left: 2px solid var(--border-color); padding-left: var(--space-4);">
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <h4 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary);">
+                      IT Support &mdash; <span style="color: var(--color-green);">Urumuri Rw'Icyizere Ltd</span>
+                    </h4>
+                    <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">September 2023 – March 2024</span>
+                  </div>
+                  <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-2);">
+                    <li>Managed internal IT infrastructure and website hosting services.</li>
+                    <li>Provided support for web-based applications and hosting environments.</li>
+                    <li>Maintained network systems and ensured system uptime.</li>
+                  </ul>
+                </div>
+
+                <!-- ES Sumba -->
+                <div style="border-left: 2px solid var(--border-color); padding-left: var(--space-4);">
+                  <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <h4 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary);">
+                      IT Officer &mdash; <span style="color: var(--color-green);">ES Sumba</span>
+                    </h4>
+                    <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">June 2021 – May 2023</span>
+                  </div>
+                  <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-2);">
+                    <li>Managed the school's ICT infrastructure by maintaining computers, servers, network equipment, and internet connectivity while providing technical support to staff and students.</li>
+                    <li>Installed and configured software, performed preventive maintenance, and supported digital learning platforms.</li>
+                    <li>Maintained ICT equipment records and delivered technical training to improve users' digital skills and effective use of technology resources.</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Software Development Projects -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Software Development Projects
+              </h3>
+              <p style="font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
+                Designed, developed, deployed, and maintained multiple enterprise web applications including <strong>GlamourSearch, GCIC Platform, TrumpetNet, Beyond Success Platform, and IHKIP</strong>. Managed complete deployment lifecycles from development through production using Linux servers and VPS hosting environments. Configured domains, DNS services, SSL certificates, databases, backups, and server security while ensuring reliable application performance and continuous service availability.
+              </p>
+            </div>
+
+            <!-- Hosting & Infrastructure Experience -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Hosting &amp; Infrastructure Experience
+              </h3>
+              <p style="font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
+                Extensive practical experience managing production hosting environments using <strong>Linux servers, VPS infrastructure, cloud hosting platforms, cPanel, Hostinger, Contabo, and AfriRegister</strong>. Responsibilities have included server deployment, application hosting, DNS management, SSL implementation, system monitoring, backup administration, performance optimization, troubleshooting, infrastructure maintenance, and security management.
+              </p>
+            </div>
+
+            <!-- Mobile Application Development -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Mobile Application Development
+              </h3>
+              <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-bottom: 0;">
+                <li>Verified Google Play Developer with two published Android applications currently available on the Google Play Store.</li>
+                <li>Managed application deployment, updates, and developer console operations.</li>
+              </ul>
+            </div>
+
+            <!-- Training Experience -->
+            <div style="margin-bottom: var(--space-8);">
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Training Experience
+              </h3>
+              <div style="border-left: 2px solid var(--border-color); padding-left: var(--space-4);">
+                <h4 style="font-size: var(--text-sm); font-weight: 700;">Technical Trainer &mdash; Codadev Training Program</h4>
+                <ul style="padding-left: var(--space-4); font-size: var(--text-xs); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-1);">
+                  <li>Trained on technical instruction and training delivery methods.</li>
+                  <li>Provided training on application troubleshooting and Heroku deployment environments.</li>
+                  <li>Mentored developers on debugging and deployment practices.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div>
+              <h3 style="font-size: var(--text-xs); font-family: var(--font-mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-yellow); margin-bottom: var(--space-3);">
+                Education
+              </h3>
+              <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                <div style="border-left: 2px solid var(--color-green); padding-left: var(--space-4);">
+                  <h4 style="font-size: var(--text-sm); font-weight: 700; color: var(--text-primary);">
+                    Bachelor of Science with Honours in Information Technology
+                  </h4>
+                  <p style="font-size: var(--text-xs); color: var(--color-green); margin-bottom: 2px;">University of Rwanda &bull; 2022 – 2026</p>
+                </div>
+
+                <div style="border-left: 2px solid var(--border-color); padding-left: var(--space-4);">
+                  <h4 style="font-size: var(--text-sm); font-weight: 700; color: var(--text-primary);">
+                    Advanced Level (A2), Mathematics, Computer Science &amp; Economics
+                  </h4>
+                  <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">2018 – 2021</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@media (min-width: 900px) {
+  .cv-layout-grid {
+    grid-template-columns: 320px 1fr !important;
+  }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-title">{{ OWNER_NAME }}</div>
+        <p class="footer-text">{{ ROLE_TITLE }}</p>
+        <p class="footer-text" style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2);">
+          Building practical digital systems, intelligent software, and technology solutions.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="footer-heading">Navigation</h3>
+        <ul class="footer-links">
+          <li><a href="{% url 'core:home' %}">Home</a></li>
+          <li><a href="{% url 'core:about' %}">About Me</a></li>
+          <li><a href="{% url 'projects:list' %}">Featured Projects</a></li>
+          <li><a href="{% url 'articles:list' %}">Technical Writing</a></li>
+          <li><a href="{% url 'experience:list' %}">Experience & Skills</a></li>
+          <li><a href="{% url 'core:cv' %}">Curriculum Vitae</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-heading">Connect</h3>
+        <ul class="footer-links">
+          <li><a href="{% url 'core:contact' %}">Contact Form</a></li>
+          {% if GITHUB_URL %}<li><a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>{% endif %}
+          {% if LINKEDIN_URL %}<li><a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>{% endif %}
+          <li><a href="mailto:{{ EMAIL }}">Direct Email</a></li>
+          <li><a href="{% url 'core:now' %}">Now (/now)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        &copy; {{ CURRENT_YEAR }} {{ OWNER_NAME }}. All rights reserved.
+      </div>
+      <div>
+        Designed & Built with Django, Semantic HTML5, and Token CSS.
+      </div>
+    </div>
+  </div>
+</footer>

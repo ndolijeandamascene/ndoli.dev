@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Technical Writing & Articles | {{ OWNER_NAME }}{% endblock %}
+{% block meta_description %}Read technical articles on software engineering, Django, PostgreSQL, pgvector, and local AI retrieval by NDOLI Jean Damascene.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow">Technical Knowledge</span>
+      <h1>Technical Writing & Insights</h1>
+      <p class="section-subtitle">Articles exploring real-world system architecture, local RAG implementations, PostgreSQL vector search, and Linux infrastructure.</p>
+    </div>
+
+    <!-- Category Filters -->
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-color);">
+      <a href="{% url 'articles:list' %}" class="btn btn-sm {% if not active_category %}btn-primary{% else %}btn-outline{% endif %}">
+        All Topics
+      </a>
+      {% for cat in categories %}
+      <a href="?category={{ cat.slug }}" class="btn btn-sm {% if active_category == cat.slug %}btn-primary{% else %}btn-outline{% endif %}">
+        {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Article Grid -->
+    <div class="grid grid-3">
+      {% for article in articles %}
+      <article class="card {% if article.is_featured %}card-highlight{% endif %}">
+        <div class="card-header">
+          <span class="badge badge-yellow">{{ article.category.name|default:"Engineering" }}</span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">{{ article.reading_time_minutes }} min read</span>
+        </div>
+
+        <div class="card-body">
+          <h2 class="card-title" style="font-size: var(--text-lg);">
+            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+          </h2>
+          <p style="font-size: var(--text-sm); line-height: 1.6; color: var(--text-secondary);">
+            {{ article.excerpt }}
+          </p>
+        </div>
+
+        <div class="card-footer">
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">
+            {{ article.published_at|date:"M d, Y" }}
+          </span>
+          <a href="{{ article.get_absolute_url }}" class="btn btn-outline btn-sm">
+            Read Article &rarr;
+          </a>
+        </div>
+      </article>
+      {% empty %}
+      <div class="card" style="grid-column: 1 / -1; text-align: center; padding: var(--space-12);">
+        <p style="font-size: var(--text-lg); color: var(--text-muted); margin-bottom: var(--space-4);">No articles published in this category yet.</p>
+        <a href="{% url 'articles:list' %}" class="btn btn-secondary">View All Articles</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

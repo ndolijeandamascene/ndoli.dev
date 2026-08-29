@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
+{% block meta_description %}Get in touch with NDOLI Jean Damascene for software engineering, system architecture, consulting, or technical collaboration.{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: var(--space-12);">
+  <div class="container-narrow">
+    <div class="section-header">
+      <span class="section-eyebrow">Get In Touch</span>
+      <h1 style="margin-bottom: var(--space-3);">Let's Build Something Meaningful</h1>
+      <p class="section-subtitle">Have a software project, technical inquiry, institutional platform requirement, or career opportunity? Send a message below.</p>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom: var(--space-12);">
+      <div class="card">
+        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: var(--space-2);">Direct Inquiries</h3>
+        <p style="font-size: var(--text-sm); margin-bottom: var(--space-3);">For direct correspondence and official requests:</p>
+        <p style="font-family: var(--font-mono); font-size: var(--text-base); color: var(--text-primary); font-weight: 600;">
+          <a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a>
+        </p>
+        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2);">Location: Kigali, Rwanda (UTC+2)</p>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: var(--space-2);">Verified Profiles</h3>
+        <p style="font-size: var(--text-sm); margin-bottom: var(--space-3);">Explore public code and professional network:</p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
+          {% if GITHUB_URL %}
+          <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary);">
+            &rarr; GitHub: <span style="color: var(--color-green);">ndolijeandamascene</span>
+          </a>
+          {% endif %}
+          {% if LINKEDIN_URL %}
+          <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary);">
+            &rarr; LinkedIn: <span style="color: var(--color-yellow);">ndoli-jean-damascene</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <div class="card" style="padding: var(--space-8); border-color: var(--border-color-hover);">
+      <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-6);">Send a Direct Message</h2>
+
+      <form method="post" action="{% url 'core:contact' %}">
+        {% csrf_token %}
+
+        {% if form.errors %}
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #EF4444; color: #EF4444; padding: var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+            Please correct the errors indicated below.
+          </div>
+        {% endif %}
+
+        <!-- Anti-Spam Honeypot Field -->
+        {{ form.website_url }}
+
+        <div class="grid grid-2" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Full Name *</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+              <div style="color: #EF4444; font-size: var(--text-xs); margin-top: 4px;">{{ form.name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email Address *</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div style="color: #EF4444; font-size: var(--text-xs); margin-top: 4px;">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.subject.id_for_label }}" class="form-label">Subject / Purpose *</label>
+          {{ form.subject }}
+          {% if form.subject.errors %}
+            <div style="color: #EF4444; font-size: var(--text-xs); margin-top: 4px;">{{ form.subject.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.message.id_for_label }}" class="form-label">Message *</label>
+          {{ form.message }}
+          {% if form.message.errors %}
+            <div style="color: #EF4444; font-size: var(--text-xs); margin-top: 4px;">{{ form.message.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+          Send Message &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
