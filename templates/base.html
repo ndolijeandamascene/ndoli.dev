@@ -15,18 +15,30 @@
   <link rel="canonical" href="{% block canonical %}{{ CANONICAL_HOST }}{{ request.path }}{% endblock %}">
 
   <!-- Open Graph / Facebook -->
+  <meta property="og:site_name" content="NDOLI">
+  <meta property="og:locale" content="en_US">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-  <meta property="og:url" content="{{ CANONICAL_HOST }}{{ request.path }}">
+  <meta property="og:url" content="{% block og_url %}{{ CANONICAL_HOST }}{{ request.path }}{% endblock %}">
   <meta property="og:title" content="{% block og_title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}">
-  <meta property="og:image" content="{% block og_image %}{{ CANONICAL_HOST }}{% static 'images/og-default.svg' %}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ OWNER_NAME }} is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ CANONICAL_HOST }}{% static 'images/ndoli-og-image.png' %}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NDOLI Jean Damascene — IT Professional & Software Developer">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="{{ CANONICAL_HOST }}{{ request.path }}">
   <meta name="twitter:title" content="{% block twitter_title %}{{ OWNER_NAME }} | IT Professional & Software Developer{% endblock %}">
-  <meta name="twitter:description" content="{% block twitter_description %}IT professional and software developer building intelligent systems and practical technology solutions.{% endblock %}">
-  <meta name="twitter:image" content="{% block twitter_image %}{{ CANONICAL_HOST }}{% static 'images/og-default.svg' %}{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ OWNER_NAME }} is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{{ CANONICAL_HOST }}{% static 'images/ndoli-og-image.png' %}{% endblock %}">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="manifest" href="{% static 'site.webmanifest' %}">
 
   <!-- Theme Color for Mobile Browsers -->
   <meta name="theme-color" content="#0B0F10">
@@ -43,7 +55,7 @@
   <!-- Anti-Flicker Theme Script -->
   <script src="{% static 'js/theme.js' %}"></script>
 
-  <!-- Schema.org JSON-LD Structured Data -->
+  <!-- Schema.org JSON-LD Structured Data: Person & WebSite -->
   <script type="application/ld+json">
     {{ PERSON_JSON_LD|safe }}
   </script>

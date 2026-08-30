@@ -1,16 +1,58 @@
 {% extends 'base.html' %}
 
-{% block title %}Now (/now) | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
-{% block meta_description %}What NDOLI Jean Damascene is currently building, learning, researching, and exploring.{% endblock %}
+{% block title %}Now | NDOLI Jean Damascene{% endblock %}
+{% block meta_description %}Current focus, active software development projects, research, and technical initiatives by NDOLI Jean Damascene.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://ndoli.dev/now/#webpage",
+  "url": "https://ndoli.dev/now/",
+  "name": "Now | NDOLI Jean Damascene",
+  "description": "Public record of what NDOLI Jean Damascene is currently building, researching, and exploring.",
+  "about": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Now",
+        "item": "https://ndoli.dev/now/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12);">
   <div class="container-narrow">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <span style="color: var(--text-primary);">Now</span>
+    </nav>
+
     <div class="section-header">
       <span class="section-eyebrow">Public Log</span>
       <h1 style="margin-bottom: var(--space-2);">What I'm Doing Now</h1>
       <p class="section-subtitle">
-        Inspired by Derek Sivers' <em>/now</em> page movement. This is a public snapshot of what currently occupies my technical energy and focus.
+        Inspired by Derek Sivers' <em>/now</em> page movement. This is a public snapshot of what currently occupies the technical energy and focus of <strong>NDOLI Jean Damascene</strong>.
       </p>
     </div>
 

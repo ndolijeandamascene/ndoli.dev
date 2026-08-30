@@ -1,62 +1,109 @@
 {% extends 'base.html' %}
 
-{% block title %}About | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
-{% block meta_description %}Learn about NDOLI Jean Damascene: software engineer, IT manager, and system builder specializing in Django, PostgreSQL, and intelligent digital platforms.{% endblock %}
+{% block title %}About NDOLI Jean Damascene | IT Professional & Software Developer{% endblock %}
+{% block meta_description %}Learn about NDOLI Jean Damascene: an IT professional and software developer from Rwanda specializing in Django, PostgreSQL, Linux systems, and practical digital solutions.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": "https://ndoli.dev/about/#webpage",
+  "url": "https://ndoli.dev/about/",
+  "name": "About NDOLI Jean Damascene | IT Professional & Software Developer",
+  "description": "Professional biography, software development experience, IT infrastructure background, and education of NDOLI Jean Damascene.",
+  "mainEntity": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "About",
+        "item": "https://ndoli.dev/about/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12);">
   <div class="container-narrow">
     <div class="section-header">
-      <span class="section-eyebrow">About NDOLI</span>
-      <h1 style="margin-bottom: var(--space-4);">Building Technology That Solves Real-World Problems</h1>
-      <p class="section-subtitle">A journey centered on technical competence, architectural discipline, and practical digital systems.</p>
+      <span class="section-eyebrow">Professional Biography</span>
+      <h1 style="margin-bottom: var(--space-4);">About NDOLI Jean Damascene</h1>
+      <p class="section-subtitle">IT Professional · Software Developer · Systems Builder based in Kigali, Rwanda.</p>
     </div>
 
     <div class="article-prose" style="margin-bottom: var(--space-12);">
-      <h2>Professional Identity</h2>
+      <h2>Professional Background</h2>
       <p>
-        I am <strong>NDOLI Jean Damascene</strong>, an IT professional, software developer, and systems builder based in Rwanda. My work is driven by a straightforward philosophy: <em>technology is only as valuable as the real-world problems it solves and the reliability with which it performs.</em>
+        I am <strong>NDOLI Jean Damascene</strong>, an IT professional and software developer based in Rwanda. My career is centered on building practical digital systems, reliable enterprise infrastructure, and intelligent software applications that solve real-world organizational challenges.
       </p>
       <p>
-        Rather than merely assembling off-the-shelf templates or reciting buzzwords, I focus on the end-to-end craft of software engineering: designing normalized relational schemas, implementing secure RESTful APIs, orchestrating AI/RAG retrieval pipelines, and configuring hardened production server environments.
+        My technical work spans the full spectrum of modern digital platforms: from designing robust relational databases and implementing high-performance backend systems in <strong>Django and Python</strong>, to orchestrating privacy-preserving AI retrieval pipelines and administering secure Linux server environments.
       </p>
 
-      <h2>Core Engineering Philosophy</h2>
-      <blockquote>
-        "Simplicity is prerequisite for reliability. Build software with clear data boundaries, verify every assumption with tests, and prioritize evidence of work over claims of expertise."
-      </blockquote>
+      <h2>Software Development & Engineering Focus</h2>
       <p>
-        My architectural approach follows these foundational tenets:
+        As a software developer, I specialize in backend architecture, relational data modeling, and verifiable software engineering. I prioritize clean code structure, rigorous data boundary validation, and production resilience over superficial complexity.
+      </p>
+      <p>
+        Key areas of software development expertise include:
       </p>
       <ul>
-        <li><strong>Security & Data Governance:</strong> Zero trust on user inputs, robust CSRF/CORS barriers, strict password hashing, and isolation of sensitive credentials.</li>
-        <li><strong>Maintainability First:</strong> Clean Django architecture, explicit service layers, and modular separation rather than bloated monolithic spaghetti.</li>
-        <li><strong>Evidence over Hype:</strong> When integrating AI, grounding responses in verified knowledge graphs and local vector databases (e.g., PostgreSQL with pgvector) rather than blind unconstrained generation.</li>
-        <li><strong>Performance by Design:</strong> Server-side rendering, efficient SQL joins (`select_related`/`prefetch_related`), minimal frontend runtime baggage, and fast responsive delivery.</li>
+        <li><strong>Backend Web Engineering:</strong> Developing modular Django web applications, RESTful APIs, role-based authentication systems, and transactional workflows.</li>
+        <li><strong>Database Design & Optimization:</strong> Designing normalized PostgreSQL and MySQL schemas, optimizing complex SQL queries, and utilizing <code>pgvector</code> for high-dimensional vector search.</li>
+        <li><strong>AI & RAG Architectures:</strong> Architecting Retrieval-Augmented Generation (RAG) systems grounded in local vector databases, enabling intelligent knowledge querying without leaking sensitive institutional data to external cloud APIs.</li>
       </ul>
 
-      <h2>Education & Academic Foundation</h2>
+      <h2>IT Operations & Systems Administration</h2>
+      <p>
+        Alongside software development, I have over three years of hands-on experience in enterprise IT operations and systems administration across corporate and educational institutions in Rwanda.
+      </p>
+      <ul>
+        <li><strong>Linux & Windows Server Administration:</strong> Configuring, hardening, and monitoring production VPS servers, Docker containers, and reverse proxy environments.</li>
+        <li><strong>Network Infrastructure & Security:</strong> Managing TCP/IP networking, DNS routing, SSL/TLS certificates, firewall configurations, and endpoint defense.</li>
+        <li><strong>Business Continuity & Disaster Recovery:</strong> Establishing automated database backup routines, system health monitoring, and rapid fault recovery procedures.</li>
+      </ul>
+
+      <h2>Academic Foundation & Education</h2>
       <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6); margin: var(--space-6) 0;">
         <span class="badge badge-green" style="margin-bottom: var(--space-2);">ACADEMIC DEGREE</span>
-        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">Bachelor of Science in Information Technology</h3>
+        <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-1);">Bachelor of Science with Honours in Information Technology</h3>
         <p style="color: var(--color-yellow); font-family: var(--font-mono); font-size: var(--text-sm); margin-bottom: var(--space-2);">
-          University of Rwanda · Class of 2026
+          University of Rwanda · 2022 – 2026
         </p>
-        <p style="font-size: var(--text-sm); margin-bottom: 0;">
-          Rigorous academic study in computer systems, algorithms, relational database theory, software engineering methodologies, computer networking, and cybersecurity.
+        <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0;">
+          Comprehensive academic program covering software engineering methodologies, relational database theory, computer networks, algorithms, system architecture, and cybersecurity.
         </p>
       </div>
 
-      <h2>What I Am Building Now</h2>
+      <h2>Notable Projects & Initiatives</h2>
       <p>
-        Currently, I am leading technical operations as IT Manager at GIRA LTD while actively architecting intelligent health information systems (<strong>IHKIP</strong>) and exploring local LLM orchestration workflows.
+        Among my key technical initiatives is <a href="{% url 'projects:detail' slug='ihkip' %}" style="color: var(--color-green); font-weight: 600;">IHKIP (Intelligent Health Knowledge & Information Platform)</a>, an ongoing system exploring clinical guidelines indexing, semantic vector search, and local LLM orchestration. Additionally, I develop and maintain enterprise management platforms, public digital portals, and administrative tooling for organizations in Rwanda.
       </p>
     </div>
 
     <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
-      <a href="{% url 'projects:list' %}" class="btn btn-primary">Explore Featured Projects &rarr;</a>
-      <a href="{% url 'core:cv' %}" class="btn btn-secondary">Review Full CV</a>
-      <a href="{% url 'core:contact' %}" class="btn btn-outline">Send a Message</a>
+      <a href="{% url 'projects:list' %}" class="btn btn-primary">Explore Projects &rarr;</a>
+      <a href="{% url 'articles:list' %}" class="btn btn-secondary">Read Technical Writing</a>
+      <a href="{% url 'experience:list' %}" class="btn btn-secondary">Work Experience</a>
+      <a href="{% url 'core:cv' %}" class="btn btn-secondary">Review CV</a>
+      <a href="{% url 'core:contact' %}" class="btn btn-outline">Contact NDOLI</a>
     </div>
   </div>
 </section>

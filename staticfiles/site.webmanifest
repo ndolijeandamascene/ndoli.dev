@@ -1,0 +1,26 @@
+{
+  "name": "NDOLI Jean Damascene",
+  "short_name": "NDOLI",
+  "description": "Personal website of NDOLI Jean Damascene: IT Professional, Software Developer & Systems Builder",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F10",
+  "theme_color": "#0B0F10",
+  "icons": [
+    {
+      "src": "/static/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

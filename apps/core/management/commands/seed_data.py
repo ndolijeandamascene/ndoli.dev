@@ -14,8 +14,8 @@ class Command(BaseCommand):
         settings = SiteSettings.load()
         settings.owner_name = 'NDOLI Jean Damascene'
         settings.short_brand = 'NDOLI'
-        settings.role_title = 'IT Operations Administrator · Systems Administrator · Software Developer'
-        settings.hero_headline = 'IT Operations Administrator, Systems Administrator, and Software Developer with over three years of experience supporting enterprise IT infrastructure, Linux and Windows environments, networking, and web platforms.'
+        settings.role_title = 'IT Professional · Software Developer · Systems Builder'
+        settings.hero_headline = 'I build practical digital systems, intelligent software, and technology solutions that solve real-world problems.'
         settings.snapshot_text = 'Experienced in providing Tier 2 technical support, administering Linux and Windows servers, managing enterprise networks, deploying cloud-hosted business applications, maintaining IT security standards, and supporting digital transformation initiatives.'
         settings.email = 'ndolijeandamascene@gmail.com'
         settings.phone_number = '+250 789 317 65'

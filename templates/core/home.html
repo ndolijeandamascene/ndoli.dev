@@ -4,6 +4,26 @@
 {% block title %}NDOLI Jean Damascene | IT Professional & Software Developer{% endblock %}
 {% block meta_description %}NDOLI Jean Damascene is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.{% endblock %}
 
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://ndoli.dev/#webpage",
+  "url": "https://ndoli.dev/",
+  "name": "NDOLI Jean Damascene | IT Professional & Software Developer",
+  "description": "NDOLI Jean Damascene is an IT professional and software developer from Rwanda building practical digital systems, intelligent software, and technology solutions.",
+  "about": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "inLanguage": "en"
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <!-- ==========================================================================
      1. HERO SECTION & SYSTEMS VISUALIZATION (SIDE-BY-SIDE ON DESKTOP)
@@ -16,18 +36,17 @@
         <span>Based in Kigali, Rwanda &bull; Available for Technical Systems &amp; Engineering</span>
       </div>
 
-      <h1 class="hero-headline">
-        BUILDING DIGITAL SYSTEMS <br>
-        <span class="text-gradient">THAT MATTER.</span>
+      <h1 class="hero-headline" style="font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: var(--space-2); color: var(--text-primary);">
+        NDOLI Jean Damascene
       </h1>
 
-      <div class="hero-identity">
-        <strong class="hero-name">{{ OWNER_NAME }}</strong>
-        <span class="hero-role-divider">|</span>
-        <span class="hero-role">IT Professional &amp; Software Developer</span>
+      <div class="hero-identity" style="margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+        <span class="badge badge-green" style="font-size: var(--text-sm); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px;">IT Professional &amp; Software Developer</span>
+        <span class="hero-role-divider" style="color: var(--text-muted);">·</span>
+        <span class="hero-role" style="font-family: var(--font-mono); color: var(--color-yellow); font-size: var(--text-sm); font-weight: 600;">Systems Builder</span>
       </div>
 
-      <p class="hero-description">
+      <p class="hero-description" style="font-size: var(--text-lg); line-height: 1.6; color: var(--text-secondary); max-width: 620px; margin-bottom: var(--space-6);">
         I build practical digital systems, intelligent software, and technology solutions that solve real-world problems.
       </p>
 

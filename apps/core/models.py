@@ -3,7 +3,7 @@ from django.db import models
 class SiteSettings(models.Model):
     owner_name = models.CharField(max_length=150, default='NDOLI Jean Damascene')
     short_brand = models.CharField(max_length=50, default='NDOLI')
-    role_title = models.CharField(max_length=200, default='IT Operations Administrator · Systems Administrator · Software Developer')
+    role_title = models.CharField(max_length=200, default='IT Professional · Software Developer · Systems Builder')
     hero_headline = models.CharField(
         max_length=300,
         default='I build practical digital systems, intelligent software, and technology solutions that solve real-world problems.'

@@ -1,25 +1,71 @@
 {% extends 'base.html' %}
 
-{% block title %}Curriculum Vitae | {{ OWNER_NAME }} — IT Operations & Systems Administrator, Software Developer{% endblock %}
-{% block meta_description %}Official Curriculum Vitae of NDOLI Jean Damascene. IT Operations Administrator, Systems Administrator, and Software Developer with over three years of experience.{% endblock %}
+{% block title %}NDOLI Jean Damascene — CV{% endblock %}
+{% block meta_description %}Curriculum Vitae of NDOLI Jean Damascene: IT Professional, Systems Administrator, and Software Developer based in Kigali, Rwanda.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://ndoli.dev/cv/#webpage",
+  "url": "https://ndoli.dev/cv/",
+  "name": "NDOLI Jean Damascene — CV",
+  "description": "Curriculum Vitae and verified professional qualifications of NDOLI Jean Damascene.",
+  "mainEntity": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "CV",
+        "item": "https://ndoli.dev/cv/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
   <div class="container">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);" class="no-print">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <span style="color: var(--text-primary);">Curriculum Vitae</span>
+    </nav>
+
     <!-- Top Action Bar -->
     <div class="no-print" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-color);">
       <div>
         <span class="section-eyebrow">Verified Curriculum Vitae</span>
-        <h1>{{ OWNER_NAME }}</h1>
-        <p style="color: var(--text-muted); margin-bottom: 0;">IT Operations Administrator &bull; Systems Administrator &bull; Software Developer</p>
+        <h1 style="margin-bottom: var(--space-1);">NDOLI Jean Damascene</h1>
+        <p style="color: var(--text-muted); margin-bottom: 0;">IT Professional &bull; Software Developer &bull; Systems Builder</p>
       </div>
 
-      <div style="display: flex; gap: var(--space-3);">
-        <button onclick="window.print()" class="btn btn-primary">
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+        <a href="{% url 'core:cv_pdf' %}" class="btn btn-primary" download="NDOLI_Jean_Damascene_CV.pdf">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Download PDF
+        </a>
+        <button onclick="window.print()" class="btn btn-secondary">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-          Print / Save PDF
+          Print CV
         </button>
-        <a href="{% url 'core:contact' %}" class="btn btn-secondary">Contact NDOLI</a>
+        <a href="{% url 'core:contact' %}" class="btn btn-outline">Contact NDOLI</a>
       </div>
     </div>
 

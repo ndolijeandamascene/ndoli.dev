@@ -5,7 +5,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load local .env file if present
+# Load local .env file if present — but NEVER override vars already set by Docker/Easypanel
 env_file = BASE_DIR / '.env'
 if env_file.exists():
     with open(env_file, 'r', encoding='utf-8') as f:
@@ -13,7 +13,9 @@ if env_file.exists():
             line = line.strip()
             if line and not line.startswith('#') and '=' in line:
                 key, val = line.split('=', 1)
-                os.environ[key.strip()] = val.strip().strip('"\'')
+                key = key.strip()
+                # setdefault: only set if NOT already defined in the environment
+                os.environ.setdefault(key, val.strip().strip('"\''))
 
 # Add apps directory to Python path
 sys.path.insert(0, str(BASE_DIR / 'apps'))
@@ -28,10 +30,12 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = os.environ.get(
-    'ALLOWED_HOSTS',
-    '127.0.0.1,localhost,testserver,ndoli.dev,www.ndoli.dev,62.171.182.99'
-).split(',')
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get(
+        'ALLOWED_HOSTS',
+        'ndoli.dev,www.ndoli.dev,62.171.182.99,127.0.0.1,localhost,testserver,ndoli_ndoli_dev,*'
+    ).split(',') if h.strip()
+]
 
 csrf_origins_env = os.environ.get('CSRF_TRUSTED_ORIGINS')
 if csrf_origins_env:
@@ -107,7 +111,14 @@ ASGI_APPLICATION = 'config.asgi.application'
 DATABASE_URL = os.environ.get('DATABASE_URL')
 DB_NAME = os.environ.get('DB_NAME')
 
-if DATABASE_URL:
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'test_db.sqlite3',
+        }
+    }
+elif DATABASE_URL:
     import re
     import urllib.parse
     m = re.match(r'^(?:postgres|postgresql)://([^:]+):(.*)@([^:@/]+)(?::(\d+))?/([^?]+)', DATABASE_URL)
@@ -121,6 +132,9 @@ if DATABASE_URL:
                 'PASSWORD': urllib.parse.unquote(raw_pwd),
                 'HOST': host,
                 'PORT': int(port) if port else 5432,
+                'OPTIONS': {
+                    'connect_timeout': 5,
+                },
             }
         }
     else:
@@ -133,6 +147,9 @@ if DATABASE_URL:
                 'PASSWORD': url.password,
                 'HOST': url.hostname,
                 'PORT': url.port or 5432,
+                'OPTIONS': {
+                    'connect_timeout': 5,
+                },
             }
         }
 elif DB_NAME and os.environ.get('DB_USER'):

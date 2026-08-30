@@ -1,14 +1,56 @@
 {% extends 'base.html' %}
 
-{% block title %}Contact | {{ OWNER_NAME }} — IT Professional & Software Developer{% endblock %}
-{% block meta_description %}Get in touch with NDOLI Jean Damascene for software engineering, system architecture, consulting, or technical collaboration.{% endblock %}
+{% block title %}Contact NDOLI Jean Damascene{% endblock %}
+{% block meta_description %}Get in touch with NDOLI Jean Damascene for software engineering, systems architecture, IT operations, or technical collaborations.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": "https://ndoli.dev/contact/#webpage",
+  "url": "https://ndoli.dev/contact/",
+  "name": "Contact NDOLI Jean Damascene",
+  "description": "Contact channels, direct message form, and scheduling for NDOLI Jean Damascene.",
+  "mainEntity": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Contact",
+        "item": "https://ndoli.dev/contact/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12);">
   <div class="container-narrow">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <span style="color: var(--text-primary);">Contact</span>
+    </nav>
+
     <div class="section-header">
-      <span class="section-eyebrow">Get In Touch</span>
-      <h1 style="margin-bottom: var(--space-3);">Let's Build Something Meaningful</h1>
+      <span class="section-eyebrow">Direct Contact &amp; Inquiry</span>
+      <h1 style="margin-bottom: var(--space-3);">Contact NDOLI Jean Damascene</h1>
       <p class="section-subtitle">Have a software project, technical inquiry, institutional platform requirement, or career opportunity? Send a message below.</p>
     </div>
 

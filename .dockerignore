@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Environment files — never bake secrets into Docker images
+.env
+.env.local
+.env.*.local
+.env.example
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info
+dist/
+build/
+
+# Django dev
+db.sqlite3
+*.sqlite3
+
+# Media uploads (mounted as volume in production)
+media/
+
+# Local dev tools
+.venv
+venv/
+env/
+*.log

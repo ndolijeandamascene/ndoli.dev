@@ -1,41 +1,30 @@
 services:
   web:
-    build: .
+    image: ndoli/ndoli_dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: ndoli_dev_web
     restart: always
+    env_file:
+      - .env
     environment:
-      - DEBUG=False
-      - SECRET_KEY=${SECRET_KEY:-super-secret-production-key-change-me}
-      - ALLOWED_HOSTS=ndoli.dev,www.ndoli.dev,62.171.182.99,localhost,127.0.0.1
-      - DATABASE_URL=postgres://${DB_USER:-ndoli_user}:${DB_PASSWORD:-ndoli_password}@db:5432/${DB_NAME:-ndoli_dev}
-      - EMAIL_HOST=${EMAIL_HOST:-localhost}
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-ndoli.dev,www.ndoli.dev,62.171.182.99,localhost,127.0.0.1}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS:-https://ndoli.dev,https://www.ndoli.dev,http://62.171.182.99:8000,http://62.171.182.99}
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:Kigali@123@62.171.182.99:5437/ndoli?sslmode=disable}
+      - EMAIL_HOST=${EMAIL_HOST:-smtp.gmail.com}
       - EMAIL_PORT=${EMAIL_PORT:-587}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-contact@ndoli.dev}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:-}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-ndolijeandamascene@gmail.com}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS:-True}
     ports:
       - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
     volumes:
       - media_volume:/app/media
-
-  db:
-    image: pgvector/pgvector:pg16
-    container_name: ndoli_dev_db
-    restart: always
-    environment:
-      POSTGRES_DB: ${DB_NAME:-ndoli_dev}
-      POSTGRES_USER: ${DB_USER:-ndoli_user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-ndoli_password}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-ndoli_user} -d ${DB_NAME:-ndoli_dev}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - static_volume:/app/staticfiles
 
 volumes:
-  postgres_data:
   media_volume:
+  static_volume:

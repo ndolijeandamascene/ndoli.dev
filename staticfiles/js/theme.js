@@ -1,6 +1,6 @@
 /**
  * Anti-flicker Theme Controller for ndoli.dev
- * Handles Dark / Light / System preference persistence
+ * Dark Mode is the primary default theme.
  */
 (function () {
   const THEME_STORAGE_KEY = 'ndoli_theme';
@@ -10,7 +10,8 @@
     if (stored === 'dark' || stored === 'light') {
       return stored;
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    // Default to Dark Mode for all visitors
+    return 'dark';
   }
 
   function applyTheme(theme) {
@@ -31,21 +32,14 @@
 
   // Global toggle function
   window.toggleTheme = function () {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
     const next = current === 'dark' ? 'light' : 'dark';
     localStorage.setItem(THEME_STORAGE_KEY, next);
     applyTheme(next);
   };
 
-  // Sync with OS theme changes if user hasn't explicitly set preference
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem(THEME_STORAGE_KEY)) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
-  });
-
   // Re-apply icon state when DOM loads
   document.addEventListener('DOMContentLoaded', () => {
-    applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+    applyTheme(document.documentElement.getAttribute('data-theme') || 'dark');
   });
 })();

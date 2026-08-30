@@ -1,15 +1,64 @@
 {% extends 'base.html' %}
 
-{% block title %}Technical Skills & Disciplines | {{ OWNER_NAME }}{% endblock %}
-{% block meta_description %}Categorized technical skills, programming languages, backend frameworks, databases, and AI tooling of NDOLI Jean Damascene.{% endblock %}
+{% block title %}Technical Skills | NDOLI Jean Damascene{% endblock %}
+{% block meta_description %}Explore the technical competencies, backend frameworks, databases, AI tooling, and Linux infrastructure skills of NDOLI Jean Damascene.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://ndoli.dev/experience/skills/#webpage",
+  "url": "https://ndoli.dev/experience/skills/",
+  "name": "Technical Skills | NDOLI Jean Damascene",
+  "description": "Categorized technical competencies and verified skills matrix of NDOLI Jean Damascene.",
+  "about": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Experience",
+        "item": "https://ndoli.dev/experience/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Skills",
+        "item": "https://ndoli.dev/experience/skills/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12);">
   <div class="container">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <a href="{% url 'experience:list' %}">Experience</a> &rarr; 
+      <span style="color: var(--text-primary);">Skills</span>
+    </nav>
+
     <div class="section-header">
       <span class="section-eyebrow">Technical Competencies</span>
-      <h1>Technical Skills & Stack</h1>
-      <p class="section-subtitle">Disciplines and technologies I have worked with, defended, and deployed to production systems.</p>
+      <h1>Technical Skills &amp; Stack</h1>
+      <p class="section-subtitle">Disciplines and technologies <strong>NDOLI Jean Damascene</strong> has engineered, defended, and deployed to production systems.</p>
     </div>
 
     <div class="grid grid-2" style="gap: var(--space-6); margin-bottom: var(--space-12);">
@@ -39,7 +88,7 @@
     </div>
 
     <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: var(--space-6);">
-      <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: var(--space-2);">Skill Truthfulness & Integrity Policy</h3>
+      <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: var(--space-2);">Skill Truthfulness &amp; Integrity Policy</h3>
       <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 0;">
         I do not display subjective percentage bars (e.g., <em>"Python 95%"</em>). Instead, my skills are demonstrated through working code, architecture case studies, and deployed systems.
       </p>

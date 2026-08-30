@@ -1,15 +1,57 @@
 {% extends 'base.html' %}
 
-{% block title %}Experience & Career Timeline | {{ OWNER_NAME }}{% endblock %}
-{% block meta_description %}Verified employment timeline, leadership roles, education, and credentials of NDOLI Jean Damascene.{% endblock %}
+{% block title %}NDOLI Jean Damascene — Professional Experience{% endblock %}
+{% block meta_description %}Explore the professional IT operations, software engineering, and systems administration experience of NDOLI Jean Damascene.{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://ndoli.dev/experience/#webpage",
+  "url": "https://ndoli.dev/experience/",
+  "name": "NDOLI Jean Damascene — Professional Experience",
+  "description": "Verified career timeline, systems administration experience, IT operations leadership, and education of NDOLI Jean Damascene.",
+  "mainEntity": {
+    "@id": "https://ndoli.dev/#person"
+  },
+  "isPartOf": {
+    "@id": "https://ndoli.dev/#website"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ndoli.dev/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Experience",
+        "item": "https://ndoli.dev/experience/"
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="section" style="padding-top: var(--space-12);">
   <div class="container-narrow">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumbs" style="margin-bottom: var(--space-6); font-size: var(--text-sm); color: var(--text-muted);">
+      <a href="{% url 'core:home' %}">Home</a> &rarr; 
+      <span style="color: var(--text-primary);">Experience</span>
+    </nav>
+
     <div class="section-header">
-      <span class="section-eyebrow">Career Timeline</span>
-      <h1>Work Experience & Education</h1>
-      <p class="section-subtitle">A record of professional IT leadership, systems development, academic foundations, and certifications.</p>
+      <span class="section-eyebrow">Career Timeline &amp; Credentials</span>
+      <h1>Professional Experience</h1>
+      <p class="section-subtitle">Verified career history, systems leadership, academic qualifications, and technical certifications of <strong>NDOLI Jean Damascene</strong>.</p>
     </div>
 
     <!-- Career Experience Section -->
@@ -54,14 +96,14 @@
       {% endfor %}
     </div>
 
-    <!-- Certifications Section (if available) -->
+    <!-- Certifications Section -->
     {% if certifications %}
-    <h2 style="font-size: var(--text-2xl); color: var(--text-primary); margin-bottom: var(--space-6);">Verified Certifications</h2>
-    <div class="grid grid-2" style="margin-bottom: var(--space-12);">
+    <h2 style="font-size: var(--text-2xl); color: var(--text-primary); margin-bottom: var(--space-6);">Verified Technical Certifications</h2>
+    <div class="grid grid-2" style="margin-bottom: var(--space-12); gap: var(--space-4);">
       {% for cert in certifications %}
       <div class="card">
         <h3 style="font-size: var(--text-base); margin-bottom: var(--space-1);">{{ cert.name }}</h3>
-        <p style="font-size: var(--text-xs); color: var(--color-green); margin-bottom: var(--space-2);">{{ cert.issuing_organization }}</p>
+        <p style="font-size: var(--text-xs); color: var(--color-green); margin-bottom: var(--space-2);">{{ cert.issuing_organization }} &bull; {{ cert.issue_date }}</p>
         {% if cert.credential_url %}
         <a href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="margin-top: auto; width: fit-content;">Verify Credential &rarr;</a>
         {% endif %}
@@ -72,7 +114,8 @@
 
     <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
       <a href="{% url 'experience:skills' %}" class="btn btn-secondary">Browse Skills Directory &rarr;</a>
-      <a href="{% url 'core:cv' %}" class="btn btn-outline">Download Curriculum Vitae</a>
+      <a href="{% url 'projects:list' %}" class="btn btn-secondary">View Project Portfolio</a>
+      <a href="{% url 'core:cv' %}" class="btn btn-outline">Review Curriculum Vitae (CV)</a>
     </div>
   </div>
 </section>
