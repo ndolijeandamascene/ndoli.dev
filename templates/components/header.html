@@ -18,7 +18,12 @@
     </nav>
 
     <div class="nav-actions">
-      <a href="{% url 'core:hire' %}" class="btn btn-accent btn-sm no-print" style="font-weight: 700;">
+      <button onclick="openRecruiterDrawer()" class="btn btn-recruiter-trigger nav-recruiter-btn no-print" aria-label="Open Recruiter Fast-Track View" title="Recruiter Fast-Track (Summary & 1-Click Actions)">
+        <span class="btn-pulse-dot"></span>
+        <span class="btn-recruiter-text">⚡ Recruiter View</span>
+      </button>
+
+      <a href="{% url 'core:hire' %}" class="btn btn-accent btn-sm nav-hire-btn no-print" style="font-weight: 700;">
         Hire Me &rarr;
       </a>
 
@@ -27,28 +32,57 @@
       </button>
 
       {% if GITHUB_URL %}
-      <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm no-print" aria-label="GitHub Profile">
+      <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm no-print nav-github-btn" aria-label="GitHub Profile">
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
       {% endif %}
 
-      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open Navigation Menu" aria-expanded="false">
+      <button id="mobile-menu-btn" class="mobile-menu-btn" onclick="toggleMobileNav(event)" aria-label="Open Navigation Menu" aria-expanded="false">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- Mobile Drawer -->
+  <!-- Mobile Navigation Drawer -->
   <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Mobile Navigation">
-    <a href="{% url 'core:home' %}" class="nav-link">Home</a>
-    <a href="{% url 'core:about' %}" class="nav-link">About</a>
-    <a href="{% url 'projects:list' %}" class="nav-link">Projects</a>
-    <a href="{% url 'articles:list' %}" class="nav-link">Writing</a>
-    <a href="{% url 'experience:list' %}" class="nav-link">Experience</a>
-    <a href="{% url 'core:cv' %}" class="nav-link">CV &amp; Resume</a>
-    <a href="{% url 'core:hire' %}" class="nav-link" style="color: var(--color-yellow); font-weight: 700;">Hire Me &rarr;</a>
-    <a href="{% url 'core:now' %}" class="nav-link">Now</a>
-    <a href="{% url 'core:contact' %}" class="nav-link">Contact</a>
+    <button onclick="openRecruiterDrawer(); const m = document.getElementById('mobile-nav-drawer'); if (m) m.classList.remove('open');" class="btn btn-recruiter-hero" style="width: 100%; justify-content: center; padding: 0.75rem 1rem; margin-bottom: var(--space-2);">
+      <span class="btn-pulse-dot"></span>
+      <span>⚡ Open Recruiter Fast-Track View</span>
+    </button>
+    <div class="mobile-nav-links">
+      <a href="{% url 'core:home' %}" class="mobile-drawer-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+        <span>Home</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'core:about' %}" class="mobile-drawer-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+        <span>About Me</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'projects:list' %}" class="mobile-drawer-link {% if 'projects' in request.path %}active{% endif %}">
+        <span>Featured Projects</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'articles:list' %}" class="mobile-drawer-link {% if 'writing' in request.path %}active{% endif %}">
+        <span>Technical Writing</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'experience:list' %}" class="mobile-drawer-link {% if 'experience' in request.path %}active{% endif %}">
+        <span>Experience &amp; Skills</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'core:cv' %}" class="mobile-drawer-link {% if request.resolver_match.url_name == 'cv' %}active{% endif %}">
+        <span>Curriculum Vitae (CV)</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'core:hire' %}" class="mobile-drawer-link hire-link" style="border-color: var(--color-yellow-border); color: var(--color-yellow); font-weight: 700;">
+        <span>🎯 Hire Me (Intake &amp; Scope)</span>
+        <span>&rarr;</span>
+      </a>
+      <a href="{% url 'core:contact' %}" class="mobile-drawer-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+        <span>Contact &amp; Book Call</span>
+        <span>&rarr;</span>
+      </a>
+    </div>
   </div>
 </header>

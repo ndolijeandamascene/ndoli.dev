@@ -12,9 +12,14 @@ class SiteSettings(models.Model):
         default='I am an IT professional and software developer focused on building practical digital systems. My work spans web applications, backend systems, databases, AI-assisted software, networking, cybersecurity, and technology solutions for real-world organizations.'
     )
     email = models.EmailField(default='ndolijeandamascene@gmail.com')
+    phone_number = models.CharField(max_length=50, default='+250 789 317 65', blank=True)
+    whatsapp_url = models.URLField(default='https://wa.me/25078931765', blank=True)
+    booking_url = models.URLField(default='https://cal.com/ndolijeandamascene', blank=True, help_text='Cal.com or Calendly direct booking link')
+    years_of_experience = models.CharField(max_length=50, default='3+ Years', blank=True)
+    availability_badge = models.CharField(max_length=150, default='Available for Full-time, Hybrid & Remote Roles', blank=True)
     location = models.CharField(max_length=100, default='Kigali, Rwanda')
     github_url = models.URLField(default='https://github.com/ndolijeandamascene', blank=True)
-    linkedin_url = models.URLField(default='https://linkedin.com/in/ndoli-jean-damascene', blank=True)
+    linkedin_url = models.URLField(default='', blank=True)
     twitter_url = models.URLField(blank=True)
     cv_file = models.FileField(upload_to='cv/', blank=True, null=True)
 
@@ -29,6 +34,26 @@ class SiteSettings(models.Model):
     def load(cls):
         obj, created = cls.objects.get_or_create(pk=1)
         return obj
+
+
+class Testimonial(models.Model):
+    client_name = models.CharField(max_length=120)
+    role_title = models.CharField(max_length=150)
+    organization = models.CharField(max_length=150)
+    quote = models.TextField()
+    project_context = models.CharField(max_length=150, blank=True, help_text='e.g., Enterprise IT & Linux Infrastructure')
+    avatar_initials = models.CharField(max_length=5, blank=True, default='ND')
+    order = models.IntegerField(default=0)
+    is_featured = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Testimonial / Endorsement'
+        verbose_name_plural = 'Testimonials / Endorsements'
+        ordering = ['order', '-created_at']
+
+    def __str__(self):
+        return f"{self.client_name} ({self.organization})"
 
 
 class ContactMessage(models.Model):

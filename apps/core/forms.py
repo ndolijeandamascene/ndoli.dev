@@ -83,7 +83,7 @@ class JobOfferForm(forms.ModelForm):
             }),
             'company_website': forms.URLInput(attrs={
                 'class': 'form-input',
-                'placeholder': 'https://company.rw or LinkedIn profile',
+                'placeholder': 'https://company.rw or organization website',
             }),
             'job_title': forms.TextInput(attrs={
                 'class': 'form-input',

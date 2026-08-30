@@ -1,0 +1,49 @@
+<!-- ==========================================================================
+     TESTIMONIALS & SOCIAL PROOF COMPONENT
+     ========================================================================== -->
+<section id="testimonials" class="section testimonials-section">
+  <div class="container">
+    
+    <div class="section-header text-center">
+      <span class="badge badge-yellow" style="margin-bottom: var(--space-3);">
+        TRUST &amp; SOCIAL PROOF
+      </span>
+      <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: var(--space-3);">
+        What Leaders &amp; Collaborators Say
+      </h2>
+      <p class="section-subtitle" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+        Real feedback from organizations, technical directors, and project leads who have worked with NDOLI Jean Damascene.
+      </p>
+    </div>
+
+    {% if testimonials %}
+    <div class="grid grid-3" style="gap: var(--space-6); margin-top: var(--space-8);">
+      {% for testimonial in testimonials %}
+      <div class="card testimonial-card">
+        <div class="testimonial-rating">
+          ★★★★★
+        </div>
+        <blockquote class="testimonial-quote">
+          &ldquo;{{ testimonial.quote }}&rdquo;
+        </blockquote>
+        {% if testimonial.project_context %}
+        <div class="testimonial-context">
+          <span>Project:</span> {{ testimonial.project_context }}
+        </div>
+        {% endif %}
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">
+            {{ testimonial.avatar_initials|default:"ND" }}
+          </div>
+          <div>
+            <strong class="testimonial-name">{{ testimonial.client_name }}</strong>
+            <span class="testimonial-role">{{ testimonial.role_title }}, {{ testimonial.organization }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>

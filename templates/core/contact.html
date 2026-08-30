@@ -12,31 +12,34 @@
       <p class="section-subtitle">Have a software project, technical inquiry, institutional platform requirement, or career opportunity? Send a message below.</p>
     </div>
 
-    <div class="grid grid-2" style="margin-bottom: var(--space-12);">
+    <div class="grid grid-3" style="margin-bottom: var(--space-8); gap: var(--space-4);">
       <div class="card">
-        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: var(--space-2);">Direct Inquiries</h3>
-        <p style="font-size: var(--text-sm); margin-bottom: var(--space-3);">For direct correspondence and official requests:</p>
-        <p style="font-family: var(--font-mono); font-size: var(--text-base); color: var(--text-primary); font-weight: 600;">
+        <h3 style="font-size: var(--text-base); color: var(--color-green); margin-bottom: var(--space-2);">Direct Inquiries</h3>
+        <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-2);">Official correspondence:</p>
+        <p style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-primary); font-weight: 600; margin-bottom: 0;">
           <a href="mailto:{{ EMAIL }}">{{ EMAIL }}</a>
         </p>
-        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2);">Location: Kigali, Rwanda (UTC+2)</p>
+        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2); margin-bottom: 0;">Kigali, Rwanda (UTC+2)</p>
       </div>
 
-      <div class="card">
-        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: var(--space-2);">Verified Profiles</h3>
-        <p style="font-size: var(--text-sm); margin-bottom: var(--space-3);">Explore public code and professional network:</p>
-        <div style="display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm);">
-          {% if GITHUB_URL %}
-          <a href="{{ GITHUB_URL }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary);">
-            &rarr; GitHub: <span style="color: var(--color-green);">ndolijeandamascene</span>
-          </a>
-          {% endif %}
-          {% if LINKEDIN_URL %}
-          <a href="{{ LINKEDIN_URL }}" target="_blank" rel="noopener noreferrer" style="color: var(--text-primary);">
-            &rarr; LinkedIn: <span style="color: var(--color-yellow);">ndoli-jean-damascene</span>
-          </a>
-          {% endif %}
-        </div>
+      <div class="card" style="border-color: var(--color-yellow-border); background: var(--color-yellow-subtle);">
+        <h3 style="font-size: var(--text-base); color: var(--color-yellow); margin-bottom: var(--space-2);">Instant Chat &amp; Call</h3>
+        <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-2);">Fast WhatsApp communication:</p>
+        {% if WHATSAPP_URL %}
+        <a href="{{ WHATSAPP_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-sm" style="background: #25D366; border-color: #25D366; color: #07130E; font-weight: 700; width: 100%; justify-content: center;">
+          WhatsApp ({{ PHONE_NUMBER }})
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="card" style="border-color: var(--color-green-border); background: var(--color-green-subtle);">
+        <h3 style="font-size: var(--text-base); color: var(--color-green); margin-bottom: var(--space-2);">15-Min Intro Call</h3>
+        <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-2);">Direct appointment scheduler:</p>
+        {% if BOOKING_URL %}
+        <a href="{{ BOOKING_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center;">
+          Schedule Call &rarr;
+        </a>
+        {% endif %}
       </div>
     </div>
 

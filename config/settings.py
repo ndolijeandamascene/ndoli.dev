@@ -5,6 +5,16 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load local .env file if present
+env_file = BASE_DIR / '.env'
+if env_file.exists():
+    with open(env_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, val = line.split('=', 1)
+                os.environ[key.strip()] = val.strip().strip('"\'')
+
 # Add apps directory to Python path
 sys.path.insert(0, str(BASE_DIR / 'apps'))
 
@@ -23,12 +33,19 @@ ALLOWED_HOSTS = os.environ.get(
     '127.0.0.1,localhost,testserver,ndoli.dev,www.ndoli.dev,62.171.182.99'
 ).split(',')
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://ndoli.dev',
-    'https://www.ndoli.dev',
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-]
+csrf_origins_env = os.environ.get('CSRF_TRUSTED_ORIGINS')
+if csrf_origins_env:
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins_env.split(',') if origin.strip()]
+else:
+    CSRF_TRUSTED_ORIGINS = [
+        'https://ndoli.dev',
+        'https://www.ndoli.dev',
+        'http://127.0.0.1:8000',
+        'http://localhost:8000',
+        'http://62.171.182.99',
+        'https://62.171.182.99',
+        'http://62.171.182.99:8000',
+    ]
 
 # Reverse Proxy SSL Header for EasyPanel / Nginx / VPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -91,18 +108,33 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 DB_NAME = os.environ.get('DB_NAME')
 
 if DATABASE_URL:
+    import re
     import urllib.parse
-    url = urllib.parse.urlparse(DATABASE_URL)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port or 5432,
+    m = re.match(r'^(?:postgres|postgresql)://([^:]+):(.*)@([^:@/]+)(?::(\d+))?/([^?]+)', DATABASE_URL)
+    if m:
+        user, raw_pwd, host, port, name = m.groups()
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': name,
+                'USER': user,
+                'PASSWORD': urllib.parse.unquote(raw_pwd),
+                'HOST': host,
+                'PORT': int(port) if port else 5432,
+            }
         }
-    }
+    else:
+        url = urllib.parse.urlparse(DATABASE_URL)
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': url.path[1:],
+                'USER': url.username,
+                'PASSWORD': url.password,
+                'HOST': url.hostname,
+                'PORT': url.port or 5432,
+            }
+        }
 elif DB_NAME and os.environ.get('DB_USER'):
     DATABASES = {
         'default': {

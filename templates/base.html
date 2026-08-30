@@ -77,6 +77,18 @@
   <!-- Footer -->
   {% include 'components/footer.html' %}
 
+  <!-- Recruiter Fast-Track Drawer Component -->
+  {% include 'components/recruiter_drawer.html' %}
+
+  <!-- Interactive Skill Evidence Modal -->
+  {% include 'components/skill_evidence_modal.html' %}
+
+  <!-- Floating WhatsApp Chat Widget -->
+  {% include 'components/floating_whatsapp.html' %}
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
   <!-- Client Script -->
   <script src="{% static 'js/main.js' %}"></script>
   {% block extra_scripts %}{% endblock %}

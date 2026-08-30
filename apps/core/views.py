@@ -5,8 +5,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
+from django.core.mail import send_mail
+from django.conf import settings
 from .forms import ContactForm, JobOfferForm
-from .models import SiteSettings, ContactMessage, JobOffer
+from .models import SiteSettings, ContactMessage, JobOffer, Testimonial
 from apps.projects.models import Project, Category, Technology
 from apps.articles.models import Article, ArticleCategory
 from apps.experience.models import Experience, Education, SkillCategory, Skill, Certification
@@ -26,6 +28,7 @@ class HomeView(TemplateView):
         context['experiences'] = Experience.objects.all()[:5]
         context['education'] = Education.objects.filter(is_visible=True).first()
         context['skill_categories'] = SkillCategory.objects.prefetch_related('skills').all()
+        context['testimonials'] = Testimonial.objects.filter(is_featured=True)
         return context
 
 
@@ -36,6 +39,7 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['educations'] = Education.objects.filter(is_visible=True)
         context['experiences'] = Experience.objects.all()
+        context['testimonials'] = Testimonial.objects.filter(is_featured=True)
         return context
 
 
@@ -43,6 +47,11 @@ class ContactView(FormView):
     template_name = 'core/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('core:contact')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['testimonials'] = Testimonial.objects.filter(is_featured=True)
+        return context
 
     def form_valid(self, form):
         contact_msg = form.save(commit=False)
@@ -52,6 +61,20 @@ class ContactView(FormView):
         else:
             contact_msg.ip_address = self.request.META.get('REMOTE_ADDR')
         contact_msg.save()
+
+        # Send Email Notification
+        try:
+            recipient = getattr(settings, 'OWNER_EMAIL', 'ndolijeandamascene@gmail.com')
+            send_mail(
+                subject=f"[ndoli.dev] New Message from {contact_msg.name}: {contact_msg.subject}",
+                message=f"Name: {contact_msg.name}\nEmail: {contact_msg.email}\nSubject: {contact_msg.subject}\nIP: {contact_msg.ip_address}\n\nMessage:\n{contact_msg.message}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[recipient],
+                fail_silently=True,
+            )
+        except Exception:
+            pass
+
         messages.success(self.request, "Thank you for reaching out! Your message has been sent successfully. I will get back to you soon.")
         return super().form_valid(form)
 
@@ -61,6 +84,11 @@ class HireMeView(FormView):
     form_class = JobOfferForm
     success_url = reverse_lazy('core:hire')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['testimonials'] = Testimonial.objects.filter(is_featured=True)
+        return context
+
     def form_valid(self, form):
         job_offer = form.save(commit=False)
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
@@ -69,6 +97,34 @@ class HireMeView(FormView):
         else:
             job_offer.ip_address = self.request.META.get('REMOTE_ADDR')
         job_offer.save()
+
+        # Send Email Notification
+        try:
+            recipient = getattr(settings, 'OWNER_EMAIL', 'ndolijeandamascene@gmail.com')
+            send_mail(
+                subject=f"[ndoli.dev] 🎯 NEW JOB OFFER: {job_offer.job_title} at {job_offer.company_name}",
+                message=(
+                    f"A new job offer / hiring proposal has been submitted on ndoli.dev:\n\n"
+                    f"Company: {job_offer.company_name}\n"
+                    f"Contact Person: {job_offer.contact_person}\n"
+                    f"Email: {job_offer.contact_email}\n"
+                    f"Phone: {job_offer.contact_phone}\n"
+                    f"Website: {job_offer.company_website}\n\n"
+                    f"Role: {job_offer.job_title}\n"
+                    f"Category: {job_offer.get_job_category_display()}\n"
+                    f"Type: {job_offer.get_employment_type_display()}\n"
+                    f"Location: {job_offer.work_location}\n"
+                    f"Offered Salary: {job_offer.offered_salary} {job_offer.salary_currency}\n"
+                    f"Expected Start Date: {job_offer.expected_start_date}\n\n"
+                    f"Description / Scope:\n{job_offer.job_description}\n"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[recipient],
+                fail_silently=True,
+            )
+        except Exception:
+            pass
+
         messages.success(
             self.request,
             f"Thank you, {job_offer.contact_person}! Your job offer for '{job_offer.job_title}' at {job_offer.company_name} has been received. I will review the compensation and role requirements and reply promptly."

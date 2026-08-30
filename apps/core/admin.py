@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import SiteSettings, ContactMessage, JobOffer
+from .models import SiteSettings, ContactMessage, JobOffer, Testimonial
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ['client_name', 'role_title', 'organization', 'project_context', 'is_featured', 'order']
+    list_filter = ['is_featured', 'created_at']
+    list_editable = ['is_featured', 'order']
+    search_fields = ['client_name', 'role_title', 'organization', 'quote']
 
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):

@@ -1,0 +1,138 @@
+<!-- ==========================================================================
+     INTERACTIVE PROJECT SCOPE & TIMELINE ESTIMATOR MINI-TOOL
+     ========================================================================== -->
+<div class="card project-estimator-card" id="project-estimator">
+  <div class="estimator-header">
+    <span class="badge badge-green" style="margin-bottom: var(--space-2);">
+      INTERACTIVE SCOPE CALCULATOR
+    </span>
+    <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-2);">
+      Project Scope &amp; Timeline Estimator
+    </h3>
+    <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: 0;">
+      Select your organization's technical needs below to get an instant estimated delivery timeline and recommended architectural stack.
+    </p>
+  </div>
+
+  <div class="estimator-grid">
+    <!-- Options Column -->
+    <div class="estimator-controls">
+      
+      <!-- 1. System Type -->
+      <div class="estimator-group">
+        <label class="estimator-label">1. Primary Solution Type</label>
+        <div class="estimator-options">
+          <label class="estimator-choice">
+            <input type="radio" name="est_type" value="systems_admin" data-weeks="2" data-type-name="Enterprise Systems & Infrastructure" checked onchange="updateEstimator()">
+            <span class="choice-content">
+              <strong>Enterprise Systems &amp; Server Infrastructure</strong>
+              <small>Linux/Windows servers, networking, VPN, automated backup configuration</small>
+            </span>
+          </label>
+
+          <label class="estimator-choice">
+            <input type="radio" name="est_type" value="django_app" data-weeks="4" data-type-name="Custom Django Web Platform" onchange="updateEstimator()">
+            <span class="choice-content">
+              <strong>Custom Full-Stack Django Web Application</strong>
+              <small>Database models, user roles (RBAC), admin dashboard, responsive UI</small>
+            </span>
+          </label>
+
+          <label class="estimator-choice">
+            <input type="radio" name="est_type" value="ai_rag" data-weeks="5" data-type-name="AI & RAG Knowledge Pipeline" onchange="updateEstimator()">
+            <span class="choice-content">
+              <strong>AI, Vector Search &amp; RAG Knowledge Platform</strong>
+              <small>PostgreSQL + pgvector, PDF/doc semantic search, LLM orchestration</small>
+            </span>
+          </label>
+
+          <label class="estimator-choice">
+            <input type="radio" name="est_type" value="security_audit" data-weeks="1.5" data-type-name="IT Security & Server Hardening" onchange="updateEstimator()">
+            <span class="choice-content">
+              <strong>IT Security Hardening &amp; Server Audit</strong>
+              <small>Firewall rules, SSL automation, vulnerability scan, endpoint defense</small>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. Technical Add-ons -->
+      <div class="estimator-group">
+        <label class="estimator-label">2. Architectural Modules &amp; Add-ons</label>
+        <div class="estimator-addons">
+          <label class="addon-checkbox">
+            <input type="checkbox" name="est_addon" value="rbac" data-weeks="1" data-name="Role-Based Access (RBAC)" checked onchange="updateEstimator()">
+            <span>Role-Based Authentication &amp; Audit Logs (+1 wk)</span>
+          </label>
+          <label class="addon-checkbox">
+            <input type="checkbox" name="est_addon" value="docker_vps" data-weeks="0.5" data-name="Docker & VPS Cloud Deployment" checked onchange="updateEstimator()">
+            <span>Docker Containerization &amp; Cloud VPS Deployment (+0.5 wk)</span>
+          </label>
+          <label class="addon-checkbox">
+            <input type="checkbox" name="est_addon" value="api_integration" data-weeks="1" data-name="REST API / Third-Party Integration" onchange="updateEstimator()">
+            <span>REST API Integration / Payment / SMS (+1 wk)</span>
+          </label>
+          <label class="addon-checkbox">
+            <input type="checkbox" name="est_addon" value="rag_embeddings" data-weeks="1.5" data-name="pgvector Embeddings Indexing" onchange="updateEstimator()">
+            <span>Custom Vector Embeddings Indexing (+1.5 wks)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 3. Delivery Urgency -->
+      <div class="estimator-group">
+        <label class="estimator-label">3. Target Pace &amp; Availability</label>
+        <div class="estimator-pace-grid">
+          <label class="pace-choice">
+            <input type="radio" name="est_pace" value="1.0" checked onchange="updateEstimator()">
+            <span>Standard Sprint (Full-Time)</span>
+          </label>
+          <label class="pace-choice">
+            <input type="radio" name="est_pace" value="0.75" onchange="updateEstimator()">
+            <span>Accelerated Sprint (Priority)</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Estimate Results Column -->
+    <div class="estimator-results-box">
+      <div class="results-badge">LIVE ESTIMATE</div>
+      
+      <div class="results-metric">
+        <span class="results-label">Estimated Delivery Timeline</span>
+        <div class="results-weeks" id="est-total-weeks">3 - 4 Weeks</div>
+        <span class="results-note" id="est-pace-label">Based on full-time engineering focus</span>
+      </div>
+
+      <div class="results-stack-box">
+        <span class="results-subheading">Recommended Architecture:</span>
+        <div class="results-stack-tags" id="est-stack-tags">
+          <span>Linux / Docker</span>
+          <span>PostgreSQL</span>
+          <span>Django</span>
+        </div>
+      </div>
+
+      <div class="results-scope-box">
+        <span class="results-subheading">Deliverables Breakdown:</span>
+        <ul class="results-deliverables-list" id="est-deliverables-list">
+          <li>Production-ready environment provisioning</li>
+          <li>Database schema modeling &amp; security policies</li>
+          <li>Automated backups and deployment checklist</li>
+        </ul>
+      </div>
+
+      <div class="results-cta">
+        <a id="est-submit-btn" href="{% url 'core:hire' %}" class="btn btn-primary btn-block">
+          Submit Job / Project with This Scope &rarr;
+        </a>
+        <small style="display: block; text-align: center; color: var(--text-muted); margin-top: var(--space-2); font-size: 11px;">
+          Includes consultation &bull; No obligation
+        </small>
+      </div>
+
+    </div>
+  </div>
+</div>

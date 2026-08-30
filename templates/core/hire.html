@@ -20,6 +20,31 @@
       </p>
     </div>
 
+    <!-- Fast-Track Intro Call / WhatsApp Option -->
+    <div class="card" style="padding: var(--space-5); margin-bottom: var(--space-6); background: var(--bg-surface); border: 1px solid var(--color-yellow-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4);">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-yellow-subtle); display: flex; align-items: center; justify-content: center; color: var(--color-yellow); font-size: 1.3rem;">
+          📅
+        </div>
+        <div>
+          <strong style="display: block; font-size: var(--text-base); color: var(--text-primary);">Want an Immediate 15-Minute Interview Call?</strong>
+          <span style="font-size: var(--text-xs); color: var(--text-secondary);">Direct booking for recruiters, CTOs, and hiring managers.</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+        {% if BOOKING_URL %}
+        <a href="{{ BOOKING_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+          Book Intro Call &rarr;
+        </a>
+        {% endif %}
+        {% if WHATSAPP_URL %}
+        <a href="{{ WHATSAPP_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-accent btn-sm" style="background: #25D366; border-color: #25D366; color: #07130E; font-weight: 700;">
+          WhatsApp ({{ PHONE_NUMBER }})
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
     <!-- Quick Highlights Matrix -->
     <div class="grid grid-3" style="gap: var(--space-4); margin-bottom: var(--space-8);">
       <div class="card" style="padding: var(--space-4); text-align: center; border-color: var(--color-green-border); background: var(--color-green-subtle);">
@@ -29,12 +54,12 @@
 
       <div class="card" style="padding: var(--space-4); text-align: center; border-color: var(--color-yellow-border); background: var(--color-yellow-subtle);">
         <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-yellow); display: block; margin-bottom: 2px;">EXPERIENCE</span>
-        <p style="font-size: var(--text-xs); color: var(--text-primary); margin-bottom: 0; font-weight: 600;">3+ Years Production &bull; Tier 2 IT</p>
+        <p style="font-size: var(--text-xs); color: var(--text-primary); margin-bottom: 0; font-weight: 600;">{{ YEARS_OF_EXPERIENCE }} Production &bull; Tier 2 IT</p>
       </div>
 
       <div class="card" style="padding: var(--space-4); text-align: center; border-color: var(--border-color); background: var(--bg-surface-elevated);">
         <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 2px;">AVAILABILITY</span>
-        <p style="font-size: var(--text-xs); color: var(--text-primary); margin-bottom: 0; font-weight: 600;">Full-time &bull; Hybrid &bull; Contract</p>
+        <p style="font-size: var(--text-xs); color: var(--text-primary); margin-bottom: 0; font-weight: 600;">Full-time &bull; Hybrid &bull; Remote</p>
       </div>
     </div>
 
@@ -100,7 +125,7 @@
             </div>
 
             <div class="form-group">
-              <label for="{{ form.company_website.id_for_label }}" class="form-label">Company Website / LinkedIn</label>
+              <label for="{{ form.company_website.id_for_label }}" class="form-label">Company Website</label>
               {{ form.company_website }}
             </div>
           </div>
@@ -195,7 +220,7 @@
     <!-- Alternative Contact Note -->
     <div style="text-align: center; margin-top: var(--space-8);">
       <p style="font-size: var(--text-sm); color: var(--text-secondary);">
-        Prefer direct email? Reach out at <a href="mailto:{{ EMAIL }}" style="font-weight: 700; color: var(--color-green);">{{ EMAIL }}</a> or call/WhatsApp <a href="tel:+250789312765" style="font-weight: 700; color: var(--color-yellow);">+250 789 312 765</a>.
+        Prefer direct email? Reach out at <a href="mailto:{{ EMAIL }}" style="font-weight: 700; color: var(--color-green);">{{ EMAIL }}</a> or WhatsApp <a href="{{ WHATSAPP_URL }}" target="_blank" rel="noopener noreferrer" style="font-weight: 700; color: var(--color-yellow);">{{ PHONE_NUMBER }}</a>.
       </p>
     </div>
 

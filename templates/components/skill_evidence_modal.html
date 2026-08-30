@@ -1,0 +1,60 @@
+<!-- ==========================================================================
+     INTERACTIVE SKILL EVIDENCE MODAL
+     Opens when clicking any skill badge on Home, Skills, or CV
+     ========================================================================== -->
+<div id="skill-evidence-backdrop" class="modal-backdrop" aria-hidden="true" onclick="closeSkillEvidenceModal()"></div>
+
+<div id="skill-evidence-modal" class="modal-dialog" role="dialog" aria-labelledby="skill-modal-title" aria-modal="true" aria-hidden="true">
+  <div class="modal-header">
+    <div class="modal-title-group">
+      <span class="badge badge-green" id="skill-modal-category">CATEGORY</span>
+      <h3 class="modal-title" id="skill-modal-title">Skill Evidence</h3>
+    </div>
+    <button class="modal-close-btn" onclick="closeSkillEvidenceModal()" aria-label="Close modal">
+      &times;
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <!-- Proficiency & Experience Timeline -->
+    <div class="modal-fact-row">
+      <div class="modal-fact-col">
+        <span class="fact-label">PROFICIENCY LEVEL</span>
+        <strong id="skill-modal-level" class="text-green">Core Production</strong>
+      </div>
+      <div class="modal-fact-col">
+        <span class="fact-label">EXPERIENCE TENURE</span>
+        <strong id="skill-modal-tenure">3+ Years Active Use</strong>
+      </div>
+      <div class="modal-fact-col">
+        <span class="fact-label">VERIFIED PROOF</span>
+        <strong class="text-yellow">Production Deployed</strong>
+      </div>
+    </div>
+
+    <!-- Real-World Deployment Context -->
+    <div class="modal-section">
+      <h4 class="modal-section-title">💼 Real-World Production Context</h4>
+      <p id="skill-modal-description" class="modal-desc">
+        Applied in enterprise IT operations, automated backups, Linux server provisioning, and database architecture.
+      </p>
+    </div>
+
+    <!-- Related Flagship Projects -->
+    <div class="modal-section">
+      <h4 class="modal-section-title">📂 Applied in Verified Projects</h4>
+      <div id="skill-modal-projects" class="modal-projects-list">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a href="{% url 'projects:list' %}" class="btn btn-outline btn-sm">
+      Explore All Projects &rarr;
+    </a>
+    <a href="{% url 'core:hire' %}" class="btn btn-primary btn-sm">
+      Hire for This Skill &rarr;
+    </a>
+  </div>
+</div>

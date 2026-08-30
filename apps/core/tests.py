@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from apps.core.models import SiteSettings, ContactMessage
+from apps.core.models import SiteSettings, ContactMessage, Testimonial
 from apps.projects.models import Category, Technology, Project
 from apps.articles.models import ArticleCategory, Tag, Article
 from apps.experience.models import Experience, Education, SkillCategory, Skill
@@ -11,6 +11,20 @@ class PlatformTests(TestCase):
 
         # Seed minimal test data with get_or_create to ensure idempotency
         self.settings = SiteSettings.load()
+        self.settings.phone_number = '+250 789 317 65'
+        self.settings.whatsapp_url = 'https://wa.me/25078931765'
+        self.settings.booking_url = 'https://cal.com/ndolijeandamascene'
+        self.settings.save()
+
+        self.testimonial = Testimonial.objects.create(
+            client_name='Operations Director',
+            role_title='Managing Director',
+            organization='GIRA LTD',
+            quote='NDOLI transformed our internal IT operations.',
+            project_context='Enterprise Infrastructure',
+            is_featured=True,
+        )
+
         self.category, _ = Category.objects.get_or_create(
             slug='healthcare-technology',
             defaults={'name': 'Healthcare Technology'}
@@ -83,6 +97,10 @@ class PlatformTests(TestCase):
         self.assertContains(response, 'NDOLI Jean Damascene')
         self.assertContains(response, 'IHKIP')
         self.assertContains(response, 'application/ld+json')
+        self.assertContains(response, 'Recruiter View')
+        self.assertContains(response, 'How I Can Help Your Organization')
+        self.assertContains(response, 'Project Scope &amp; Timeline Estimator')
+        self.assertContains(response, 'What Leaders &amp; Collaborators Say')
 
     def test_about_page_loads(self):
         response = self.client.get(reverse('core:about'))
@@ -98,6 +116,7 @@ class PlatformTests(TestCase):
         self.assertEqual(res_detail.status_code, 200)
         self.assertContains(res_detail, 'IHKIP')
         self.assertContains(res_detail, 'AI health knowledge platform')
+        self.assertContains(res_detail, 'INTERACTIVE ARCHITECTURE')
 
     def test_articles_list_and_detail(self):
         res_list = self.client.get(reverse('articles:list'))
@@ -116,6 +135,7 @@ class PlatformTests(TestCase):
         res_skills = self.client.get(reverse('experience:skills'))
         self.assertEqual(res_skills.status_code, 200)
         self.assertContains(res_skills, 'Python')
+        self.assertContains(res_skills, 'openSkillEvidence')
 
     def test_cv_and_now_pages(self):
         res_cv = self.client.get(reverse('core:cv'))
@@ -153,6 +173,7 @@ class PlatformTests(TestCase):
         res_get = self.client.get(reverse('core:hire'))
         self.assertEqual(res_get.status_code, 200)
         self.assertContains(res_get, 'Hire NDOLI Jean Damascene')
+        self.assertContains(res_get, 'Want an Immediate 15-Minute Interview Call?')
 
         # 2. POST valid job offer with salary
         from apps.core.models import JobOffer

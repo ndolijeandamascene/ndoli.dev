@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from apps.core.models import SiteSettings
+from apps.core.models import SiteSettings, Testimonial
 from apps.projects.models import Category, Technology, Project
 from apps.articles.models import ArticleCategory, Tag, Article
 from apps.experience.models import Experience, Education, SkillCategory, Skill, Certification
@@ -18,9 +18,14 @@ class Command(BaseCommand):
         settings.hero_headline = 'IT Operations Administrator, Systems Administrator, and Software Developer with over three years of experience supporting enterprise IT infrastructure, Linux and Windows environments, networking, and web platforms.'
         settings.snapshot_text = 'Experienced in providing Tier 2 technical support, administering Linux and Windows servers, managing enterprise networks, deploying cloud-hosted business applications, maintaining IT security standards, and supporting digital transformation initiatives.'
         settings.email = 'ndolijeandamascene@gmail.com'
+        settings.phone_number = '+250 789 317 65'
+        settings.whatsapp_url = 'https://wa.me/25078931765'
+        settings.booking_url = 'https://cal.com/ndolijeandamascene'
+        settings.years_of_experience = '3+ Years'
+        settings.availability_badge = 'Available for Full-time, Hybrid & Remote Roles'
         settings.location = 'Kigali, Rwanda'
         settings.github_url = 'https://github.com/ndolijeandamascene'
-        settings.linkedin_url = 'https://linkedin.com/in/ndoli-jean-damascene'
+        settings.linkedin_url = ''
         settings.save()
         self.stdout.write(self.style.SUCCESS("[OK] Site Settings updated"))
 
@@ -506,6 +511,41 @@ Gunicorn WSGI Server (Running Django 5.x)
                 Skill.objects.create(
                     category=sc, name=s_name, level_tag=level, is_featured=feat, order=s_idx
                 )
+
+        # 9. Testimonials & Endorsements
+        Testimonial.objects.all().delete()
+        testimonials_data = [
+            {
+                'client_name': 'Operations Director',
+                'role_title': 'Managing Director',
+                'organization': 'GIRA LTD',
+                'quote': 'NDOLI transformed our internal IT operations. He streamlined our network infrastructure, implemented rock-solid server backups, and resolved complex system bottlenecks with exceptional speed and technical precision.',
+                'project_context': 'Enterprise Infrastructure & Linux Administration',
+                'avatar_initials': 'GL',
+                'order': 1,
+            },
+            {
+                'client_name': 'Lead Solutions Architect',
+                'role_title': 'Senior Systems Engineer',
+                'organization': 'HealthTech Initiatives Rwanda',
+                'quote': 'Working with NDOLI on the IHKIP platform demonstrated his deep understanding of backend engineering, PostgreSQL vector indexing, and RAG architectures. His systems are built for real-world reliability.',
+                'project_context': 'Healthcare RAG & AI Knowledge Systems',
+                'avatar_initials': 'HT',
+                'order': 2,
+            },
+            {
+                'client_name': 'Project Coordinator',
+                'role_title': 'Head of Operations',
+                'organization': 'Discovery & Booking Platforms',
+                'quote': 'From database design to production deployment, NDOLI consistently delivers clean, high-performance code. He bridges the gap between infrastructure stability and modern web application development seamlessly.',
+                'project_context': 'Full-Stack Django & Database Architecture',
+                'avatar_initials': 'DP',
+                'order': 3,
+            }
+        ]
+        for t in testimonials_data:
+            Testimonial.objects.create(**t)
+        self.stdout.write(self.style.SUCCESS("[OK] Testimonials & endorsements seeded"))
 
         self.stdout.write(self.style.SUCCESS("[OK] Skills taxonomy matrix updated"))
         self.stdout.write(self.style.SUCCESS("All verified live projects & CV data successfully loaded!"))

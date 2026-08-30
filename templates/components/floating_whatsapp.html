@@ -1,0 +1,28 @@
+{% if WHATSAPP_URL %}
+<!-- Floating WhatsApp Chat Widget -->
+<div class="whatsapp-floating-widget no-print" id="whatsapp-floating-widget">
+  <div class="whatsapp-tooltip" id="whatsapp-tooltip">
+    <div class="whatsapp-tooltip-header">
+      <span class="whatsapp-status-dot"></span>
+      <strong>NDOLI Jean Damascene</strong>
+    </div>
+    <div class="whatsapp-tooltip-body">
+      Looking for an IT Administrator or Full-Stack Developer? Let's chat! 👋
+    </div>
+    <button type="button" class="whatsapp-tooltip-close" onclick="dismissWhatsAppTooltip(event)" aria-label="Close message">&times;</button>
+  </div>
+
+  <a href="{{ WHATSAPP_URL }}?text=Hello%20NDOLI,%20I%20saw%20your%20portfolio%20(ndoli.dev)%20and%20would%20like%20to%20connect!" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     class="whatsapp-floating-btn" 
+     aria-label="Chat directly on WhatsApp with NDOLI Jean Damascene"
+     title="Direct WhatsApp Chat ({{ PHONE_NUMBER }})">
+    <span class="whatsapp-ripple"></span>
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.632.062-1.782-.416-1.465-.609-2.42-2.122-2.493-2.22-.072-.098-.59-0.785-.59-1.496 0-.71.373-1.06.505-1.205.133-.146.29-.182.387-.182s.193.003.277.008c.089.005.209-.034.325.247.121.29.412 1.002.448 1.075.036.073.06.16.012.257-.048.097-.072.16-.145.242-.072.085-.153.188-.218.254-.073.072-.15.15-.064.298.085.145.378.625.811 1.011.558.498 1.028.653 1.173.725.145.073.23.06.315-.036.085-.097.362-.423.46-.568.096-.145.193-.121.325-.073.133.048.845.398.99.47.145.073.242.109.277.17.037.06.037.35-.107.755zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.393A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.61 0-3.11-.475-4.378-1.294l-.314-.204-2.946.824.789-2.883-.223-.332A8.136 8.136 0 013.833 12c0-4.503 3.664-8.167 8.167-8.167 4.503 0 8.167 3.664 8.167 8.167 0 4.503-3.664 8.167-8.167 8.167z"/>
+    </svg>
+    <span class="whatsapp-online-dot"></span>
+  </a>
+</div>
+{% endif %}
