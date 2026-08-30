@@ -74,7 +74,6 @@
             <button type="button" onclick="openSkillEvidence(this)" data-skill-name="{{ skill.name }}" data-category="{{ category.name }}" class="badge {% if skill.is_featured %}badge-green{% else %}badge-neutral{% endif %}" style="font-size: var(--text-sm); padding: 6px 12px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-surface); text-align: left; transition: all var(--transition-fast);" title="Click to view verified project evidence">
               {{ skill.name }}
               {% if skill.level_tag %}<small style="opacity: 0.7; margin-left: 4px;">({{ skill.level_tag }})</small>{% endif %}
-              <span style="font-size: 10px; color: var(--color-green); margin-left: 4px;">🔍</span>
             </button>
           </li>
           {% endfor %}

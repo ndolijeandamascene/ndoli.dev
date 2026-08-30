@@ -6,13 +6,13 @@
     
     <div class="section-header text-center">
       <span class="badge badge-yellow" style="margin-bottom: var(--space-3);">
-        TRUST &amp; SOCIAL PROOF
+        ENDORSEMENTS
       </span>
       <h2 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: var(--space-3);">
         What Leaders &amp; Collaborators Say
       </h2>
       <p class="section-subtitle" style="max-width: 600px; margin-left: auto; margin-right: auto;">
-        Real feedback from organizations, technical directors, and project leads who have worked with NDOLI Jean Damascene.
+        Direct feedback from organizations, technical directors, and project leads who have worked with NDOLI Jean Damascene.
       </p>
     </div>
 
@@ -20,8 +20,8 @@
     <div class="grid grid-3" style="gap: var(--space-6); margin-top: var(--space-8);">
       {% for testimonial in testimonials %}
       <div class="card testimonial-card">
-        <div class="testimonial-rating">
-          ★★★★★
+        <div class="testimonial-rating" style="color: var(--color-green); font-size: var(--text-xs); font-family: var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;">
+          Verified Recommendation
         </div>
         <blockquote class="testimonial-quote">
           &ldquo;{{ testimonial.quote }}&rdquo;

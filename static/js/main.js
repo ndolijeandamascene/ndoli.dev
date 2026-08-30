@@ -38,7 +38,7 @@ window.showToast = function (message) {
 
   const toast = document.createElement('div');
   toast.className = 'toast-message';
-  toast.innerHTML = `<span>✓</span> <span>${message}</span>`;
+  toast.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span>${message}</span>`;
   container.appendChild(toast);
 
   setTimeout(() => {
@@ -248,7 +248,7 @@ window.openSkillEvidence = function (el) {
   document.getElementById('skill-modal-description').textContent = data.desc;
 
   const projContainer = document.getElementById('skill-modal-projects');
-  projContainer.innerHTML = data.projects.map((p) => `<span class="modal-project-pill">✓ ${p}</span>`).join('');
+  projContainer.innerHTML = data.projects.map((p) => `<span class="modal-project-pill">${p}</span>`).join('');
 
   modal.classList.add('open');
   backdrop.classList.add('open');

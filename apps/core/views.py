@@ -102,7 +102,7 @@ class HireMeView(FormView):
         try:
             recipient = getattr(settings, 'OWNER_EMAIL', 'ndolijeandamascene@gmail.com')
             send_mail(
-                subject=f"[ndoli.dev] 🎯 NEW JOB OFFER: {job_offer.job_title} at {job_offer.company_name}",
+                subject=f"[ndoli.dev] New Job Proposal: {job_offer.job_title} at {job_offer.company_name}",
                 message=(
                     f"A new job offer / hiring proposal has been submitted on ndoli.dev:\n\n"
                     f"Company: {job_offer.company_name}\n"

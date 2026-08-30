@@ -323,7 +323,9 @@
         </div>
 
         <button id="theme-toggle-btn" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
-          <span class="theme-icon">🌙</span>
+          <span class="theme-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </span>
         </button>
       </div>
 
@@ -486,7 +488,7 @@
         <!-- SECTION: INFRASTRUCTURE & SERVER SPECIFICATIONS -->
         <div class="card" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color);">
           <h3 style="font-size: var(--text-sm); font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--space-4);">
-            ⚙️ Production Environment &amp; Server Infrastructure
+            Production Environment &amp; Server Infrastructure
           </h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); font-size: var(--text-xs);">
             <div style="background: var(--bg-surface); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
@@ -515,7 +517,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <div>
             <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: 2px;">
-              💼 Employer Job Offers &amp; Proposed Compensation
+              Employer Job Offers &amp; Proposed Compensation
             </h2>
             <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
               Manage, update status, and review compensation for all incoming IT roles.
@@ -603,7 +605,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <div>
             <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: 2px;">
-              ✉️ Direct Inquiries &amp; Messages
+              Direct Inquiries &amp; Messages
             </h2>
             <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
               All messages received via the `/contact/` form.
@@ -658,8 +660,8 @@
                       {% csrf_token %}
                       <input type="hidden" name="action" value="delete_message">
                       <input type="hidden" name="message_id" value="{{ msg.id }}">
-                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px; color: #EF4444;">
-                        ✕
+                      <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px; color: #EF4444;" title="Delete message">
+                        &times;
                       </button>
                     </form>
                   </div>
@@ -682,7 +684,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <div>
             <h2 style="font-size: var(--text-xl); color: var(--color-green); margin-bottom: 2px;">
-              🚀 Systems &amp; Projects Manager (CRUD)
+              Systems &amp; Projects Manager
             </h2>
             <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
               Create, edit, update, or remove showcase systems and case studies.
@@ -761,7 +763,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <div>
             <h2 style="font-size: var(--text-xl); color: var(--color-yellow); margin-bottom: 2px;">
-              📝 Articles &amp; Lab Publications (CRUD)
+              Articles &amp; Publications Manager
             </h2>
             <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
               Publish, update, edit content, or delete technical publications.
@@ -829,7 +831,7 @@
       <div id="tab-settings" class="dash-tab-panel">
         <div style="margin-bottom: var(--space-4);">
           <h2 style="font-size: var(--text-xl); color: var(--text-primary); margin-bottom: 2px;">
-            ⚙️ Public Site Profile &amp; Bio Settings
+            Public Site Profile &amp; Bio Settings
           </h2>
           <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: 0;">
             Update your public personal branding, headlines, and contact details directly without leaving the dashboard.
@@ -902,7 +904,7 @@
     <div class="dash-modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
         <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: 0;">+ Add New Project / System</h3>
-        <button onclick="closeModal('modal-add-project')" class="btn btn-outline btn-sm">✕</button>
+        <button onclick="closeModal('modal-add-project')" class="btn btn-outline btn-sm" aria-label="Close">&times;</button>
       </div>
 
       <form method="post">
@@ -978,8 +980,8 @@
   <div id="modal-edit-project" class="dash-modal">
     <div class="dash-modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
-        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: 0;">✏️ Edit Project / System</h3>
-        <button onclick="closeModal('modal-edit-project')" class="btn btn-outline btn-sm">✕</button>
+        <h3 style="font-size: var(--text-lg); color: var(--color-green); margin-bottom: 0;">Edit Project / System</h3>
+        <button onclick="closeModal('modal-edit-project')" class="btn btn-outline btn-sm" aria-label="Close">&times;</button>
       </div>
 
       <form method="post">
@@ -1057,7 +1059,7 @@
     <div class="dash-modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
         <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: 0;">+ Write Technical Article</h3>
-        <button onclick="closeModal('modal-add-article')" class="btn btn-outline btn-sm">✕</button>
+        <button onclick="closeModal('modal-add-article')" class="btn btn-outline btn-sm" aria-label="Close">&times;</button>
       </div>
 
       <form method="post">
@@ -1111,8 +1113,8 @@
   <div id="modal-edit-article" class="dash-modal">
     <div class="dash-modal-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--border-color);">
-        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: 0;">✏️ Edit Technical Article</h3>
-        <button onclick="closeModal('modal-edit-article')" class="btn btn-outline btn-sm">✕</button>
+        <h3 style="font-size: var(--text-lg); color: var(--color-yellow); margin-bottom: 0;">Edit Technical Article</h3>
+        <button onclick="closeModal('modal-edit-article')" class="btn btn-outline btn-sm" aria-label="Close">&times;</button>
       </div>
 
       <form method="post">
