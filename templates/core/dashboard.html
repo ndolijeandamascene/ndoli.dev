@@ -677,6 +677,64 @@
             </tbody>
           </table>
         </div>
+
+        {% if all_spam_messages %}
+        <!-- QUARANTINED BOT SPAM AUDIT -->
+        <div style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px dashed var(--border-color);">
+          <details>
+            <summary style="cursor: pointer; font-size: var(--text-sm); font-weight: 700; color: var(--color-yellow); display: flex; align-items: center; gap: 8px;">
+              <span>🛡️ View Blocked &amp; Quarantined Spam ({{ spam_messages_count }})</span>
+              <span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">(Silently intercepted without emailing your inbox)</span>
+            </summary>
+            <div class="dash-table-wrapper" style="margin-top: var(--space-4);">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Blocked Sender</th>
+                    <th>Intercepted Subject</th>
+                    <th>Reason Blocked</th>
+                    <th>IP Address</th>
+                    <th>Intercepted At</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for s_msg in all_spam_messages %}
+                  <tr style="opacity: 0.85;">
+                    <td>
+                      <strong>{{ s_msg.name }}</strong>
+                      <div style="font-size: 11px; color: var(--text-muted);">{{ s_msg.email }}</div>
+                    </td>
+                    <td style="color: var(--text-secondary); max-width: 250px;">
+                      {{ s_msg.subject }}
+                    </td>
+                    <td>
+                      <span class="badge badge-yellow" style="font-size: 10.5px;">{{ s_msg.spam_reason|default:"Bot Heuristic" }}</span>
+                    </td>
+                    <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+                      {{ s_msg.ip_address|default:"Unknown" }}
+                    </td>
+                    <td style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">
+                      {{ s_msg.created_at|date:"M d, H:i" }}
+                    </td>
+                    <td>
+                      <form method="post" onsubmit="return confirm('Delete this spam record permanently?');" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="delete_message">
+                        <input type="hidden" name="message_id" value="{{ s_msg.id }}">
+                        <button type="submit" class="btn btn-outline btn-sm" style="padding: 2px 6px; font-size: 11px; color: #EF4444;" title="Delete spam record">
+                          &times;
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+        {% endif %}
       </div>
 
       <!-- ================= TAB 4: PROJECTS & SYSTEMS (FULL CRUD) ================= -->

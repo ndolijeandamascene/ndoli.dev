@@ -1,12 +1,25 @@
 from django import forms
 from .models import ContactMessage, JobOffer
+from .security import URL_PATTERN, check_honeypots
 
 class ContactForm(forms.ModelForm):
-    # Honeypot field for bot protection (should be left empty by real humans)
+    # Stealth honeypot fields for bot protection (must be left empty by real humans)
     website_url = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'style': 'display:none !important;', 'tabindex': '-1', 'autocomplete': 'off'})
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
     )
+    business_title = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
+    )
+    contact_fax = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
+    )
+
+    # Security & Verification Tokens
+    security_token = forms.CharField(required=False, widget=forms.HiddenInput())
+    interaction_token = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = ContactMessage
@@ -39,19 +52,44 @@ class ContactForm(forms.ModelForm):
             }),
         }
 
+    def clean_name(self):
+        name = self.cleaned_data.get('name', '').strip()
+        if URL_PATTERN.search(name):
+            raise forms.ValidationError("Full name cannot contain web links or URLs.")
+        return name
+
+    def clean_subject(self):
+        subject = self.cleaned_data.get('subject', '').strip()
+        if URL_PATTERN.search(subject):
+            raise forms.ValidationError("Subject line cannot contain web links or URLs.")
+        return subject
+
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('website_url'):
-            raise forms.ValidationError("Spam detected.")
+        is_hp_spam, hp_reason = check_honeypots(cleaned_data)
+        if is_hp_spam:
+            raise forms.ValidationError("Automated submission detected.")
         return cleaned_data
 
 
 class JobOfferForm(forms.ModelForm):
-    # Honeypot field for bot protection
+    # Stealth honeypot fields for bot protection
     website_url = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'style': 'display:none !important;', 'tabindex': '-1', 'autocomplete': 'off'})
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
     )
+    business_title = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
+    )
+    contact_fax = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'tabindex': '-1', 'autocomplete': 'off', 'aria-hidden': 'true'})
+    )
+
+    # Security & Verification Tokens
+    security_token = forms.CharField(required=False, widget=forms.HiddenInput())
+    interaction_token = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = JobOffer
@@ -124,8 +162,21 @@ class JobOfferForm(forms.ModelForm):
             }),
         }
 
+    def clean_contact_person(self):
+        contact_person = self.cleaned_data.get('contact_person', '').strip()
+        if URL_PATTERN.search(contact_person):
+            raise forms.ValidationError("Contact person name cannot contain web links or URLs.")
+        return contact_person
+
+    def clean_job_title(self):
+        job_title = self.cleaned_data.get('job_title', '').strip()
+        if URL_PATTERN.search(job_title):
+            raise forms.ValidationError("Job title cannot contain web links or URLs.")
+        return job_title
+
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('website_url'):
-            raise forms.ValidationError("Spam detected.")
+        is_hp_spam, hp_reason = check_honeypots(cleaned_data)
+        if is_hp_spam:
+            raise forms.ValidationError("Automated submission detected.")
         return cleaned_data

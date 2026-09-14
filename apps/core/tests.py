@@ -318,15 +318,22 @@ class CompleteSEOAndPlatformTests(TestCase):
 
     # 10. FUNCTIONAL PLATFORM TESTS
     def test_contact_form_submission(self):
+        from django.core import mail
+        mail.outbox = []
         response = self.client.post(reverse('core:contact'), {
-            'name': 'Inquirer Name',
+            'name': 'Jean Damascene',
             'email': 'inquiry@example.com',
             'subject': 'Collaboration Opportunity',
             'message': 'We would like to discuss a software project.',
             'website_url': '',
+            'business_title': '',
+            'contact_fax': '',
         }, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(ContactMessage.objects.filter(email='inquiry@example.com').exists())
+        msg = ContactMessage.objects.filter(email='inquiry@example.com').first()
+        self.assertIsNotNone(msg)
+        self.assertFalse(msg.is_spam)
+        self.assertEqual(len(mail.outbox), 1)
 
     def test_contact_honeypot_rejects_bots(self):
         response = self.client.post(reverse('core:contact'), {
@@ -338,6 +345,65 @@ class CompleteSEOAndPlatformTests(TestCase):
         })
         self.assertEqual(response.status_code, 200)
         self.assertFalse(ContactMessage.objects.filter(email='bot@spam.com').exists())
+
+    def test_contact_stealth_honeypots_catch_bots(self):
+        # Bot fills business_title decoy field
+        res1 = self.client.post(reverse('core:contact'), {
+            'name': 'Decoy Bot',
+            'email': 'decoy@spam.com',
+            'subject': 'Decoy Subject',
+            'message': 'Decoy text',
+            'business_title': 'Marketing Director',
+        })
+        self.assertEqual(res1.status_code, 200)
+        self.assertFalse(ContactMessage.objects.filter(email='decoy@spam.com').exists())
+
+        # Bot fills contact_fax decoy field
+        res2 = self.client.post(reverse('core:contact'), {
+            'name': 'Fax Bot',
+            'email': 'fax@spam.com',
+            'subject': 'Fax Subject',
+            'message': 'Fax text',
+            'contact_fax': '+1-800-SPAM',
+        })
+        self.assertEqual(res2.status_code, 200)
+        self.assertFalse(ContactMessage.objects.filter(email='fax@spam.com').exists())
+
+    def test_contact_blocks_url_in_name_and_subject(self):
+        from django.core import mail
+        mail.outbox = []
+        # Exact payload from screenshot
+        response = self.client.post(reverse('core:contact'), {
+            'name': 'Hello http://ndoli.dev/fekal0911 Owner',
+            'email': 'pirduhina96@gmail.com',
+            'subject': 'Hi http://ndoli.dev/fekal0911 Admin',
+            'message': 'Hello http://ndoli.dev/fekal0911 Owner',
+            'website_url': '',
+        })
+        self.assertEqual(response.status_code, 200)
+        # Form validation rejects URL in name
+        self.assertFalse(ContactMessage.objects.filter(email='pirduhina96@gmail.com').exists())
+        # Zero spam emails sent to inbox!
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_anti_spam_security_evaluation(self):
+        from apps.core.security import analyze_submission_content, check_honeypots, evaluate_submission_spam
+        # URL in name
+        is_spam, reason = analyze_submission_content(name='Hello http://ndoli.dev/fekal0911 Owner')
+        self.assertTrue(is_spam)
+        self.assertIn("URL or link pattern detected in name", reason)
+
+        # URL in subject
+        is_spam, reason = analyze_submission_content(subject='Hi https://spam.com/offer')
+        self.assertTrue(is_spam)
+
+        # BBCode link
+        is_spam, reason = analyze_submission_content(message='Check this [url=http://spam.com]link[/url]')
+        self.assertTrue(is_spam)
+
+        # Clean submission
+        is_spam, reason = analyze_submission_content(name='Alice Smith', subject='Partnership Inquiry', message='Let us meet for coffee.')
+        self.assertFalse(is_spam)
 
     def test_hire_me_page_and_form_submission(self):
         # 1. GET page
@@ -361,9 +427,32 @@ class CompleteSEOAndPlatformTests(TestCase):
             'expected_start_date': 'Next 2 Weeks',
             'job_description': 'Building Django web systems and managing database architectures.',
             'website_url': '',
+            'business_title': '',
+            'contact_fax': '',
         }, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(JobOffer.objects.filter(company_name='Tech Enterprise Ltd').exists())
+        job = JobOffer.objects.filter(company_name='Tech Enterprise Ltd').first()
+        self.assertIsNotNone(job)
+        self.assertFalse(job.is_spam)
+
+    def test_hire_me_blocks_url_in_contact_person(self):
+        from django.core import mail
+        mail.outbox = []
+        response = self.client.post(reverse('core:hire'), {
+            'company_name': 'Spam Corp',
+            'contact_person': 'Spammer https://spam.com/hiring',
+            'contact_email': 'spammer@spam.com',
+            'job_title': 'Spam Role',
+            'job_category': 'software_dev',
+            'employment_type': 'fulltime_remote',
+            'work_location': 'Kigali, Rwanda',
+            'offered_salary': '500,000 RWF',
+            'salary_currency': 'RWF',
+            'job_description': 'Spam description',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(JobOffer.objects.filter(company_name='Spam Corp').exists())
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_login_page_and_dashboard_access(self):
         from django.contrib.auth.models import User

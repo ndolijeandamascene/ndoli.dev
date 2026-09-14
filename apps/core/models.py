@@ -64,6 +64,8 @@ class ContactMessage(models.Model):
     ip_address = models.GenericIPAddressField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    is_spam = models.BooleanField(default=False, db_index=True)
+    spam_reason = models.CharField(max_length=255, blank=True)
 
     class Meta:
         verbose_name = 'Contact Message'
@@ -136,6 +138,8 @@ class JobOffer(models.Model):
     # Metadata & Tracking
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     ip_address = models.GenericIPAddressField(blank=True, null=True)
+    is_spam = models.BooleanField(default=False, db_index=True)
+    spam_reason = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

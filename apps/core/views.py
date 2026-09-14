@@ -43,23 +43,58 @@ class AboutView(TemplateView):
         return context
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        return x_forwarded_for.split(',')[0].strip()
+    return request.META.get('REMOTE_ADDR', '')
+
+
 class ContactView(FormView):
     template_name = 'core/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('core:contact')
 
+    def get_initial(self):
+        from .security import generate_form_security_token
+        initial = super().get_initial()
+        initial['security_token'] = generate_form_security_token(get_client_ip(self.request))
+        return initial
+
     def get_context_data(self, **kwargs):
+        from .security import generate_form_security_token
         context = super().get_context_data(**kwargs)
         context['testimonials'] = Testimonial.objects.filter(is_featured=True)
+        context['security_token'] = generate_form_security_token(get_client_ip(self.request))
         return context
 
     def form_valid(self, form):
+        from .security import evaluate_submission_spam
         contact_msg = form.save(commit=False)
-        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            contact_msg.ip_address = x_forwarded_for.split(',')[0]
-        else:
-            contact_msg.ip_address = self.request.META.get('REMOTE_ADDR')
+        ip = get_client_ip(self.request)
+        contact_msg.ip_address = ip
+
+        # Comprehensive Anti-Spam Evaluation
+        is_spam, spam_reason = evaluate_submission_spam(
+            data=self.request.POST,
+            ip_address=ip,
+            name=contact_msg.name,
+            email=contact_msg.email,
+            subject=contact_msg.subject,
+            message=contact_msg.message,
+        )
+
+        if is_spam:
+            contact_msg.is_spam = True
+            contact_msg.spam_reason = spam_reason[:255]
+            contact_msg.save()
+            # CRITICAL: DO NOT SEND EMAIL!
+            # Return standard success message so the bot believes it succeeded and leaves
+            messages.success(self.request, "Thank you for reaching out! Your message has been sent successfully. I will get back to you soon.")
+            return super().form_valid(form)
+
+        # Verified Human Submission
+        contact_msg.is_spam = False
         contact_msg.save()
 
         # Send Email Notification
@@ -84,18 +119,48 @@ class HireMeView(FormView):
     form_class = JobOfferForm
     success_url = reverse_lazy('core:hire')
 
+    def get_initial(self):
+        from .security import generate_form_security_token
+        initial = super().get_initial()
+        initial['security_token'] = generate_form_security_token(get_client_ip(self.request))
+        return initial
+
     def get_context_data(self, **kwargs):
+        from .security import generate_form_security_token
         context = super().get_context_data(**kwargs)
         context['testimonials'] = Testimonial.objects.filter(is_featured=True)
+        context['security_token'] = generate_form_security_token(get_client_ip(self.request))
         return context
 
     def form_valid(self, form):
+        from .security import evaluate_submission_spam
         job_offer = form.save(commit=False)
-        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            job_offer.ip_address = x_forwarded_for.split(',')[0]
-        else:
-            job_offer.ip_address = self.request.META.get('REMOTE_ADDR')
+        ip = get_client_ip(self.request)
+        job_offer.ip_address = ip
+
+        # Comprehensive Anti-Spam Evaluation
+        is_spam, spam_reason = evaluate_submission_spam(
+            data=self.request.POST,
+            ip_address=ip,
+            name=job_offer.contact_person,
+            email=job_offer.contact_email,
+            subject=job_offer.job_title,
+            message=job_offer.job_description,
+        )
+
+        if is_spam:
+            job_offer.is_spam = True
+            job_offer.spam_reason = spam_reason[:255]
+            job_offer.save()
+            # CRITICAL: DO NOT SEND EMAIL!
+            messages.success(
+                self.request,
+                f"Thank you, {job_offer.contact_person}! Your job offer for '{job_offer.job_title}' at {job_offer.company_name} has been received. I will review the compensation and role requirements and reply promptly."
+            )
+            return super().form_valid(form)
+
+        # Verified Human Submission
+        job_offer.is_spam = False
         job_offer.save()
 
         # Send Email Notification
@@ -168,15 +233,20 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context['all_articles'] = Article.objects.all().order_by('-published_at', '-updated_at')
         context['article_categories'] = ArticleCategory.objects.all()
         
-        context['messages_count'] = ContactMessage.objects.count()
-        context['unread_messages_count'] = ContactMessage.objects.filter(is_read=False).count()
-        context['all_messages'] = ContactMessage.objects.all().order_by('-created_at')
+        # Filter genuine inquiries vs quarantined spam
+        context['messages_count'] = ContactMessage.objects.filter(is_spam=False).count()
+        context['unread_messages_count'] = ContactMessage.objects.filter(is_spam=False, is_read=False).count()
+        context['all_messages'] = ContactMessage.objects.filter(is_spam=False).order_by('-created_at')
         context['recent_messages'] = context['all_messages'][:5]
+        context['spam_messages_count'] = ContactMessage.objects.filter(is_spam=True).count()
+        context['all_spam_messages'] = ContactMessage.objects.filter(is_spam=True).order_by('-created_at')
 
-        context['job_offers_count'] = JobOffer.objects.count()
-        context['new_job_offers_count'] = JobOffer.objects.filter(status='new').count()
-        context['all_job_offers'] = JobOffer.objects.all().order_by('-created_at')
+        # Filter genuine job offers vs spam
+        context['job_offers_count'] = JobOffer.objects.filter(is_spam=False).count()
+        context['new_job_offers_count'] = JobOffer.objects.filter(is_spam=False, status='new').count()
+        context['all_job_offers'] = JobOffer.objects.filter(is_spam=False).order_by('-created_at')
         context['recent_job_offers'] = context['all_job_offers'][:5]
+        context['spam_job_offers_count'] = JobOffer.objects.filter(is_spam=True).count()
 
         context['experiences_count'] = Experience.objects.count()
         context['skills_count'] = Skill.objects.count()

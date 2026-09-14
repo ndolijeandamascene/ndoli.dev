@@ -88,8 +88,19 @@
       <form method="post" action="{% url 'core:hire' %}">
         {% csrf_token %}
         
-        <!-- Honeypot Anti-Spam Field -->
-        {{ form.website_url }}
+        <!-- Stealth Anti-Spam Decoy Traps -->
+        <div class="security-trap" aria-hidden="true" style="position: absolute !important; left: -9999px !important; top: -9999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; opacity: 0 !important; pointer-events: none !important;">
+          <label for="id_website_url">Leave this field blank</label>
+          {{ form.website_url }}
+          <label for="id_business_title">Do not fill this field</label>
+          {{ form.business_title }}
+          <label for="id_contact_fax">Leave empty</label>
+          {{ form.contact_fax }}
+        </div>
+
+        <!-- Cryptographic Anti-Bot Token & Client Verification -->
+        {{ form.security_token }}
+        {{ form.interaction_token }}
 
         <!-- 1. COMPANY & CONTACT DETAILS -->
         <div style="margin-bottom: var(--space-6); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-color);">
@@ -226,4 +237,31 @@
 
   </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  (function() {
+    var form = document.querySelector('form[action*="hire"]');
+    if (!form) return;
+    var interactionInput = form.querySelector('input[name="interaction_token"]');
+    var hasInteracted = false;
+
+    function recordInteraction() {
+      if (hasInteracted) return;
+      hasInteracted = true;
+      if (interactionInput) {
+        interactionInput.value = 'human_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 8);
+      }
+      window.removeEventListener('mousemove', recordInteraction);
+      window.removeEventListener('keydown', recordInteraction);
+      window.removeEventListener('touchstart', recordInteraction);
+    }
+
+    window.addEventListener('mousemove', recordInteraction, { passive: true });
+    window.addEventListener('keydown', recordInteraction, { passive: true });
+    window.addEventListener('touchstart', recordInteraction, { passive: true });
+    form.addEventListener('focusin', recordInteraction, { passive: true });
+  })();
+</script>
 {% endblock %}
